@@ -1,0 +1,79 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    text-align: center;
+}
+.post{
+    margin: 10px;
+    width: 300px;
+    border: 1px groove gainsboro;
+    border-radius: 10px;
+    box-shadow: 0 0 5px gainsboro;
+    overflow: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+    display: inline-block;
+}
+.post:hover{
+    box-shadow: 0 0 5px gray;
+}
+.post-thumbnail img{
+    max-width: 100%;
+    vertical-align: middle;
+}
+.icon{
+    width: 20px;
+    display: inline;
+    margin-right: 10px;
+}
+.post-time,.post-date,.post-address,.post-cost,.post-contact{
+    display: flex;   
+    padding: 5px 0  5px 20px;
+}
+.post-title{
+    text-align: left;
+    padding: 10px 10px  5px 20px;
+}
+.post-contact a{
+    text-decoration: none;
+    color: black;
+    font-weight: 600!important;
+}
+.post-contact{
+    background-color: rgb(0, 153, 255);
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+}
+.post-contact img{
+    margin-left: 80px;
+}
+.post-contact:hover{
+    background-color: rgb(0, 141, 180);
+}
+.post-cost p{
+    font-weight: bold;
+}
+.post-datetime{
+    padding: 5px;
+    margin: 10px;
+    width: 130px;
+    position: relative;
+    font-weight: bold;
+    bottom: 170px;
+    font-size: x-large;
+    background-color: gainsboro;
+    border-radius: 5px ;
+}
+.post-thumbnail{
+    height: 170px;
+}
+.post-list{
+    display: flex;
+    justify-content: space-between;
+    width: 1290px;
+    margin-left: auto;
+    margin-right: auto;
+    flex-wrap: wrap;
+}

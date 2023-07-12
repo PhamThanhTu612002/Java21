@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="image/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&family=Rufina:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datamaps/0.5.9/datamaps.all.min.js"></script>
+    <title>Leospa - Clean & Minimal SCSS HTML5 Template</title>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="flex align-end">
+                <div class="logo">
+                    <a href="index.html"><img src="image/logo.png" alt=""></a>
+                </div>
+                <nav class="menu flex">
+                    <a class="navigation-link" href="index.html">HOME</a>
+                    <a class="navigation-link" href="about.html">ABOUT</a>
+                    <a class="navigation-link" href="feature.html">FEATURE</a>
+                    <a class="navigation-link" href="service.html">SERVICE</a>
+                    <a class="navigation-link" href="contact.html">CONTACT</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <div class="contact pading50px">
+        <div class="contact-container procedure-container">
+            <div class="contact-heading procedure-heading">
+                <h3 class="procedure-title">Get In Touch</h3>
+                <p class="procedure-tagline">To doesn't his appear replenish together called he of mad place won't wherein blessed second every wherein were meat kind wherein and martcin</p>
+            </div>
+            <div class="contact-form flex justify-center">
+                <div class="address">
+                    <address class="flex">
+                        <span><i class="fa-solid fa-map-location-dot"></i></span>
+                        <p>848 E 28th ST, BROOKLYN <br>NEW YORK, USA</p>
+                    </address>
+                    <address class="flex">
+                        <span><i class="fa-regular fa-envelope"></i></span>
+                        <p>example@leospa.com<br>example@leospa.com</p>
+                    </address>
+                    <address class="flex">
+                        <span><i class="fa-solid fa-mobile"></i></span>
+                        <p>tel:+02 365 2365 3265 (02)<br>+01 365 2365 3265 (04)</p>
+                    </address>
+                </div>
+                <form class="flex flex-col" action="">
+                    <input type="text" placeholder="Name">
+                    <input type="text" placeholder="Email Address">
+                    <textarea name="" id="" cols="30" rows="10" placeholder="Write Comment"></textarea>
+                </form>
+            </div>
+            <button class="btb-read-more">SUBMIT NOW</button>
+        </div>
+    </div>
+    <div class="procedure-container" id="map"></div>
+    <script>
+        // Tạo bản đồ dữ liệu và đặt các thuộc tính cho bản đồ
+        var map = new Datamap({
+          element: document.getElementById("map"),
+          projection: "mercator",
+          fills: {
+            defaultFill: "#ff817e"
+          },
+          geographyConfig: {
+            borderColor: "#fff",
+            highlightBorderWidth: 2,
+            highlightFillColor: "rgb(252, 141, 89)",
+            popupTemplate: function (geography, data) {
+              return (
+                '<div class="hoverinfo"><strong>' +
+                geography.properties.name +
+                "</strong></div>"
+              );
+            }
+          }
+        });
+  
+        // Dữ liệu bản đồ với số liệu tương ứng cho các quốc gia trên thế giới
+        var data = {
+          CAN: { fillKey: "active", data: 5678 },
+        };
+  
+        // Nhúng dữ liệu bản đồ vào bản đồ dữ liệu
+        map.updateChoropleth(data);
+      </script>
+</body>
+<footer>
+    <div class="footer-container quote-container">
+        <a href=""><img src="image/logo.png" alt=""></a>
+        <nav class="menu-2 flex justify-center">
+            <a class="navigation-link" href="#">HOME</a>
+            <a class="navigation-link" href="#">ABOUT</a>
+            <a class="navigation-link" href="#">FETURE</a>
+            <a class="navigation-link" href="#">SERVICE</a>
+            <a class="navigation-link" href="#">CONTACT</a>
+        </nav>
+        <nav class="social flex justify-center">
+            <a href=""><i class="fa-brands fa-facebook-f"></i></a>
+            <a href=""><i class="fa-brands fa-twitter"></i></i></a>
+            <a href=""><i class="fa-brands fa-vimeo-v"></i></a>
+            <a href=""><i class="fa-brands fa-instagram"></i></a>
+        </nav>
+        <p class="copyright">© COPYRIGHT 2019 <a href="">themeies.com.</a> ALL RIGHTS RESERVED.</p>
+    </div>
+</footer>
+</html>

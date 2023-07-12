@@ -1,0 +1,40 @@
+.container{
+    margin-left: auto;
+    margin-right: auto;
+}
+.heart{
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    top: 40vh;
+    transform: rotate(45deg);
+    animation: beat .25s infinite alternate;
+}
+@keyframes beat{
+	to { transform: rotate(45deg) scale(1.4); }
+}
+.heart,.tron1,.tron2{
+    width: 200px;
+    height: 200px;
+    background-color: red;
+}
+.tron1,.tron2{
+    border-radius: 50%;
+}
+.tron1{
+    position: absolute;
+    left: -100px; 
+    z-index: -1;       
+}
+.tron2{
+    position: absolute;
+    top: -100px; 
+    z-index: -1;   
+}
+img{
+    position: absolute;
+    width: 200px;
+    height: 200px;
+
+    transform: translate(-20px,-20px) rotate(-45deg) scale(0.8);
+}

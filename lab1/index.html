@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buổi 1</title>
+    <link rel="shortcut icon" href="https://i.pinimg.com/236x/1a/04/93/1a0493ce119adfa5c11b4297d457e4fa.jpg" type="image/x-icon">
+</head>
+<body>
+    <!-- Navigation - Các liên kết điều hướng -->
+    <div>
+        <h1>Logo</h1>
+        <ul>
+            <li>
+                <a href="index.html">Home page</a>
+            </li>
+            <li>
+                <a href="login.html">Login page</a>
+            </li>
+            <li>
+                <a href="signup.html">Signup page</a>
+            </li>
+        </ul>
+    </div>
+    <div>
+        <p>Danh sách sản phẩm</p>
+        <ul>
+            <li>Điện thoại</li>
+            <li>Máy tính</li>
+            <li>Tivi</li>
+        </ul>
+    </div>
+    <p>Đây là đoạn văn bản</p>
+    <p>I <strong>LOVE</strong> YOU</p>
+
+    <div>Đây là một block</div>
+
+    <h1>Đây cũng là một block</h1>
+
+    <h1>Đây là thẻ &lt;h1&gt;</h1>
+    <h2>Đây là thẻ &lt;h2&gt;</h2>
+    <h3>Đây là thẻ &lt;h3&gt;</h3>
+    <h4>Đây là thẻ &lt;h4&gt;</h4>
+    
+    <span>Một từ</span>
+
+    <b>In dậm</b>
+
+    <i>In nghiêng</i>
+
+    <u>Gạch chân</u>
+
+    <p title="Đoạn văn bản ẩn">Thử di chuột vào đoạn văn bản này</p>
+
+    <p>&lt;p&gt; stands for paragraph</p>
+    <hr>
+    <p>Đánh dấu 1 đoạn văn bản <br>độc lập</p>
+
+    <p>The <abbr title="World Health Organization">WHO</abbr> was founded in 1948.</p>
+
+    <code><h1>Đây là thẻ &lt;h1&gt;</h1></code>
+
+    <blockquote>Đây là thẻ blockquote</blockquote>
+    <mark>Đầy là thẻ mark</mark>
+
+    <img width="500" src="DSC08021.jpg" alt="ninh bình">
+
+    <p>Click the button below to display the hidden content from the template element.</p>
+    <button onclick="showContent()">Show hidden content</button>
+
+    <template>
+    <h2>Flower</h2>
+    <img src="https://i.pinimg.com/236x/1a/04/93/1a0493ce119adfa5c11b4297d457e4fa.jpg" width="214" height="204">
+    </template>
+
+    <script>
+    function showContent() {
+    let temp = document.getElementsByTagName("template")[0];
+    let clon = temp.content.cloneNode(true);
+    document.body.appendChild(clon);
+    }
+    </script>
+
+    
+</body>
+</html>

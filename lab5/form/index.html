@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <form action="">
+        <div class="form-field">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username">
+        </div>
+        <div>
+            <label for="password">Password</label>
+            <input type="password" id="password">
+        </div>
+        <!-- Chỉ chọn 1 giá trị -->
+        <div class="form-field">
+            <span class="form-label">Hãy chọn đáp án:</span>
+            <input type="radio" name="answer">
+            <label for="A">A</label>
+            <input type="radio" name="answer">
+            <label for="B">B</label>
+            <input type="radio" name="answer">
+            <label for="C">C</label>
+            <input type="radio" name="answer">
+            <label for="D">D</label>
+        </div>
+        <!-- Chọn 0 hoặc nhiều giá trị -->
+        <div class="form-field">
+            <span class="form-label">Hãy chọn sở thích:</span>
+            <input type="checkbox" name="hobbies">
+            <label for="football">Bóng đá</label>
+            <input type="checkbox" name="hobbies">
+            <label for="basketball">Bóng rổ</label>
+            <input type="checkbox" name="hobbies">
+            <label for="#">Khác</label>
+        </div>
+        <div class="form-field">
+            <!-- Tùy chọn cho 1 trường giá trị -->
+            <select name="address" id="address">
+                <option value="1">Hà Nội</option>
+                <option value="2">Thành phố Hồ Chí Minh</option>
+                <option value="3">Đà Nẵng</option>
+                <option value="4">Hải Phòng</option>
+            </select>
+        </div>
+        <div class="form-field">
+            <!-- Dùng cho các comment, nội dung bài viết -->
+            <label for="note">Ghi chú</label>
+            <textarea name="" id="" cols="30" rows="10"></textarea>
+        </div>
+        <div class="form-field">
+            <!-- Dùng cho các action -->
+            <button>Click me!</button>
+        </div>
+    </form>
+</body>
+</html>

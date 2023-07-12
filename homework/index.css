@@ -1,0 +1,46 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+.post{
+    margin: 10px;
+    width: 310px;
+    text-align: center;
+    border: 1px groove;
+    border-radius: 10px;
+    box-shadow: 0 0 5px gainsboro;
+    overflow: hidden;
+}
+.post:hover{
+    box-shadow: 0 0 5px grey;
+}
+.post-thumbnail{
+    max-width: 100%;
+    vertical-align: middle;
+}
+.post-title{
+    padding: 10px;
+}
+.post-excerpt{
+    padding: 10px;
+    margin-left: 10px;
+    text-align: left;
+}
+.post-view{
+    margin-right: 160px;
+    text-align: left;
+    display: flex;
+}
+.post-published{
+    text-align: right;
+}
+.post-view img{
+    width: 20px;
+}
+.post-meta{
+    max-width: 100%;
+    border-top: 1px solid gainsboro; 
+    padding: 20px;
+    display: flex;
+    text-align: center;
+}

@@ -1,0 +1,26 @@
+.box{
+    width: 500px;
+    height: 500px;
+    background: rgb(255,0,0);
+    background: linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(249,255,0,1) 14%, rgba(27,193,0,1) 28%, rgba(0,44,255,1) 42%, rgba(255,0,249,1) 56%, rgba(2,254,255,1) 84%, rgba(255,183,0,1) 100%);
+    /* position: relative;
+    top: 50px;
+    left: 50px; */
+    transform: translate(50px,50px);
+    /* transition: all 0.5s linear 0s; */
+    animation: spin 5s linear 0s infinite;
+}
+/* .box:hover{
+    transform: translate(50px,50px) scale(1.5) rotate(180deg);
+}
+.box:focus{
+    transform: translate(50px,50px) scale(0.5) rotate(180deg);
+} */
+@keyframes spin{
+    0%{
+        transform: translate(50px,50px) rotate(0deg);
+    }
+    100%{
+        transform: translate(50px,50px) rotate(360deg);
+    }
+}
