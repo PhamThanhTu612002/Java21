@@ -4,7 +4,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
-public class Main {
+public class Buoi2 {
     public static void main(String[] args) {
 
         double d = 9 / 5;

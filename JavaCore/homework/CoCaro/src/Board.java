@@ -104,7 +104,7 @@ public class Board extends JPanel {
                     return WIN;
                 } else if(this.matrix[i][j].getValue().equals(player) && this.matrix[i + 1][j + 1].getValue().equals(player) && this.matrix[i + 2][j + 2].getValue().equals(player) && this.matrix[i + 3][j + 3].getValue().equals(player) && this.matrix[i + 4][j + 4].getValue().equals(player)){
                     return WIN;
-                } else if(this.matrix[i][j].getValue().equals(player) && this.matrix[Math.abs(i-1)][Math.abs(j-1)].getValue().equals(player) && this.matrix[Math.abs(i-2)][Math.abs(j-2)].getValue().equals(player) && this.matrix[Math.abs(i-3)][Math.abs(j-3)].getValue().equals(player) && this.matrix[Math.abs(i-4)][Math.abs(j-4)].getValue().equals(player)) {
+                } else if(this.matrix[i][j].getValue().equals(player) && this.matrix[Math.abs(i+1)][Math.abs(j-1)].getValue().equals(player) && this.matrix[Math.abs(i+2)][Math.abs(j-2)].getValue().equals(player) && this.matrix[Math.abs(i+3)][Math.abs(j-3)].getValue().equals(player) && this.matrix[Math.abs(i+4)][Math.abs(j-4)].getValue().equals(player)) {
                     return WIN;
                 }
             }
