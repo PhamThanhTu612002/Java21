@@ -19,10 +19,7 @@ public class Mang2chieu {
             System.out.println("Nhâp số hàng k:");
             k = Integer.parseInt(sc.nextLine());
             int[][] mang2chieuB = new int[h][k];
-            if ( n != h && m != k){
-                System.out.println("Không thể thực hiện");
-                System.out.println("Mời nhập lại:");
-            }else {
+            if ( n == h && m == k){
                 System.out.println("Nhập ma trận A:");
                 for (int i = 0; i < n; i++) {
                     for (int j = 0; j < m; j++) {
@@ -50,6 +47,8 @@ public class Mang2chieu {
                 System.out.println(Arrays.deepToString(mang2chieuB));
                 System.out.println(Arrays.deepToString(mang2chieuC));
                 break;
+            }else {
+                System.out.println("Mời nhập lại!");
             }
         } while (true);
 
