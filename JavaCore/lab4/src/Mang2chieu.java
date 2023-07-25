@@ -57,7 +57,7 @@ public class Mang2chieu {
 //            }
 //        }
 //        System.out.println("Tổng các số vừa nhập là: " + tong);
-        
+
 //        int tong2 = 0;
 //        for (int i = 0; i < n; i++){
 //            for (int j = 0; j< m; j++){

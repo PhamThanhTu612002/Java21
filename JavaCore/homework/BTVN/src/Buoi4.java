@@ -17,8 +17,10 @@ public class Buoi4 {
         System.out.println(Arrays.toString(arr2));
         for (int i = 0; i<arr2.length;i++){
             if (i == 2){
-                System.out.println("Mời bạn sửa phần tử vị trí thứ 2:");
-                arr2[i] = Integer.parseInt(sc.nextLine());
+                System.out.println("Đổi vị trí 2 cho vị trí 3:");
+                int temp = arr2[i];
+                arr2[i] = arr2[i+1];
+                arr2[i+1] =temp;
             }
         }
         System.out.println(Arrays.toString(arr2));
