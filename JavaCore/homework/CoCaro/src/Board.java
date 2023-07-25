@@ -18,7 +18,7 @@ public class Board extends JPanel {
     private Image imageY;
     private EndGame endGame;
 
-    private Cell matrix[][] = new Cell[N][M];
+    private final Cell[][] matrix = new Cell[N][M];
     private String currentPlayer = Cell.EMPTY_VALUE;
 
 
