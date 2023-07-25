@@ -15,7 +15,7 @@ public class Buoi4 {
             }
         }
         System.out.println(Arrays.toString(arr2));
-        for (int i = 0; i<arr2.length;i++){
+        for (int i = 0; i < arr2.length;i++){
             if (i == 2){
                 System.out.println("Đổi vị trí 2 cho vị trí 3:");
                 int temp = arr2[i];
