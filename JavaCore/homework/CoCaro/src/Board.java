@@ -165,9 +165,11 @@ public class Board extends JPanel {
                 cells.setWidth(20);
                 cells.setHeight(20);
 
-                Color color = k%2==0 ? Color.WHITE:Color.lightGray;
+                Color color = Color.WHITE;
                 graphics2D.setColor(color);
                 graphics2D.fillRect(x,y,20,20);
+                graphics2D.setColor(Color.lightGray);
+                graphics2D.drawRect(x, y, 20, 20);
 
                 if (cells.getValue().equals(Cell.X_VALUE)){
                     Image image = imageX;
