@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        boolean isNumber = false;
         //bài 1
 //        Product product = new Product();
 //        //Input information
@@ -28,10 +29,26 @@ public class Main {
         employee.setName(sc.nextLine());
         System.out.println("Input Address:");
         employee.setAddress(sc.nextLine());
-        System.out.println("Input Age:");
-        employee.setAge(Integer.parseInt(sc.nextLine()));
-        System.out.println("Input Experience:");
-        employee.setExperience(Double.parseDouble(sc.nextLine()));
+
+        while (!isNumber) {
+            try {
+                System.out.println("Input Age:");
+                employee.setAge(Integer.parseInt(sc.nextLine()));
+                isNumber = true;
+            } catch (NumberFormatException e) {
+                System.out.println("Đây không phải là một số. Vui lòng nhập lại.");
+            }
+
+        }
+        while (isNumber){
+            try {
+                System.out.println("Input Experience:");
+                employee.setExperience(Double.parseDouble(sc.nextLine()));
+                isNumber = false;
+            }catch (NumberFormatException e){
+                System.out.println("Đây không phải là một số. Vui lòng nhập lại.");
+            }
+        }
         System.out.println("Input PlaceWork:");
         employee.setPlaceWork(sc.nextLine());
 
@@ -50,10 +67,25 @@ public class Main {
 //            employee.setName(sc.nextLine());
 //            System.out.println("Input Address:");
 //            employee.setAddress(sc.nextLine());
-//            System.out.println("Input Age:");
-//            employee.setAge(Integer.parseInt(sc.nextLine()));
-//            System.out.println("Input Experience:");
-//            employee.setExperience(Double.parseDouble(sc.nextLine()));
+//            while (!isNumber) {
+//            try {
+//                System.out.println("Input Age:");
+//                employee.setAge(Integer.parseInt(sc.nextLine()));
+//                isNumber = true;
+//            } catch (NumberFormatException e) {
+//                System.out.println("Đây không phải là một số. Vui lòng nhập lại.");
+//            }
+//
+//        }
+//        while (isNumber){
+//            try {
+//                System.out.println("Input Experience:");
+//                employee.setExperience(Double.parseDouble(sc.nextLine()));
+//                isNumber = false;
+//            }catch (NumberFormatException e){
+//                System.out.println("Đây không phải là một số. Vui lòng nhập lại.");
+//            }
+//        }
 //            System.out.println("Input PlaceWork:");
 //            employee.setPlaceWork(sc.nextLine());
 //
