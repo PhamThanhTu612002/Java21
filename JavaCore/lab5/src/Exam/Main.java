@@ -7,6 +7,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         boolean isNumber = false;
+
         //bài 1
 //        Product product = new Product();
 //        //Input information
@@ -40,7 +41,6 @@ public class Main {
             } catch (NumberFormatException e) {
                 System.out.println("Đây không phải là một số. Vui lòng nhập lại.");
             }
-
         }
         while (isNumber){
             try {
@@ -81,7 +81,6 @@ public class Main {
 //            } catch (NumberFormatException e) {
 //                System.out.println("Đây không phải là một số. Vui lòng nhập lại.");
 //            }
-//
 //        }
 //        while (isNumber){
 //            try {
