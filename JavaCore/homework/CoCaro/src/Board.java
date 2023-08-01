@@ -9,8 +9,8 @@ import java.awt.event.MouseEvent;
 import java.util.Objects;
 
 public class Board extends JPanel {
-    public static final int N=101;
-    public static final int M=101;
+    public static final int N=100;
+    public static final int M=100;
     public static final int DRAW = 0;
     public static final int WIN = 1;
     public static final int NORMAL = 2;

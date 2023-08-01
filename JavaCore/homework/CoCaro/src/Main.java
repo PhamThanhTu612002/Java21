@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -12,6 +14,7 @@ public class Main {
     private static JLabel lbTime;
     private static Board board;
     private static JButton btbStart;
+    private static DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
     public static void main(String[] args) {
         board = new Board();
         board.setEndGame(new EndGame(){
@@ -27,11 +30,6 @@ public class Main {
             }
         });
 
-//        if (choice==0){
-//            board = new Board(Cell.X_VALUE);
-//        }else {
-//            board = new Board(Cell.O_VALUE);
-//        }
 
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         //Boxlayout,Flowlayout,Borderlayout
@@ -41,17 +39,16 @@ public class Main {
 
         board.setPreferredSize(new Dimension(1200,700));
 
-        FlowLayout flowLayout = new FlowLayout(FlowLayout.CENTER,0,0);
         JPanel bottomJp = new JPanel();
-        bottomJp.setLayout(flowLayout);
-        bottomJp.setBackground(Color.YELLOW);
-
+        bottomJp.setPreferredSize(new Dimension(jPanel.getWidth(), 40));
         btbStart = new JButton("Start");
         //Timer & TimerTask
-        lbTime = new JLabel("00:00");
+        lbTime = new JLabel("00:00:00");
 
         bottomJp.add(lbTime);
         bottomJp.add(btbStart);
+
+
         btbStart.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -70,7 +67,7 @@ public class Main {
         JFrame jFrame = new JFrame("Cờ caro");
         jFrame.setSize(1200,700);
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jFrame.setResizable(true);
+        jFrame.setResizable(false);
         jFrame.add(jPanel);
 
         jFrame.setLocation(150,50);
@@ -87,16 +84,18 @@ public class Main {
         System.out.println(currentPlayer);
 
         //Đếm ngược
-        sec =0;
-        lbTime.setText("0:0");
+
+        sec = 0;
+        lbTime.setText("00:00:00");
         timer.cancel();
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 sec++;
-                String value = sec/60 + ":" + sec%60;
-                lbTime.setText(value);
+                LocalTime time = LocalTime.ofSecondOfDay(sec);
+                String formattedTime = time.format(timeFormatter);
+                lbTime.setText(formattedTime);
             }
         }, 1000, 1000);
         btbStart.setText("Stop");
@@ -105,7 +104,7 @@ public class Main {
         btbStart.setText("Start");
 
         sec=0;
-        lbTime.setText("0:0");
+        lbTime.setText("00:00:00");
 
         timer.cancel();
         timer=new Timer();

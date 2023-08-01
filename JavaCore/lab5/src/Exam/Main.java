@@ -34,7 +34,9 @@ public class Main {
             try {
                 System.out.println("Input Age:");
                 employee.setAge(Integer.parseInt(sc.nextLine()));
-                isNumber = true;
+                if (employee.getAge()>0){
+                    isNumber = true;
+                }
             } catch (NumberFormatException e) {
                 System.out.println("Đây không phải là một số. Vui lòng nhập lại.");
             }
@@ -44,7 +46,9 @@ public class Main {
             try {
                 System.out.println("Input Experience:");
                 employee.setExperience(Double.parseDouble(sc.nextLine()));
-                isNumber = false;
+                if (employee.getExperience()>0){
+                    isNumber = false;
+                }
             }catch (NumberFormatException e){
                 System.out.println("Đây không phải là một số. Vui lòng nhập lại.");
             }
@@ -71,7 +75,9 @@ public class Main {
 //            try {
 //                System.out.println("Input Age:");
 //                employee.setAge(Integer.parseInt(sc.nextLine()));
-//                isNumber = true;
+//                if (employee.getAge()>0){
+//                    isNumber = true;
+//                }
 //            } catch (NumberFormatException e) {
 //                System.out.println("Đây không phải là một số. Vui lòng nhập lại.");
 //            }
@@ -81,7 +87,9 @@ public class Main {
 //            try {
 //                System.out.println("Input Experience:");
 //                employee.setExperience(Double.parseDouble(sc.nextLine()));
-//                isNumber = false;
+//                if (employee.getExperience()>0){
+//                    isNumber = false;
+//                }
 //            }catch (NumberFormatException e){
 //                System.out.println("Đây không phải là một số. Vui lòng nhập lại.");
 //            }
