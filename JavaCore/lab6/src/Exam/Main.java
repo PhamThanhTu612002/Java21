@@ -10,5 +10,6 @@ public class Main {
         System.out.println("------Rectangle-----");
         Rectangle rectangle = new Rectangle(20,10);
         rectangle.printInfor();
+
     }
 }
