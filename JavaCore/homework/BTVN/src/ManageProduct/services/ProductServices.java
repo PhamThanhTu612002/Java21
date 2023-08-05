@@ -2,6 +2,7 @@ package ManageProduct.services;
 
 import ManageProduct.entities.Product;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class ProductServices {
@@ -118,5 +119,29 @@ public class ProductServices {
             default -> {
             }
         }
+    }
+    public void sortByPriceAscending(){
+        for (int i = 0; i < products.length; i++){
+            for (int j = i; j < products.length; j++){
+                if (products[i].getPrice() > products[j].getPrice()){
+                    Product pr = products[i];
+                    products[i] = products[j];
+                    products[j] = pr;
+                }
+            }
+        }
+        System.out.println(Arrays.toString(products));
+    }
+    public void sortByPriceDecreasing(){
+        for (int i = 0; i < products.length; i++){
+            for (int j = i; j < products.length; j++){
+                if (products[i].getPrice() < products[j].getPrice()){
+                    Product pr = products[i];
+                    products[i] = products[j];
+                    products[j] = pr;
+                }
+            }
+        }
+        System.out.println(Arrays.toString(products));
     }
 }

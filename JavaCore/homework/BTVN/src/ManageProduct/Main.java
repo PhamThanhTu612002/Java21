@@ -59,9 +59,16 @@ public class Main {
                     }
                     break;
                 case 6:
+                    if(ProductServices.products == null){
+                        System.out.println("Chưa có sản phẩm nào!");
+                    }else {
+                        System.out.println("Giá tăng dần:");
+                        services.sortByPriceAscending();
+                        System.out.println("Giá giảm dần:");
+                        services.sortByPriceDecreasing();
+                    }
                     break;
                 default:
-                    System.out.println("Vui lòng nhập lại!");
                     break;
             }
         }while (choice > 0 && choice < 7);
