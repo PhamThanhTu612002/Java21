@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="af39eb52-c4bc-40cc-97ef-6f804eef735d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/JavaCore/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/JavaCore/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaCore/homework/BTVN/BTVN.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaCore/homework/CoCaro/CoCaro.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaCore/lab1/lab1.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaCore/lab2/lab2.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaCore/lab3/lab3.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaCore/lab4/lab4.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaCore/lab5/lab5.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaCore/lab6/lab6.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaCore/lab6/src/Exam/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaCore/lab6/src/Exam/Main.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="2TO3VSXdQ4EZDxeVEdX1wSLCs0x" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/Users/PhamThanhTu/OneDrive/Máy tính/Java21/JavaCore",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="af39eb52-c4bc-40cc-97ef-6f804eef735d" name="Changes" comment="" />
+      <created>1690900322481</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1690900322481</updated>
+      <workItem from="1690900323531" duration="18000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
