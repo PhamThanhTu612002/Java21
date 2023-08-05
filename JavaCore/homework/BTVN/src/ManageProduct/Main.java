@@ -27,20 +27,36 @@ public class Main {
                     System.out.println(Arrays.toString(services.listProduct(n)));
                     break;
                 case 2:
-                    System.out.println("Nhập tên sản phẩm cần tìm:");
-                    String name = sc.nextLine();
-                    services.searchedByName(name);
+                    if(ProductServices.products == null){
+                        System.out.println("Chưa có sản phẩm nào!");
+                    }else {
+                        System.out.println("Nhập tên sản phẩm cần tìm:");
+                        String name = sc.nextLine();
+                        services.searchedByName(name);
+                    }
                     break;
                 case 3:
-                    System.out.println("Nhập ID sản phẩm cần tìm:");
-                    int idSearch = Integer.parseInt(sc.nextLine());
-                    System.out.println(services.searchedById(idSearch));
+                    if(ProductServices.products == null){
+                        System.out.println("Chưa có sản phẩm nào!");
+                    }else {
+                        System.out.println("Nhập ID sản phẩm cần tìm:");
+                        int idSearch = Integer.parseInt(sc.nextLine());
+                        System.out.println(services.searchedById(idSearch));
+                    }
                     break;
                 case 4:
+                    if(ProductServices.products == null){
+                        System.out.println("Chưa có sản phẩm nào!");
+                    }else {
                     services.productQuantityUnder5();
+                    }
                     break;
                 case 5:
+                    if(ProductServices.products == null){
+                        System.out.println("Chưa có sản phẩm nào!");
+                    }else {
                     services.searchedByPrice();
+                    }
                     break;
                 case 6:
                     break;

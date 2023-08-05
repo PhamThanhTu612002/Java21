@@ -11,7 +11,7 @@ public class ProductServices {
 
     public static Product[] products ;
     public Product[] listProduct(int n) {
-
+        boolean checkNum = false;
         while (!isFalse) {
             if (n > 0) {
                 products = new Product[n];
@@ -23,10 +23,25 @@ public class ProductServices {
                     products[i].setName(sc.nextLine());
                     System.out.println("Nhập mô tả: ");
                     products[i].setDescription(sc.nextLine());
-                    System.out.println("Nhập số lượng: ");
-                    products[i].setQuantity(Integer.parseInt(sc.nextLine()));
-                    System.out.println("Nhập giá bán: ");
-                    products[i].setPrice(Double.parseDouble(sc.nextLine()));
+
+                    while (!checkNum){
+                        System.out.println("Nhập số lượng: ");
+                        products[i].setQuantity(Integer.parseInt(sc.nextLine()));
+                        if (products[i].getQuantity() >= 0){
+                            checkNum = true;
+                        }else {
+                            System.out.println("Số lượng phải >= 0");
+                        }
+                    }
+                    while (checkNum){
+                        System.out.println("Nhập giá bán: ");
+                        products[i].setPrice(Double.parseDouble(sc.nextLine()));
+                        if (products[i].getQuantity() >= 0){
+                            checkNum = false;
+                        }else {
+                            System.out.println("Số lượng phải >= 0");
+                        }
+                    }
                     System.out.println("Nhập đơn vị tính: ");
                     products[i].setUnit(sc.nextLine());
                 }
