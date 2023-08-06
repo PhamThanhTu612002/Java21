@@ -55,15 +55,18 @@ public class ProductServices {
     }
 
     public void searchedByName(String nameSearched){
+        int count = 0;
         for (Product product : products) {
             if (products != null){
-                if (product.getName().equalsIgnoreCase(nameSearched)) {
+                if (product.getName().contains(nameSearched)) {
+                    count++;
                     System.out.println(product);
-                }else {
-                    System.out.println("Chưa nhập sản phẩm này!");
                 }
             }else {
                 System.out.println("Chưa nhập sản phẩm nào cả!");
+            }
+            if (count <= 0){
+                System.out.println("Không có sản phẩm nào tên "+ nameSearched);
             }
         }
     }
@@ -74,8 +77,10 @@ public class ProductServices {
                 System.out.println("Hãy nhập số lượng mới: ");
                 product.setQuantity(Integer.parseInt(sc.nextLine()));
                 System.out.println("Cập nhật số lượng thành công!");
+                break;
             }
         }
+
         return products[idSearched-1];
     }
 
