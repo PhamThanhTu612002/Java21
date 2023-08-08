@@ -21,7 +21,7 @@ public class SummonRiftService {
                 teams.add(teamService.createTeam(sc, figures1, figureService));
                 figures1.removeAll(figures);
             }
-        };
+        }
         LocalTime time = LocalTime.now();
         return new SummonRift(teams,time);
     }
