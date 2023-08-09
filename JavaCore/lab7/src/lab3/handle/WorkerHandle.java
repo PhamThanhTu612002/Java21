@@ -8,7 +8,12 @@ public class WorkerHandle {
         do {
             System.out.println("Enter age: ");
             try {
-                return Integer.parseInt(scanner.nextLine());
+                int age = Integer.parseInt(scanner.nextLine());
+                if (age >= 18){
+                    return age;
+                }else {
+                    System.out.println("Nhập lại tuổi!");
+                }
             }catch (Exception e){
                 System.out.println("Try again!");
             }
@@ -18,7 +23,12 @@ public class WorkerHandle {
         do {
             System.out.println("Enter salary: ");
             try {
-                return Double.parseDouble(scanner.nextLine());
+                double salary = Double.parseDouble(scanner.nextLine());
+                if (salary > 0){
+                    return salary;
+                }else {
+                    System.out.println("Nhập lại lương!");
+                }
             }catch (Exception e){
                 System.out.println("Try again!");
             }

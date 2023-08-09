@@ -21,7 +21,5 @@ public class Main {
             choice = menu.selectMenu(sc);
             menu.menuNavigation(choice,sc,workers,workerService,historySalaries);
         }while (choice < 5 && choice > 0);
-
-
     }
 }
