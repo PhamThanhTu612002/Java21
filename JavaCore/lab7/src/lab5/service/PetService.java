@@ -50,6 +50,8 @@ public class PetService {
                         newIndex = random.nextInt(pets.size());
                     }while (newIndex == randomIndex);
                     System.out.println(pets.get(newIndex));
+                    System.out.println("Bạn có muốn tìm pet khác ko(Y/N) ?");
+                    choice = scanner.nextLine();
                     break;
                 case "N":
                     isFalse = true;
