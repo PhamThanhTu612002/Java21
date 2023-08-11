@@ -35,14 +35,15 @@ public class WorkerService {
                         System.out.println("Không có id này!");
                         break;
                     }else {
-                        worker.setSalary(worker.getSalary() + newSalary);
                         HistorySalary historySalary;
                         if (newSalary > 0){
-                            historySalary = new HistorySalary(worker,"UP");
+                            historySalary = new HistorySalary(worker,"UP",newSalary + worker.getSalary());
                             historySalaries.add(historySalary);
+                            worker.setSalary(newSalary+worker.getSalary());
                         }else{
-                            historySalary = new HistorySalary(worker,"DOWN");
+                            historySalary = new HistorySalary(worker,"DOWN",newSalary + worker.getSalary());
                             historySalaries.add(historySalary);
+                            worker.setSalary(newSalary+worker.getSalary());
                         }
                     }
                 }while (!worker.getId().equals(searchedID));

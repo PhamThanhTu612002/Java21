@@ -1,25 +1,39 @@
 package handle;
 
 import entities.User;
+import utils.RegexUser;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public class HandleRegisterUser {
+public class HandleUser {
+    RegexUser regexUser = new RegexUser();
+    public int handleChoice(Scanner sc){
+        do {
+            System.out.println("Nhập lựa chọn:");
+            try {
+                return Integer.parseInt(sc.nextLine());
+            }catch (Exception e){
+                System.out.println("Vui lòng nhập lại lựa chọn!");
+            }
+        }while (true);
+    }
     public String handleUserName(Scanner sc,ArrayList<User> users){
         do {
             System.out.println("Mời bạn nhập username:");
             try {
-                String userName = sc.nextLine();
+                int count = 0;
+                String username = sc.nextLine();
                 for (User user : users){
-                    if (userName.equals(user.getUserName())){
-                        System.out.println("Username đã tồn tại");
-                        break;
-                    }else {
-                        return userName;
+                    if (username.equals(user.getUserName())){
+                        count++;
                     }
+                }
+                if (count == 0){
+                    return username;
+                }else {
+                    System.out.println("Username đã tồn tại!");
                 }
             }catch (Exception e){
                 System.out.println("Mời bạn nhập lại!");
@@ -31,21 +45,17 @@ public class HandleRegisterUser {
             System.out.println("Mời bạn nhập email:");
             try {
                 String email = sc.nextLine();
-                // Định dạng regex cho email
-
-                String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
-                // Tạo đối tượng Pattern từ regex
-
-                Pattern pattern = Pattern.compile(regex);
-                // Tạo đối tượng Matcher để so khớp chuỗi với regex
-                Matcher matcher = pattern.matcher(email);
+                Matcher matcher = regexUser.regexUserName(sc,email);
+                int count = 0;
                 for (User user : users){
                     if (!matcher.matches() || email.equals(user.getEmail())){
-                        System.out.println("Email chưa hợp lệ hoặc đã tồn tại!");
-                        break;
-                    }else {
-                        return email;
+                        count++;
                     }
+                }
+                if (count == 0){
+                    return email;
+                }else {
+                    System.out.println("Email đã tồn tại hoặc sai định dạng!");
                 }
             }catch (Exception e){
                 System.out.println("Mời bạn nhập lại!");
@@ -57,16 +67,7 @@ public class HandleRegisterUser {
             System.out.println("Mời bạn nhập password:");
             try {
                 String password = sc.nextLine();
-
-                // Định dạng regex cho mật khẩu
-                String regex = "^(?=.*[A-Z])(?=.*[.,-_;])(?=.*[a-zA-Z0-9]).{7,15}$";
-
-                // Tạo đối tượng Pattern từ regex
-                Pattern pattern = Pattern.compile(regex);
-
-                // Tạo đối tượng Matcher để so khớp chuỗi với regex
-                Matcher matcher = pattern.matcher(password);
-
+                Matcher matcher = regexUser.regexPassword(sc,password);
                 if (!matcher.matches()){
                     System.out.println("Password không hợp lệ!");
                 }else {
@@ -77,4 +78,5 @@ public class HandleRegisterUser {
             }
         }while (true);
     }
+
 }

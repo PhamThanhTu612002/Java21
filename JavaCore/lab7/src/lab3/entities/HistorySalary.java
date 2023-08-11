@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 public class HistorySalary {
     private Worker worker;
+    private double newSalary;
     private String status;
     private LocalDate date;
 
@@ -31,16 +32,27 @@ public class HistorySalary {
         this.date = date;
     }
 
-    public HistorySalary(Worker worker, String status) {
+    public double getNewSalary() {
+        return newSalary;
+    }
+
+    public void setNewSalary(double newSalary) {
+        this.newSalary = newSalary;
+    }
+
+    public HistorySalary(Worker worker, String status, double newSalary) {
         this.worker = worker;
         this.status = status;
         this.date = LocalDate.now();
+        this.newSalary = newSalary;
     }
 
     @Override
     public String toString() {
         return "HistorySalary{" +
-                "worker=" + worker +
+                "workerID=" + worker.getId() +
+                "workerName=" + worker.getName()+
+                ", newSalary=" + newSalary +
                 ", status='" + status + '\'' +
                 ", date=" + date +
                 '}';

@@ -49,4 +49,5 @@ public class WorkerHandle {
         } while (!isFalse);
         return newSalary;
     }
+
 }
