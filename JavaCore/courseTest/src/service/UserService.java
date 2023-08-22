@@ -5,35 +5,37 @@ import handle.HandleUser;
 import views.MenuUser;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Scanner;
 
 public class UserService {
     HandleUser handleUser = new HandleUser();
     MenuUser menuUser = new MenuUser();
 
-    public void homePage(Scanner sc,UserService userService, ArrayList<User> users){
+    public void homePage(Scanner sc, UserService userService, Map<String,User> userMap){
         boolean isFalse = false;
         do {
             menuUser.homePage();
             int choice = handleUser.handleChoice(sc);
             switch (choice) {
                 case 1 -> {
-                    userService.login(sc, users);
+                    userService.login(sc, userMap);
                     isFalse = true;
                 }
-                case 2 -> users.add(userService.registerNewUser(sc, users));
+                case 2 -> userService.registerNewUser(sc,userMap);
                 default -> {
                 }
             }
         }while (!isFalse);
     }
-    public User registerNewUser(Scanner sc, ArrayList<User> users){
-        String userName = handleUser.handleUserName(sc,users);
-        String email = handleUser.handleEmail(sc,users);
+    public Map<String, User> registerNewUser(Scanner sc, Map<String,User> userMap){
+        String userName = handleUser.handleUserName(sc,userMap);
+        String email = handleUser.handleEmail(sc,userMap);
         String passWord = handleUser.handlePassWord(sc);
-        return new User(userName,email,passWord);
+        userMap.put(userName,new User(userName,email,passWord));
+        return userMap;
     }
-    public void login(Scanner sc, ArrayList<User> users){
+    public void login(Scanner sc, Map<String,User> userMap){
         boolean isFalse = false;
         int count = 0;
         do {
@@ -42,16 +44,16 @@ public class UserService {
                 System.out.println("Password: ");
                 String password = sc.nextLine();
             try {
-                for (User user : users){
-                    successLogin(sc,users,user,username,password);
-                    loginAgain(sc,users,user,username,password);
-                    if (!username.equals(user.getUserName())){
+                for (Map.Entry<String, User> user : userMap.entrySet()){
+                    successLogin(sc,userMap,user.getValue(),username,password);
+                    loginAgain(sc,userMap,user.getValue(),username,password);
+                    if (!username.equals(user.getValue().getUserName())){
                         count++;
                     }
                 }
-                if (count == users.size()){
+                if (count == userMap.size()){
                     System.out.println("Kiểm tra lại username!");
-                    this.login(sc,users);
+                    this.login(sc,userMap);
                 }
                 isFalse = true;
             }catch (Exception e){
@@ -59,7 +61,7 @@ public class UserService {
             }
         }while (!isFalse);
     }
-    public void successLogin(Scanner sc,ArrayList<User>users,User user, String username, String password){
+    public void successLogin(Scanner sc,Map<String,User> userMap,User user, String username, String password){
         boolean isFalse = false;
         if (username.equals(user.getUserName()) && password.equals(user.getPassWord())){
             System.out.println("Đăng nhập thành công!");
@@ -67,43 +69,43 @@ public class UserService {
                 menuUser.mainMenu();
                 int choice = handleUser.handleChoice(sc);
                 switch (choice) {
-                    case 1 -> changeUsername(sc, users, user, handleUser);
-                    case 2 -> changeEmail(sc, users, user, handleUser);
+                    case 1 -> changeUsername(sc, userMap, user, handleUser);
+                    case 2 -> changeEmail(sc, userMap, user, handleUser);
                     case 3 -> changePassword(sc, user, handleUser);
                     case 4 -> {
                         System.out.println("Đăng xuất thành công!");
-                        this.homePage(sc, this, users);
+                        this.homePage(sc, this, userMap);
                     }
                     case 0 -> isFalse = true;
                 }
             }while (!isFalse);
         }
     }
-    public void loginAgain(Scanner sc,ArrayList<User>users,User user, String username, String password){
+    public void loginAgain(Scanner sc,Map<String,User> userMap,User user, String username, String password){
         if (username.equals(user.getUserName()) && !password.equals(user.getPassWord())){
             System.out.println("Sai mật khẩu!");
             menuUser.loginPage();
             int choice = handleUser.handleChoice(sc);
             switch (choice) {
-                case 1 -> this.login(sc, users);
+                case 1 -> this.login(sc, userMap);
                 case 2 -> {
-                    handleForgetPassword(sc, users, username);
-                    homePage(sc, this, users);
+                    handleForgetPassword(sc, userMap, username);
+                    homePage(sc, this, userMap);
                 }
             }
         }
     }
-    public void handleForgetPassword(Scanner sc, ArrayList<User> users,String username){
+    public void handleForgetPassword(Scanner sc, Map<String, User> userMap,String username){
         int count = 0;
         do {
             System.out.println("Xác nhận email: ");
             try {
                 String email = sc.nextLine();
-                for (User user : users){
-                    if (email.equals(user.getEmail()) && username.equals(user.getUserName())){
+                for (Map.Entry<String, User> user : userMap.entrySet()){
+                    if (email.equals(user.getValue().getEmail()) && username.equals(user.getValue().getUserName())){
                         System.out.println("Nhập mật khẩu mới: ");
                         String newPassword = handleUser.handlePassWord(sc);
-                        user.setPassWord(newPassword);
+                        user.getValue().setPassWord(newPassword);
                         System.out.println("Đổi mật khẩu thành công!");
                         count++;
                     }
@@ -116,14 +118,14 @@ public class UserService {
             }
         }while (count == 0);
     }
-    public void changeUsername(Scanner sc, ArrayList<User> users, User user, HandleUser handleUser){
-        String username = handleUser.handleUserName(sc,users);
+    public void changeUsername(Scanner sc, Map<String,User> userMap, User user, HandleUser handleUser){
+        String username = handleUser.handleUserName(sc,userMap);
         user.setUserName(username);
         System.out.println("Cập nhật username thành công!");
         System.out.println(user);
     }
-    public void changeEmail(Scanner sc, ArrayList<User> users, User user, HandleUser handleUser){
-        String email = handleUser.handleEmail(sc,users);
+    public void changeEmail(Scanner sc, Map<String,User> userMap, User user, HandleUser handleUser){
+        String email = handleUser.handleEmail(sc,userMap);
         user.setEmail(email);
         System.out.println("Cập nhật email thành công!");
         System.out.println(user);

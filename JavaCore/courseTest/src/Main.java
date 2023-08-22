@@ -1,9 +1,8 @@
 import data.UserData;
 import entities.User;
 import service.UserService;
-import views.MenuUser;
 
-import java.util.ArrayList;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
@@ -11,7 +10,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         UserData userData = new UserData();
         UserService userService = new UserService();
-        ArrayList<User> users = userData.listUser();
-        userService.homePage(sc,userService,users);
+        Map<String,User> userMap = userData.userMap();
+        userService.homePage(sc,userService,userMap);
     }
 }

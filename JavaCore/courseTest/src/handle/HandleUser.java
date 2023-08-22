@@ -4,6 +4,7 @@ import entities.User;
 import utils.RegexUser;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
@@ -19,14 +20,14 @@ public class HandleUser {
             }
         }while (true);
     }
-    public String handleUserName(Scanner sc,ArrayList<User> users){
+    public String handleUserName(Scanner sc, Map<String,User> userMap){
         do {
             System.out.println("Mời bạn nhập username:");
             try {
                 int count = 0;
                 String username = sc.nextLine();
-                for (User user : users){
-                    if (username.equals(user.getUserName())){
+                for (Map.Entry<String, User> user : userMap.entrySet()){
+                    if (username.equals(user.getValue().getUserName())){
                         count++;
                     }
                 }
@@ -40,15 +41,15 @@ public class HandleUser {
             }
         }while (true);
     }
-    public String handleEmail(Scanner sc,ArrayList<User> users){
+    public String handleEmail(Scanner sc,Map<String,User> userMap){
         do {
             System.out.println("Mời bạn nhập email:");
             try {
                 String email = sc.nextLine();
                 Matcher matcher = regexUser.regexUserName(sc,email);
                 int count = 0;
-                for (User user : users){
-                    if (!matcher.matches() || email.equals(user.getEmail())){
+                for (Map.Entry<String, User> user : userMap.entrySet()){
+                    if (!matcher.matches() || email.equals(user.getValue().getEmail())){
                         count++;
                     }
                 }

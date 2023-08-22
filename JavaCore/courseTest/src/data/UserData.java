@@ -3,11 +3,13 @@ package data;
 import entities.User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class UserData {
-    public ArrayList<User> listUser(){
-        ArrayList<User> listUser = new ArrayList<>();
+    public Map<String,User> userMap(){
+        Map<String , User> userMap = new HashMap<>();
         User user0 = new User("phamthanhtu612000","tutuduyduy0@gmail.com","Thanhtu612000");
         User user1 = new User("phamthanhtu612001","tutuduyduy1@gmail.com","Thanhtu612001");
         User user2 = new User("phamthanhtu612002","tutuduyduy2@gmail.com","Thanhtu612002");
@@ -18,17 +20,17 @@ public class UserData {
         User user7 = new User("phamthanhtu612007","tutuduyduy7@gmail.com","Thanhtu612007");
         User user8 = new User("phamthanhtu612008","tutuduyduy8@gmail.com","Thanhtu612008");
         User user9 = new User("phamthanhtu612009","tutuduyduy9@gmail.com","Thanhtu612009");
-        listUser.add(user0);
-        listUser.add(user1);
-        listUser.add(user2);
-        listUser.add(user3);
-        listUser.add(user4);
-        listUser.add(user5);
-        listUser.add(user6);
-        listUser.add(user7);
-        listUser.add(user8);
-        listUser.add(user9);
-        return  listUser;
+        userMap.put("phamthanhtu612000",user0);
+        userMap.put("phamthanhtu612001",user1);
+        userMap.put("phamthanhtu612002",user2);
+        userMap.put("phamthanhtu612003",user3);
+        userMap.put("phamthanhtu612004",user4);
+        userMap.put("phamthanhtu612005",user5);
+        userMap.put("phamthanhtu612006",user6);
+        userMap.put("phamthanhtu612007",user7);
+        userMap.put("phamthanhtu612008",user8);
+        userMap.put("phamthanhtu612009",user9);
+        return userMap;
     }
 
 }
