@@ -203,7 +203,6 @@ public class PlayGame implements Runnable {
 				count = 0;
 			}
 		}
-
 	}
 
 	private void runActor() {

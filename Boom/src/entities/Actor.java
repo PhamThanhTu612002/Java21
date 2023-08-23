@@ -12,7 +12,7 @@ public class Actor {
     public static final int DEAD = 0;
     public static final int BOMBER = 1;
     public static final int BOMB = 4;
-    protected int x, y, orient, width, height, runBomb;
+    protected int x, y, orient, type, speed, width, height, runBomb;
     public Image img;
 
     public int getX() {
@@ -38,6 +38,19 @@ public class Actor {
     public void setRunBomb(int runBomb) {
         this.runBomb = runBomb;
     }
+    public int getType() {
+        return type;
+    }
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        if (speed < 1) {
+            return;
+        }
+        this.speed = speed;
+    }
 
     public int getOrient() {
         return orient;
@@ -47,8 +60,8 @@ public class Actor {
     }
     public void drawActor(Graphics2D g2d) {
     };
-    public boolean move(int count, ArrayList<Box> arrBox){
-        if (count != 0){
+    public boolean move(int count, ArrayList<Box> arrBox, ArrayList<Bomb> arrBomb){
+        if (count % speed != 0){
             return true;
         }
         switch (orient){
@@ -57,6 +70,12 @@ public class Actor {
                     return false;
                 }
                 x = x - 1;
+                for (int i = 0; i < arrBomb.size(); i++){
+                    if (arrBomb.get(i).isImpactBombVsActor(this) == 1){
+                        x = x + 1;
+                        return false;
+                    }
+                }
                 for (int i = 0; i < arrBox.size(); i++){
                     int kq = arrBox.get(i).isImpactBoxVsActor(this);
                     if (kq != 0){
@@ -67,7 +86,7 @@ public class Actor {
                                 y = y -1;
                             }
                         }
-                        x += 1;
+                        x = x + 1;
                         return false;
                     }
                 }
@@ -77,6 +96,12 @@ public class Actor {
                     return false;
                 }
                 x = x + 1;
+                for (int i = 0; i < arrBomb.size(); i++){
+                    if (arrBomb.get(i).isImpactBombVsActor(this) == 1){
+                        x = x - 1;
+                        return false;
+                    }
+                }
                 for (int i = 0; i < arrBox.size(); i++){
                     int kq = arrBox.get(i).isImpactBoxVsActor(this);
                     if (kq != 0){
@@ -87,7 +112,7 @@ public class Actor {
                                 y = y -1;
                             }
                         }
-                        x -= 1;
+                        x = x - 1;
                         return false;
                     }
                 }
@@ -97,6 +122,12 @@ public class Actor {
                     return false;
                 }
                 y = y - 1;
+                for (int i = 0; i < arrBomb.size(); i++){
+                    if (arrBomb.get(i).isImpactBombVsActor(this) == 1){
+                        y = y + 1;
+                        return false;
+                    }
+                }
                 for (int i = 0; i < arrBox.size(); i++){
                     int kq = arrBox.get(i).isImpactBoxVsActor(this);
                     if (kq != 0){
@@ -107,7 +138,7 @@ public class Actor {
                                 x = x - 1;
                             }
                         }
-                        y += 1;
+                        y = y + 1;
                         return false;
                     }
                 }
@@ -117,6 +148,12 @@ public class Actor {
                     return false;
                 }
                 y = y + 1;
+                for (int i = 0; i < arrBomb.size(); i++){
+                    if (arrBomb.get(i).isImpactBombVsActor(this) == 1){
+                        y = y - 1;
+                        return false;
+                    }
+                }
                 for (int i = 0; i < arrBox.size(); i++){
                     int kq = arrBox.get(i).isImpactBoxVsActor(this);
                     if (kq != 0){
@@ -127,7 +164,7 @@ public class Actor {
                                 x = x -1;
                             }
                         }
-                        y -= 1;
+                        y = y - 1;
                         return false;
                     }
                 }

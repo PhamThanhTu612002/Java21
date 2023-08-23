@@ -11,8 +11,8 @@ import java.awt.*;
 public class KhoKho extends Bomber{
     private IDraw iDraw;
     private IOrient iOrient;
-    public KhoKho(int x, int y, int orient, int sizebomb, int quantityBomb) {
-        super(x, y, orient, sizebomb, quantityBomb);
+    public KhoKho(int x, int y, int type, int orient,int speed, int sizebomb, int quantityBomb) {
+        super(x, y,type, orient, speed, sizebomb, quantityBomb);
         this.runBomb = DISALLOW_RUN;
         this.heart = 3;
         this.score = 0;
@@ -57,5 +57,13 @@ public class KhoKho extends Bomber{
             return;
         }
         this.sizeBomb = sizeBomb;
+    }
+
+    @Override
+    public void setSpeed(int speed) {
+        if (speed < 1) {
+            return;
+        }
+        this.speed = speed;
     }
 }

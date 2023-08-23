@@ -10,10 +10,12 @@ public abstract class Bomber extends Actor {
 
     protected int sizeBomb, quantityBomb, status, score, heart;
 
-    public Bomber(int x, int y, int orient, int sizebomb, int quantityBomb) {
+    public Bomber(int x, int y, int type,  int orient, int speed, int sizebomb, int quantityBomb) {
         this.x = x;
         this.y = y;
         this.orient = orient;
+        this.type = type;
+        this.speed = speed;
         this.sizeBomb = sizebomb;
         this.quantityBomb = quantityBomb;
     }
@@ -65,10 +67,18 @@ public abstract class Bomber extends Actor {
         super.changeOrient(orient);
     }
     @Override
-    public boolean move(int count, ArrayList<Box> arrBox) {
+    public boolean move(int count, ArrayList<Box> arrBox, ArrayList<Bomb> arrBomb) {
         if (status == DEAD) {
             return false;
         }
-        return super.move(count, arrBox);
+        return super.move(count, arrBox,arrBomb);
+    }
+    public boolean isImpactBomberVsActor(Actor actor) {
+        if (status == DEAD) {
+            return false;
+        }
+        Rectangle rec1 = new Rectangle(x, y, width, height);
+        Rectangle rec2 = new Rectangle(actor.getX(), actor.getY(), actor.getWidth(), actor.getHeight());
+        return rec1.intersects(rec2);
     }
 }
