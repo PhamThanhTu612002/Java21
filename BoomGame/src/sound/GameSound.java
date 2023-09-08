@@ -29,7 +29,6 @@ public class GameSound {
 		if (instance == null) {
 			instance = new GameSound();
 		}
-
 		return instance;
 	}
 

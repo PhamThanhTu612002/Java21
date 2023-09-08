@@ -11,7 +11,7 @@ public class DrawBombBangImpl implements IDraw{
             BombBang bombBang = (BombBang) object;
             g2d.drawImage(bombBang.getImg_left(),bombBang.getX()+45-bombBang.getImg_left().getWidth(null),bombBang.getY(),null);
             g2d.drawImage(bombBang.getImg_right(),bombBang.getX(),bombBang.getY(),null);
-            g2d.drawImage(bombBang.getImg_up(),bombBang.getX(),bombBang.getY()+45-bombBang.getImg_up().getWidth(null),null);
+            g2d.drawImage(bombBang.getImg_up(),bombBang.getX(),bombBang.getY()+45-bombBang.getImg_up().getHeight(null),null);
             g2d.drawImage(bombBang.getImg_down(),bombBang.getX(),bombBang.getY(),null);
         }
     }

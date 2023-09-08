@@ -1,11 +1,6 @@
-45:45:1:/images/item_bomb.gif
-90:45:1:/images/item_bomb.gif
-90:495:1:/images/item_bomb.gif
-135:45:2:/images/item_bombsize.gif
-45:495:2:/images/item_bombsize.gif
-585:45:2:/images/item_bombsize.gif
-675:45:3:/images/item_shoe.gif
-45:90:3:/images/item_shoe.gif
-180:180:3:/images/item_shoe.gif
-180:495:1:/images/item_bomb.gif
-180:540:2:/images/item_bombsize.gif
+630:450:3:/images/item_shoe.gif
+630:495:3:/images/item_shoe.gif
+630:540:2:/images/item_bombsize.gif
+90:450:3:/images/item_shoe.gif
+90:540:2:/images/item_bombsize.gif
+90:495:2:/images/item_bombsize.gif

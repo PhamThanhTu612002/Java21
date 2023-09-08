@@ -1,10 +1,10 @@
 null:10600
 null:7100
+Hehe:7050
 Tú:6700
+Tú:6600
+Tú:6350
+Hehe:4150
 Tú dz:3500
 null:2300
 null:2200
-null:1400
-null:1000
-dsds:800
-Tu:800

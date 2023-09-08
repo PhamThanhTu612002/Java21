@@ -49,7 +49,6 @@ public class HightScoreControllerExt extends ControllerView {
 				GameSound.getIstance().getAudio(GameSound.BOMB).play();
 				view.myContainer.setShowMenu();
 			}
-
 		};
 	}
 }

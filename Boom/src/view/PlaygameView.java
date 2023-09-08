@@ -3,23 +3,29 @@ package view;
 import entities.Actor;
 import entities.Bomber;
 import entities.Manager;
+import sound.Sound;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.BitSet;
 import java.util.Observable;
 import java.util.Observer;
 
-public class PlaygameView implements Observer, Runnable {
+public class PlaygameView implements Runnable {
     public static boolean IS_RUNNING = true;
     protected JPanel playgameViewJp;
     private BitSet traceKey = new BitSet();
     private Manager mMagager;
+    JButton btbMenu;
     private int i = 0;
     private int count = 0;
     private int move = 0;
+    private int timeDead = 0;
+    private int timeLose = 0;
+    private int timeNext = 0;
     private Thread mytheard;
     private Container container;
 
@@ -31,8 +37,17 @@ public class PlaygameView implements Observer, Runnable {
         playgameViewJp.setFocusable(true);
         playgameViewJp.addKeyListener(keyAdapter);
         mytheard = new Thread(this);
-
         mytheard.start();
+        innitComps();
+    }
+    public void innitComps(){
+        btbMenu = new JButton();
+        btbMenu.setText("MENU");
+        btbMenu.setBackground(Color.BLUE);
+        btbMenu.setForeground(Color.YELLOW);
+        btbMenu.setFont(new Font("Arial",Font.BOLD,25));
+        btbMenu.setBounds(755,630,175,38);
+        playgameViewJp.add(btbMenu);
     }
     @SuppressWarnings("serial")
     private JPanel panelGame = new JPanel(){
@@ -44,9 +59,20 @@ public class PlaygameView implements Observer, Runnable {
             graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
             mMagager.draWBackground(graphics2D);
             mMagager.drawAllBomb(graphics2D);
+            mMagager.drawAllItem(graphics2D);
             mMagager.drawAllBox(graphics2D);
             mMagager.drawAllMonster(graphics2D);
             mMagager.getmBomber().drawActor(graphics2D);
+            mMagager.drawInfor(graphics2D);
+            if (mMagager.getStatus() == 1){
+                mMagager.drawDialog(graphics2D,1);
+            }
+            if (mMagager.getStatus() == 2){
+                mMagager.drawDialog(graphics2D,2);
+            }
+            if (mMagager.getStatus() == 3){
+                mMagager.drawDialog(graphics2D,3);
+            }
         }
     };
     private KeyAdapter keyAdapter = new KeyAdapter() {
@@ -96,7 +122,43 @@ public class PlaygameView implements Observer, Runnable {
                 runActor();
             }
             mMagager.setRunBomer();
+            mMagager.checkWin();
             mMagager.deadLineAllBomb();
+            mMagager.checkDead();
+            mMagager.checkImpactVsItem();
+
+            if (mMagager.getStatus() == 1) {
+                timeLose++;
+                if (timeLose == 2000) {
+                    mMagager.initManager();
+                    container.showMenu();
+                    timeLose = 0;
+                }
+            }
+
+            if (mMagager.getStatus() == 2) {
+                timeNext++;
+                if (timeNext == 2000) {
+                    mMagager.initManager();
+                    timeNext = 0;
+                }
+            }
+
+            if (mMagager.getStatus() == 3) {
+                timeNext++;
+                if (timeNext == 2000) {
+                    mMagager.initManager();
+                    container.showMenu();
+                    timeNext = 0;
+                }
+            }
+            if (mMagager.getmBomber().getStatus() == Bomber.DEAD){
+                timeDead++;
+                if (timeDead == 2000){
+                mMagager.setNewBomb();
+                timeDead = 0;
+                }
+            }
             if (move == 0) {
                 mMagager.changeOrientAll();
                 move = 5000;
@@ -112,19 +174,25 @@ public class PlaygameView implements Observer, Runnable {
         }
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-    }
     public Manager getmMagager() {
         return mMagager;
     }
     private void runActor() {
         i++;
         if (i == 200) {
+            Sound.getInstance().getAudio(Sound.MOVE).start();
+            Sound.getInstance().getAudio(Sound.MOVE).loop(2);
             i = 0;
         }
     }
     public void chooseActor() {
         mMagager = new Manager();
+    }
+    public void addPlayGameListener(ActionListener actionListener) {
+        btbMenu.addActionListener(actionListener);
+    }
+
+    public JButton getBtbMenu() {
+        return btbMenu;
     }
 }

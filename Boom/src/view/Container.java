@@ -1,5 +1,7 @@
 package view;
 
+import sound.Sound;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -15,6 +17,7 @@ public class Container {
     private MenuView menuView;
     private OptionView optionView;
     private PlaygameView playgameView;
+    private HighScoreView highScoreView;
 
 
     public Container(MainGameView gameView) {
@@ -28,10 +31,15 @@ public class Container {
         containerJp.add(optionView.optionViewJp, TAG_OPTION);
         playgameView = new PlaygameView(this);
         containerJp.add(playgameView.playgameViewJp, TAG_PLAYGAME);
+        highScoreView = new HighScoreView();
+        containerJp.add(highScoreView.highScoreJp,TAG_HIGHTSCORE);
     }
     public void showMenu(){
         cardLayout.show(this.containerJp, TAG_MENU);
         menuView.menuViewJp.requestFocus();
+        Sound.getInstance().stop();
+        Sound.getInstance().getAudio(Sound.MENU).start();
+        Sound.getInstance().getAudio(Sound.MENU).loop(10);
     }
     public void showOption(){
         cardLayout.show(this.containerJp, TAG_OPTION);
@@ -42,6 +50,10 @@ public class Container {
         cardLayout.show(this.containerJp, TAG_PLAYGAME);
         playgameView.playgameViewJp.requestFocus();
     }
+    public void showHighScore(){
+        cardLayout.show(this.containerJp, TAG_HIGHTSCORE);
+        highScoreView.highScoreJp.requestFocus();
+    }
 
     public MenuView getMenu() {
         return menuView;
@@ -51,5 +63,9 @@ public class Container {
     }
     public PlaygameView getPlaygameView(){
         return playgameView;
+    }
+
+    public HighScoreView getHighScoreView() {
+        return highScoreView;
     }
 }

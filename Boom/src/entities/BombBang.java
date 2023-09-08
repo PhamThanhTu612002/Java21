@@ -31,7 +31,7 @@ public class BombBang {
                 if (isImpactBox(x, y, (i+1)*45,45,arrBox.get(j))){
                     tmp_right = 1;
                 }
-                if (isImpactBox(x, y- (45*i), 45,(i+1)*45,arrBox.get(j))){
+                if (isImpactBox(x, y - (45*i), 45,(i+1)*45,arrBox.get(j))){
                     tmp_up = 1;
                 }
                 if (isImpactBox(x,y,45,(i+1)*45,arrBox.get(j))){
@@ -39,16 +39,16 @@ public class BombBang {
                 }
             }
             if (tmp_left == 0){
-                setImage(Bomber.LEFT,size+1);
+                setImage(Bomber.LEFT,i+1);
             }
             if (tmp_right == 0){
-                setImage(Bomber.RIGHT,size+1);
+                setImage(Bomber.RIGHT,i+1);
             }
             if (tmp_up == 0){
-                setImage(Bomber.UP,size+1);
+                setImage(Bomber.UP,i+1);
             }
             if (tmp_down == 0){
-                setImage(Bomber.DOWN,size+1);
+                setImage(Bomber.DOWN,i+1);
             }
         }
     }
@@ -58,7 +58,7 @@ public class BombBang {
     }
     public boolean isImpactBox(int x, int y, int width, int height, Box box){
         Rectangle rec1 = new Rectangle(x,y,width,height);
-        Rectangle rec2 = new Rectangle(box.x,box.y,box.width,box.height);
+        Rectangle rec2 = new Rectangle(box.getX(),box.getY(),box.getWidth(),box.getHeight());
         return rec1.intersects(rec2);
     }
     public void setImage(int orient, int size){
@@ -78,40 +78,31 @@ public class BombBang {
             default:break;
         }
     }
-    public boolean isImpactBombVsActor(Actor actor){
+    public boolean isImpactBombBangVsActor(Actor actor){
         Rectangle rec1 = new Rectangle(x + 45 - img_left.getWidth(null)+5,y+5,img_left.getWidth(null)-5,
                 img_left.getHeight(null)-10);
         Rectangle rec2 = new Rectangle(x,y+5,img_right.getWidth(null)-5,img_right.getHeight(null)-10);
         Rectangle rec3 = new Rectangle(x+5, y+45 - img_up.getHeight(null)+5,img_up.getWidth(null)-5,
                 img_right.getHeight(null)-10);
-        Rectangle rec4 = new Rectangle(x+5,y,img_down.getWidth(null) -10,img_up.getHeight(null)-5);
+        Rectangle rec4 = new Rectangle(x+5,y,img_down.getWidth(null) -10,img_down.getHeight(null)-5);
         Rectangle rec5 = new Rectangle(actor.getX(),actor.getY(),actor.getWidth(),actor.getHeight());
         if (rec5.intersects(rec1) || rec5.intersects(rec2) ||rec5.intersects(rec3) ||rec5.intersects(rec4)){
             return true;
         }
         return false;
     }
-    public boolean isImpactBombVsBomb(Bomb bomb){
-        Rectangle rec1 = new Rectangle(x+45 - img_left.getWidth(null),y,img_left.getWidth(null),img_left.getHeight(null));
-        Rectangle rec2 = new Rectangle(x,y,img_right.getWidth(null),img_right.getHeight(null));
-        Rectangle rec3 = new Rectangle(x, y+ 45,img_up.getHeight(null),img_up.getWidth(null));
-        Rectangle rec4 = new Rectangle(x,y,img_down.getWidth(null),img_down.getHeight(null));
-        Rectangle rec5 = new Rectangle(bomb.getX(),bomb.getY(),bomb.getWidth(),bomb.getHeight());
-        if (rec5.intersects(rec1) ||rec5.intersects(rec2) ||rec5.intersects(rec3) ||rec5.intersects(rec4)){
-            return true;
-        }
-        return false;
-    }
-    public boolean isImpactBombVsBox(Box box){
+    public boolean isImpactBombBangVsBox(Box box){
         if (box.getType() == Box.DISALLROW_BANG){
             return false;
         }
-        Rectangle rec1 = new Rectangle(x+45 - img_left.getWidth(null),y,img_left.getWidth(null),img_left.getHeight(null));
+        Rectangle rec1 = new Rectangle(x + 45 - img_left.getWidth(null),y,img_left.getWidth(null),
+                img_left.getHeight(null));
         Rectangle rec2 = new Rectangle(x,y,img_right.getWidth(null),img_right.getHeight(null));
-        Rectangle rec3 = new Rectangle(x, y + 45,img_up.getHeight(null),img_up.getWidth(null));
+        Rectangle rec3 = new Rectangle(x, y + 45 - img_up.getHeight(null),img_up.getWidth(null),
+                img_up.getHeight(null));
         Rectangle rec4 = new Rectangle(x,y,img_down.getWidth(null),img_down.getHeight(null));
         Rectangle rec5 = new Rectangle(box.getX(),box.getY(),box.getWidth(),box.getHeight());
-        if (rec5.intersects(rec1) ||rec5.intersects(rec2) ||rec5.intersects(rec3) ||rec5.intersects(rec4)){
+        if (rec5.intersects(rec1) || rec5.intersects(rec2) || rec5.intersects(rec3) || rec5.intersects(rec4)){
             return true;
         }
         return false;

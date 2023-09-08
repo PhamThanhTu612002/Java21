@@ -45,3 +45,9 @@
 540:270:0:/images/boxgo2.png
 585:270:0:/images/boxgo2.png
 630:270:0:/images/boxgo2.png
+630:540:0:/images/boxgo2.png
+630:495:0:/images/boxgo2.png
+630:450:0:/images/boxgo2.png
+90:540:0:/images/boxgo2.png
+90:495:0:/images/boxgo2.png
+90:450:0:/images/boxgo2.png
