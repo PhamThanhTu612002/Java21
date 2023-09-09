@@ -1,6 +1,7 @@
 package entities;
 
 import sound.Sound;
+import view.Container;
 import view.MainGameView;
 
 import javax.swing.*;
@@ -342,7 +343,7 @@ public class Manager {
             }
         }
     }
-    public void checkWin(){
+    public void checkWin(Container container){
         if (mBomber.getHeart() == 0){
             round = 1;
             status = 1;
@@ -354,11 +355,13 @@ public class Manager {
                 status = 3;
                 Sound.getInstance().stop();
                 Sound.getInstance().getAudio(Sound.WIN).start();
-                saveScore();
+                saveScore(container);
             }
             mBomber.setScore(mBomber.getScore());
             status = 2;
         }
+
+
     }
     public void setNewBomb(){
         switch (round){
@@ -368,14 +371,34 @@ public class Manager {
             default:break;
         }
     }
-    public void saveScore(){
-        if (arrayHighScore.size() < 10){
+    public void saveScore(Container container){
+        // Save user win
+        String name = JOptionPane.showInputDialog(null,"Hãy nhập tên của bạn: ");
+        if (name == null || name.trim().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Bạn phải nhập tên.");
+        }else {
+            HighScore score = new HighScore(name,mBomber.getScore());
+            arrayHighScore.add(score);
+            try {
+                FileOutputStream fileOutputStream = new FileOutputStream("src/highscore/HighScore.txt");
+                for (HighScore highScore : arrayHighScore) {
+                    String infor = highScore.getName() + ":" + highScore.getScore() + "\n";
+                    fileOutputStream.write(infor.getBytes());
+                }
+                fileOutputStream.close();
+                container.showMenu();
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+       /* if (arrayHighScore.size() < 10){
             String name = JOptionPane.showInputDialog(null,"Hãy nhập tên của bạn: ");
             if (name == null || name.trim().isEmpty()){
                 JOptionPane.showMessageDialog(null, "Bạn phải nhập tên.");
             }else {
                 HighScore score = new HighScore(name,mBomber.getScore());
                 arrayHighScore.add(score);
+
             }
         }else if (mBomber.getScore() >= arrayHighScore.get(arrayHighScore.size()-1).getScore()){
             String name = JOptionPane.showInputDialog(null,"Hãy nhập tên của bạn: ");
@@ -385,8 +408,8 @@ public class Manager {
                 HighScore score = new HighScore(name,mBomber.getScore());
                 arrayHighScore.add(score);
             }
-        }
-        arrayHighScore.sort(new Comparator<HighScore>() {
+        }*/
+        /*arrayHighScore.sort(new Comparator<HighScore>() {
             @Override
             public int compare(HighScore o1, HighScore o2) {
                 if (o1.getScore() < o2.getScore()){
@@ -402,8 +425,8 @@ public class Manager {
         });
         if (arrayHighScore.size() > 10){
             arrayHighScore.remove(arrayHighScore.size()-1);
-        }
-        try {
+        }*/
+        /*try {
             FileOutputStream fileOutputStream = new FileOutputStream("src/highscore/HighScore.txt");
             for (HighScore highScore : arrayHighScore) {
                 String infor = highScore.getName() + ":" + highScore.getScore() + "\n";
@@ -412,7 +435,7 @@ public class Manager {
             fileOutputStream.close();
         }catch (IOException e){
             e.printStackTrace();
-        }
+        }*/
     }
     public ArrayList<Box> getArrBox() {
         return arrBox;

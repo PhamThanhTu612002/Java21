@@ -122,10 +122,11 @@ public class PlaygameView implements Runnable {
                 runActor();
             }
             mMagager.setRunBomer();
-            mMagager.checkWin();
+
             mMagager.deadLineAllBomb();
             mMagager.checkDead();
             mMagager.checkImpactVsItem();
+            mMagager.checkWin(container);
 
             if (mMagager.getStatus() == 1) {
                 timeLose++;
@@ -137,11 +138,7 @@ public class PlaygameView implements Runnable {
             }
 
             if (mMagager.getStatus() == 2) {
-                timeNext++;
-                if (timeNext == 2000) {
-                    mMagager.initManager();
-                    timeNext = 0;
-                }
+                mMagager.initManager();
             }
 
             if (mMagager.getStatus() == 3) {
