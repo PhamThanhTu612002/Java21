@@ -379,6 +379,23 @@ public class Manager {
         }else {
             HighScore score = new HighScore(name,mBomber.getScore());
             arrayHighScore.add(score);
+            arrayHighScore.sort(new Comparator<HighScore>() {
+                @Override
+                public int compare(HighScore o1, HighScore o2) {
+                    if (o1.getScore() < o2.getScore()){
+                        return 1;
+                    }else {
+                        if (o1.getScore() == o2.getScore()){
+                            return 0;
+                        }else {
+                            return -1;
+                        }
+                    }
+                }
+            });
+            if (arrayHighScore.size() > 10){
+                arrayHighScore.remove(arrayHighScore.size()-1);
+            }
             try {
                 FileOutputStream fileOutputStream = new FileOutputStream("src/highscore/HighScore.txt");
                 for (HighScore highScore : arrayHighScore) {
@@ -391,51 +408,6 @@ public class Manager {
                 e.printStackTrace();
             }
         }
-       /* if (arrayHighScore.size() < 10){
-            String name = JOptionPane.showInputDialog(null,"Hãy nhập tên của bạn: ");
-            if (name == null || name.trim().isEmpty()){
-                JOptionPane.showMessageDialog(null, "Bạn phải nhập tên.");
-            }else {
-                HighScore score = new HighScore(name,mBomber.getScore());
-                arrayHighScore.add(score);
-
-            }
-        }else if (mBomber.getScore() >= arrayHighScore.get(arrayHighScore.size()-1).getScore()){
-            String name = JOptionPane.showInputDialog(null,"Hãy nhập tên của bạn: ");
-            if (name == null || name.trim().isEmpty()){
-                JOptionPane.showMessageDialog(null, "Bạn phải nhập tên.");
-            }else {
-                HighScore score = new HighScore(name,mBomber.getScore());
-                arrayHighScore.add(score);
-            }
-        }*/
-        /*arrayHighScore.sort(new Comparator<HighScore>() {
-            @Override
-            public int compare(HighScore o1, HighScore o2) {
-                if (o1.getScore() < o2.getScore()){
-                    return 1;
-                }else {
-                    if (o1.getScore() == o2.getScore()){
-                        return 0;
-                    }else {
-                        return -1;
-                    }
-                }
-            }
-        });
-        if (arrayHighScore.size() > 10){
-            arrayHighScore.remove(arrayHighScore.size()-1);
-        }*/
-        /*try {
-            FileOutputStream fileOutputStream = new FileOutputStream("src/highscore/HighScore.txt");
-            for (HighScore highScore : arrayHighScore) {
-                String infor = highScore.getName() + ":" + highScore.getScore() + "\n";
-                fileOutputStream.write(infor.getBytes());
-            }
-            fileOutputStream.close();
-        }catch (IOException e){
-            e.printStackTrace();
-        }*/
     }
     public ArrayList<Box> getArrBox() {
         return arrBox;
