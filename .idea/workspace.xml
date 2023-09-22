@@ -5,67 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af39eb52-c4bc-40cc-97ef-6f804eef735d" name="Changes" comment="123">
-      <change afterPath="$PROJECT_DIR$/Boom/src/entities/HighScore.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Boom/src/entities/Item.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Boom/src/entities/ReadScore.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Boom/src/highscore/HighScore.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Boom/src/images/background_hightscore.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Boom/src/images/ghost.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Boom/src/images/heart_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Boom/src/images/khokho_dead.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Boom/src/service/entities/DrawItemImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Boom/src/service/view/HighScoreService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Boom/src/sound/Sound.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Boom/src/view/HighScoreView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JavaCore/lab16/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JavaCore/lab16/lab16.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JavaCore/lab16/src/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JavaCore/lab16/src/education/entities/Classroom.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JavaCore/lab16/src/education/entities/Student.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JavaCore/lab16/src/education/entities/Subject.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JavaCore/lab16/src/education/entities/Teacher.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JavaCore/lab16/src/education/entities/Type.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JavaCore/lab16/src/sale/entities/Cart.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JavaCore/lab16/src/sale/entities/Customer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JavaCore/lab16/src/sale/entities/FPTShop.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JavaCore/lab16/src/sale/entities/Order.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JavaCore/lab16/src/sale/entities/Person.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JavaCore/lab16/src/sale/entities/Product.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JavaCore/lab16/src/sale/entities/Staff.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JavaCore/lab16/src/sale/service/CustomerService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JavaCore/lab16/src/sale/service/OrderService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JavaCore/lab16/src/sale/service/ProductService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JavaCore/lab16/src/sale/service/StaffService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Boom/src/RunGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/Boom/src/RunGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Boom/src/entities/BombBang.java" beforeDir="false" afterPath="$PROJECT_DIR$/Boom/src/entities/BombBang.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Boom/src/entities/Manager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Boom/src/entities/Manager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Boom/src/images/background_right.png" beforeDir="false" afterPath="$PROJECT_DIR$/Boom/src/images/background_right.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Boom/src/images/bomb.gif" beforeDir="false" afterPath="$PROJECT_DIR$/Boom/src/images/bomb.gif" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Boom/src/images/khokho_down.png" beforeDir="false" afterPath="$PROJECT_DIR$/Boom/src/images/khokho_down.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Boom/src/images/khokho_left.png" beforeDir="false" afterPath="$PROJECT_DIR$/Boom/src/images/khokho_left.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Boom/src/images/khokho_right.png" beforeDir="false" afterPath="$PROJECT_DIR$/Boom/src/images/khokho_right.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Boom/src/images/khokho_up.png" beforeDir="false" afterPath="$PROJECT_DIR$/Boom/src/images/khokho_up.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Boom/src/images/quaivat 1_down.png" beforeDir="false" afterPath="$PROJECT_DIR$/Boom/src/images/quaivat 1_down.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Boom/src/images/quaivat 1_left.png" beforeDir="false" afterPath="$PROJECT_DIR$/Boom/src/images/quaivat 1_left.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Boom/src/images/quaivat 1_right.png" beforeDir="false" afterPath="$PROJECT_DIR$/Boom/src/images/quaivat 1_right.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Boom/src/images/quaivat 1_up.png" beforeDir="false" afterPath="$PROJECT_DIR$/Boom/src/images/quaivat 1_up.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Boom/src/map1/BOX.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Boom/src/map1/BOX.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Boom/src/map1/ITEM.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Boom/src/map1/ITEM.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Boom/src/service/entities/DrawBombBangImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Boom/src/service/entities/DrawBombBangImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Boom/src/service/view/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Boom/src/service/view/GameService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Boom/src/service/view/MenuService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Boom/src/service/view/MenuService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Boom/src/service/view/PlaygameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Boom/src/service/view/PlaygameService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Boom/src/view/Container.java" beforeDir="false" afterPath="$PROJECT_DIR$/Boom/src/view/Container.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Boom/src/view/PlaygameView.java" beforeDir="false" afterPath="$PROJECT_DIR$/Boom/src/view/PlaygameView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BoomGame/src/hightscore/HightScore.txt" beforeDir="false" afterPath="$PROJECT_DIR$/BoomGame/src/hightscore/HightScore.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BoomGame/src/service/mainServiceImpl/HightScoreControllerExt.java" beforeDir="false" afterPath="$PROJECT_DIR$/BoomGame/src/service/mainServiceImpl/HightScoreControllerExt.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BoomGame/src/sound/GameSound.java" beforeDir="false" afterPath="$PROJECT_DIR$/BoomGame/src/sound/GameSound.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaCore/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/JavaCore/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jboom-app" beforeDir="false" afterPath="$PROJECT_DIR$/jboom-app" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jboom-app/src/view/MyContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/jboom-app/src/view/MyContainer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +18,12 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": -1
+}]]></component>
   <component name="ProjectId" id="2TO3VSXdQ4EZDxeVEdX1wSLCs0x" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -89,7 +34,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/PhamThanhTu/OneDrive/Máy tính/Java21",
+    "last_opened_file_path": "D:/Java21/Boom",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -110,6 +55,7 @@
       <workItem from="1692876259616" duration="291000" />
       <workItem from="1692876561475" duration="9000" />
       <workItem from="1693823928470" duration="437000" />
+      <workItem from="1695390098504" duration="35000" />
     </task>
     <task id="LOCAL-00001" summary="123">
       <created>1692817160297</created>
