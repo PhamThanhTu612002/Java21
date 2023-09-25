@@ -63,19 +63,61 @@ insert into Enrollments values
 (20,10,2);
 
 -- Bài tập 1: Lấy danh sách tất cả sinh viên và thông tin khóa học mà họ đã đăng ký.
-select student_name,course_name from Courses inner join Enrollments on Courses.course_id = Enrollments.course_id inner join Students on Students.student_id = Enrollments.student_id;
+select student_name,course_name 
+from Courses 
+inner join Enrollments 
+on Courses.course_id = Enrollments.course_id 
+inner join Students 
+on Students.student_id = Enrollments.student_id;
 -- Bài tập 2: Lấy tên của tất cả các khóa học mà một sinh viên cụ thể đã đăng ký (sử dụng tham số student_id).
-select course_name from Courses inner join Enrollments on Courses.course_id = Enrollments.course_id inner join Students on Students.student_id = Enrollments.student_id where Students.student_id = 5;
+select course_name from Courses 
+inner join Enrollments 
+on Courses.course_id = Enrollments.course_id 
+inner join Students 
+on Students.student_id = Enrollments.student_id 
+where Students.student_id = 5;
 -- Bài tập 3: Lấy danh sách tất cả sinh viên và số lượng khóa học mà họ đã đăng ký.
-select Students.student_name, count(Courses.course_id) from Courses inner join Enrollments on Courses.course_id = Enrollments.course_id inner join Students on Students.student_id = Enrollments.student_id group by Students.student_id;
+select Students.student_name, count(Courses.course_id) 
+from Courses 
+inner join Enrollments 
+on Courses.course_id = Enrollments.course_id 
+inner join Students 
+on Students.student_id = Enrollments.student_id 
+group by Students.student_id;
 -- Bài tập 4: Lấy tất cả các khóa học mà chưa có sinh viên nào đăng ký.
-select * from Courses right join Enrollments on Courses.course_id = Enrollments.course_id where course_name is null;
+select * from Courses 
+right join Enrollments 
+on Courses.course_id = Enrollments.course_id 
+where course_name is null;
 -- Bài tập 5: Lấy tất cả sinh viên và thông tin khóa học mà họ đã đăng ký, sắp xếp theo tên sinh viên và tên khóa học.
-select Students.student_name, Courses.course_name from Courses inner join Enrollments on Courses.course_id = Enrollments.course_id inner join Students on Students.student_id = Enrollments.student_id order by Students.student_name,Courses.course_name;
+select Students.student_name, Courses.course_name 
+from Courses 
+inner join Enrollments 
+on Courses.course_id = Enrollments.course_id 
+inner join Students 
+on Students.student_id = Enrollments.student_id 
+order by Students.student_name,Courses.course_name;
 -- Bài tập 6: Lấy tất cả các sinh viên và thông tin của họ, cùng với tên khóa học mà họ đăng ký (nếu có).
-select course_name,student_name,student_age from Courses inner join Enrollments on Courses.course_id = Enrollments.course_id inner join Students on Students.student_id = Enrollments.student_id;
+select course_name,student_name,student_age 
+from Courses 
+inner join Enrollments 
+on Courses.course_id = Enrollments.course_id 
+inner join Students 
+on Students.student_id = Enrollments.student_id;
 -- Bài tập 7: Lấy danh sách tất cả sinh viên và thông tin của họ, cùng với tên khóa học mà họ đăng ký (nếu có). Sắp xếp theo tên sinh viên và tuổi từ cao xuống thấp.
-select course_name,student_name,student_age from Courses inner join Enrollments on Courses.course_id = Enrollments.course_id inner join Students on Students.student_id = Enrollments.student_id order by Students.student_name asc,Students.student_age desc;
+select course_name,student_name,student_age 
+from Courses 
+inner join Enrollments 
+on Courses.course_id = Enrollments.course_id 
+inner join Students 
+on Students.student_id = Enrollments.student_id 
+order by Students.student_name asc,Students.student_age desc;
 -- Bài tập 8: Lấy tất cả các khóa học và số lượng sinh viên đã đăng ký vào mỗi khóa học.
-select Courses.course_name, count(Students.student_id) from Courses inner join Enrollments on Courses.course_id = Enrollments.course_id inner join Students on Students.student_id = Enrollments.student_id group by Courses.course_name;
+select Courses.course_name, count(Students.student_id) 
+from Courses 
+inner join Enrollments 
+on Courses.course_id = Enrollments.course_id 
+inner join Students 
+on Students.student_id = Enrollments.student_id 
+group by Courses.course_name;
 
