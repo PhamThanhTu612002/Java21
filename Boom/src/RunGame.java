@@ -9,7 +9,6 @@ public class RunGame {
         ReadScore score = new ReadScore();
         IView iView = new GameService(view,score);
         iView.display();
-
         view.getGameView().setVisible(true);
     }
 }

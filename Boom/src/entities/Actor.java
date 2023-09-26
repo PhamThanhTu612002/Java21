@@ -59,7 +59,7 @@ public class Actor {
         this.orient = orient;
     }
     public void drawActor(Graphics2D g2d) {
-    };
+    }
     public boolean move(int count, ArrayList<Box> arrBox, ArrayList<Bomb> arrBomb){
         if (count % speed != 0){
             return true;
@@ -70,20 +70,20 @@ public class Actor {
                     return false;
                 }
                 x = x - 1;
-                for (int i = 0; i < arrBomb.size(); i++){
-                    if (arrBomb.get(i).isImpactBombVsActor(this) == 1){
+                for (Bomb bomb1 : arrBomb) {
+                    if (bomb1.isImpactBombVsActor(this) == 1) {
                         x = x + 1;
                         return false;
                     }
                 }
-                for (int i = 0; i < arrBox.size(); i++){
-                    int kq = arrBox.get(i).isImpactBoxVsActor(this);
-                    if (kq != 0){
-                        if (kq >= -20 && kq <= 20){
-                            if (kq > 0){
+                for (Box element : arrBox) {
+                    int kq = element.isImpactBoxVsActor(this);
+                    if (kq != 0) {
+                        if (kq >= -20 && kq <= 20) {
+                            if (kq > 0) {
                                 y = y + 1;
-                            }else {
-                                y = y -1;
+                            } else {
+                                y = y - 1;
                             }
                         }
                         x = x + 1;
@@ -96,20 +96,20 @@ public class Actor {
                     return false;
                 }
                 x = x + 1;
-                for (int i = 0; i < arrBomb.size(); i++){
-                    if (arrBomb.get(i).isImpactBombVsActor(this) == 1){
+                for (Bomb bomb : arrBomb) {
+                    if (bomb.isImpactBombVsActor(this) == 1) {
                         x = x - 1;
                         return false;
                     }
                 }
-                for (int i = 0; i < arrBox.size(); i++){
-                    int kq = arrBox.get(i).isImpactBoxVsActor(this);
-                    if (kq != 0){
-                        if (kq >= -20 && kq <= 20){
-                            if (kq > 0){
+                for (Box item : arrBox) {
+                    int kq = item.isImpactBoxVsActor(this);
+                    if (kq != 0) {
+                        if (kq >= -20 && kq <= 20) {
+                            if (kq > 0) {
                                 y = y + 1;
-                            }else {
-                                y = y -1;
+                            } else {
+                                y = y - 1;
                             }
                         }
                         x = x - 1;
@@ -122,19 +122,19 @@ public class Actor {
                     return false;
                 }
                 y = y - 1;
-                for (int i = 0; i < arrBomb.size(); i++){
-                    if (arrBomb.get(i).isImpactBombVsActor(this) == 1){
+                for (Bomb bomb : arrBomb) {
+                    if (bomb.isImpactBombVsActor(this) == 1) {
                         y = y + 1;
                         return false;
                     }
                 }
-                for (int i = 0; i < arrBox.size(); i++){
-                    int kq = arrBox.get(i).isImpactBoxVsActor(this);
-                    if (kq != 0){
-                        if (kq >= -20 && kq <= 20){
-                            if (kq > 0){
+                for (Box value : arrBox) {
+                    int kq = value.isImpactBoxVsActor(this);
+                    if (kq != 0) {
+                        if (kq >= -20 && kq <= 20) {
+                            if (kq > 0) {
                                 x = x + 1;
-                            }else {
+                            } else {
                                 x = x - 1;
                             }
                         }
@@ -148,20 +148,20 @@ public class Actor {
                     return false;
                 }
                 y = y + 1;
-                for (int i = 0; i < arrBomb.size(); i++){
-                    if (arrBomb.get(i).isImpactBombVsActor(this) == 1){
+                for (Bomb bomb : arrBomb) {
+                    if (bomb.isImpactBombVsActor(this) == 1) {
                         y = y - 1;
                         return false;
                     }
                 }
-                for (int i = 0; i < arrBox.size(); i++){
-                    int kq = arrBox.get(i).isImpactBoxVsActor(this);
-                    if (kq != 0){
-                        if (kq >= -20 && kq <= 20){
-                            if (kq > 0){
+                for (Box box : arrBox) {
+                    int kq = box.isImpactBoxVsActor(this);
+                    if (kq != 0) {
+                        if (kq >= -20 && kq <= 20) {
+                            if (kq > 0) {
                                 x = x + 1;
-                            }else {
-                                x = x -1;
+                            } else {
+                                x = x - 1;
                             }
                         }
                         y = y - 1;

@@ -7,10 +7,7 @@ import view.MainGameView;
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Random;
+import java.util.*;
 
 public class Manager {
     private Random random = new Random();
@@ -31,25 +28,25 @@ public class Manager {
         mBomber = new KhoKho(540, 495,Actor.BOMBER,Bomber.DOWN,5, 1, 1);
     }
     public void draWBackground(Graphics2D g2d) {
-        Image imgBackground = new ImageIcon(getClass().getResource(Background)).getImage();
+        Image imgBackground = new ImageIcon(Objects.requireNonNull(getClass().getResource(Background))).getImage();
         g2d.drawImage(imgBackground, 0, 0, null);
     }
     public void drawAllBox(Graphics2D g2d) {
-        for (int i = 0; i < arrBox.size(); i++) {
-            arrBox.get(i).drawBox(g2d);
+        for (Box box : arrBox) {
+            box.drawBox(g2d);
         }
     }
     public void drawAllMonster(Graphics2D g2d){
-        for (int i = 0; i < arrMonster.size(); i++){
-            arrMonster.get(i).drawActor(g2d);
+        for (Monster monster : arrMonster) {
+            monster.drawActor(g2d);
         }
     }
     public void drawAllBomb(Graphics2D g2d){
-        for (int i = 0; i < arrBomb.size(); i++){
-            arrBomb.get(i).drawActor(g2d);
+        for (Bomb bomb : arrBomb) {
+            bomb.drawActor(g2d);
         }
-        for (int i = 0; i < arrBombBang.size(); i++){
-            arrBombBang.get(i).drawActor(g2d);
+        for (BombBang bombBang : arrBombBang) {
+            bombBang.drawActor(g2d);
         }
     }
     public void drawAllItem(Graphics2D g2d){
@@ -58,7 +55,7 @@ public class Manager {
         }
     }
     public void drawInfor(Graphics2D g2d){
-        Image image = new ImageIcon(getClass().getResource("/images/heart_1.png")).getImage();
+        Image image = new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/heart_1.png"))).getImage();
         if (mBomber.getHeart() == 3){
             g2d.drawImage(image,840, 319,null);
             g2d.drawImage(image,865, 319,null);
@@ -96,16 +93,16 @@ public class Manager {
         }
     }
     public void changeOrientAll() {
-        for (int i = 0; i < arrMonster.size(); i++) {
+        for (Monster monster : arrMonster) {
             int orient = random.nextInt(4) + 1;
-            arrMonster.get(i).changeOrient(orient);
+            monster.changeOrient(orient);
         }
     }
     public void moveAllMonster(int count){
-        for (int i = 0; i < arrMonster.size(); i++){
-            if (!arrMonster.get(i).move(count, arrBox,arrBomb)){
-                int orient = random.nextInt(4)+1;
-                arrMonster.get(i).changeOrient(orient);
+        for (Monster monster : arrMonster) {
+            if (!monster.move(count, arrBox, arrBomb)) {
+                int orient = random.nextInt(4) + 1;
+                monster.changeOrient(orient);
             }
         }
     }
@@ -127,7 +124,7 @@ public class Manager {
             Background = bufferedReader.readLine();
             String line;
             while ((line = bufferedReader.readLine()) != null){
-                String str[] = line.split(":");
+                String[] str = line.split(":");
                 int x = Integer.parseInt(str[0]);
                 int y = Integer.parseInt(str[1]);
                 int type = Integer.parseInt(str[2]);
@@ -146,7 +143,7 @@ public class Manager {
             BufferedReader bufferedReader = new BufferedReader(reader);
             String line;
             while ((line = bufferedReader.readLine()) != null){
-                String str[] = line.split(":");
+                String[] str = line.split(":");
                 int x = Integer.parseInt(str[0]);
                 int y = Integer.parseInt(str[1]);
                 int type = Integer.parseInt(str[2]);
@@ -171,8 +168,8 @@ public class Manager {
         }
         int x = mBomber.getX() + mBomber.getWidth()/2;
         int y = mBomber.getY() + mBomber.getHeight()/2;
-        for (int i = 0; i < arrBomb.size(); i++){
-            if (arrBomb.get(i).isImpact(x,y)){
+        for (Bomb value : arrBomb) {
+            if (value.isImpact(x, y)) {
                 return;
             }
         }
@@ -188,7 +185,7 @@ public class Manager {
             BufferedReader input = new BufferedReader(file);
             String line;
             while ((line = input.readLine()) != null) {
-                String str[] = line.split(":");
+                String[] str = line.split(":");
                 String name = str[0];
                 int score = Integer.parseInt(str[1]);
                 HighScore hightScore = new HighScore(name, score);
@@ -205,7 +202,7 @@ public class Manager {
             BufferedReader bufferedReader = new BufferedReader(reader);
             String line;
             while ((line = bufferedReader.readLine()) != null){
-                String str[] = line.split(":");
+                String[] str = line.split(":");
                 int x = Integer.parseInt(str[0]);
                 int y = Integer.parseInt(str[1]);
                 int type = Integer.parseInt(str[2]);
@@ -231,7 +228,7 @@ public class Manager {
         innitArrHightScore("src/highscore/HighScore.txt");
     }
     public void setRunBomer(){
-        if (arrBomb.size() > 0){
+        if (!arrBomb.isEmpty()){
             if (!arrBomb.get(arrBomb.size() - 1).setRun(mBomber)){
                 mBomber.setRunBomb(Bomber.DISALLOW_RUN);
             }
@@ -283,9 +280,9 @@ public class Manager {
                 }
             }
         }
-        for (int i = 0; i < arrBombBang.size(); i++) {
+        for (BombBang bombBang : arrBombBang) {
             for (int j = 0; j < arrBox.size(); j++) {
-                if (arrBombBang.get(i).isImpactBombBangVsBox(arrBox.get(j))) {
+                if (bombBang.isImpactBombBangVsBox(arrBox.get(j))) {
                     arrBox.remove(arrBox.get(j));
                 }
             }
@@ -293,17 +290,17 @@ public class Manager {
 
     }
     public void checkDead(){
-        for (int i = 0; i < arrBombBang.size(); i++){
-            if (arrBombBang.get(i).isImpactBombBangVsActor(mBomber) && mBomber.getStatus() == Bomber.ALIVE){
+        for (BombBang bombBang : arrBombBang) {
+            if (bombBang.isImpactBombBangVsActor(mBomber) && mBomber.getStatus() == Bomber.ALIVE) {
                 Image icon = null;
-                if (mBomber instanceof KhoKho){
-                    icon = new ImageIcon(getClass().getResource("/images/ghost.png")).getImage();
+                if (mBomber instanceof KhoKho) {
+                    icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/ghost.png"))).getImage();
                 }
                 mBomber.setImg(icon);
-                if (mBomber.getStatus() == Bomber.DEAD){
+                if (mBomber.getStatus() == Bomber.DEAD) {
                     return;
                 }
-                mBomber.setHeart(mBomber.getHeart()-1);
+                mBomber.setHeart(mBomber.getHeart() - 1);
                 mBomber.setStatus(Bomber.DEAD);
             }
         }
@@ -311,7 +308,7 @@ public class Manager {
             if (mBomber.isImpactBomberVsActor(arrMonster.get(i))){
                 Image image = null;
                 if (mBomber instanceof KhoKho){
-                    image = new ImageIcon(getClass().getResource("/images/ghost.png")).getImage();
+                    image = new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/ghost.png"))).getImage();
                 }
                 mBomber.setImg(image);
                 if (mBomber.getStatus() == Bomber.DEAD) {
