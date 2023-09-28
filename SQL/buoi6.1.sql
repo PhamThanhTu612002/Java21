@@ -54,6 +54,7 @@ inner join Customers
 on Customers.customer_id = Orders.customer_id
 where Orders.order_date between '2023/07/06' and '2023/12/06'
 group by Customers.customer_id,customer_name
+having total_ordered > 1
 order by total_ordered desc;
 -- 10.Lấy thông tin về các sản phẩm đã được đặt hàng nhiều lần nhất và số lượng đơn đặt hàng tương ứng (product_id, product_name, total_ordered)
 select OrderDetails.product_id, product_name, count(OrderDetails.order_detail_id) as total_ordered from Products
