@@ -5,7 +5,8 @@ select * from film where release_year between 2000 and 2010;
 -- 3.Lấy danh sách các bộ phim (films) có rating là “PG” hoặc “PG-13”.
 select * from film where rating = 'PG' or rating = 'PG-13';
 -- 4.Lấy danh sách diễn viên (actors) và số lượng bộ phim (films) mà họ tham gia, sắp xếp theo số lượng bộ phim giảm dần.
-select first_name,last_name, count(film.film_id) from actor inner join film_actor
+select first_name,last_name, count(film.film_id) 
+from actor inner join film_actor
 on actor.actor_id = film_actor.actor_id
 inner join film
 on film_actor.film_id = film.film_id
@@ -39,6 +40,7 @@ left join film_actor
 on actor.actor_id = film_actor.actor_id
 group by actor.actor_id);
 -- 9.Lấy danh sách bộ phim (films) và tổng doanh thu (revenue) của từng bộ phim, sắp xếp theo tổng doanh thu giảm dần.
+select *,film.rental_rate* film.rental_duration as revenue from film ;
 -- 10.Lấy danh sách các bộ phim (films) và thể loại (categories) của chúng, với điều kiện mỗi bộ phim thuộc thể loại “Horror”
 select title,name from film
 inner join film_category
