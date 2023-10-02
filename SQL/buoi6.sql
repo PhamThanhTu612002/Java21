@@ -1,4 +1,3 @@
-create database middle_test;
 
 create table Categories
 (

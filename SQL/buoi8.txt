@@ -1,0 +1,27 @@
+1.select name,population,area from World
+where area > 3000000 or population > 25000000
+
+2.
+select user_id, max(time_stamp) as last_stamp
+from Logins where year(time_stamp) = '2020'
+group by user_id ;
+
+3.select * from Cinema
+where id%2=1 and description != 'boring'
+order by rating desc;
+
+4.select *,
+case
+when x+y>z and x+z>y and y+z>x then 'Yes'
+else 'No'
+end as triangle 
+from Triangle
+
+5.select user_id, count(user_id) as followers_count
+from Followers
+group by user_id
+order by user_id;
+
+6.elect actor_id,director_id  from ActorDirector 
+group by actor_id,director_id
+having count(*) >=3
