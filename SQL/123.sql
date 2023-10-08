@@ -1,0 +1,1 @@
+SELECT * FROM booking_tour.tbl_comment;
