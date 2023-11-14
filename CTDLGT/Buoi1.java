@@ -88,4 +88,14 @@ public class Buoi1 {
 
         return missingNumber;
     }
+    public int findNumbers(int[] nums) {
+        int count = 0;
+        for(int n : nums){
+            if(Math.log10(n) % 2 == 1){
+                count++;
+            }
+        }
+        return count;
+    }
+
 }

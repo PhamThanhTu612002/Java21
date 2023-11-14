@@ -1,9 +1,10 @@
 import java.util.Arrays;
+import java.util.HashSet;
 
-public class Buou5 {
+public class Buoi5 {
     public static void main(String[] args) {
         int[] nums = {1,5,3,4,2};
-        System.out.println(Arrays.toString(Buou5.sortArray(nums)));
+        System.out.println(Arrays.toString(Buoi5.sortArray(nums)));
     }
     public static int[] sortArray(int[] nums) {
 
@@ -29,7 +30,7 @@ public class Buou5 {
         int[] result = new int[n];
 
         int i = 0, i1 = 0, i2 = 0;
-        // 
+        //
         while(i < n) {
             if(i1 < a1.length && i2 < a2.length) {
                 if(a1[i1] < a2[i2]) {
@@ -50,4 +51,5 @@ public class Buou5 {
 
         return result;
     }
+
 }
