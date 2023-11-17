@@ -34,3 +34,13 @@ function  translate(country){
     }
 }
 translate("JP");
+//Bài 4: Cho function truyền vào 1 chuỗi dài hơn 15 ký tự. Viết 1 function cắt chuỗi, lấy ra 10 ký tự đầu tiên và thêm vào dấu “…” ở cuối chuỗi.
+function subString(str){
+    let sub = "";
+    for(let i = 0; i < 10; i++){
+        sub += str.charAt(i);
+    }
+    sub = sub + "...";
+    console.log(sub);
+}
+subString("xinchaocacbandenvoiTechmaster");
