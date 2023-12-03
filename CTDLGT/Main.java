@@ -20,7 +20,60 @@ public class Main {
 //        findTheWinner(5,2);
 //        Buoi3 buoi3 = new Buoi3();
 //        System.out.println(buoi3.decodeString("3[a2[c]]"));
+//        MyQueue queue = new MyQueue();
+//        queue.push(1);
+//        queue.push(2);
+//        System.out.println(queue.pop());
+//        Deque<Integer> deque = new ArrayDeque<>();
+//        deque.poll();
+        isValid("()");
 
+    }
+    public static boolean isValid(String s) {
+        Deque<Integer> deque1 = new ArrayDeque<>();
+        Deque<Integer> deque2 = new ArrayDeque<>();
+        for(int i = 0; i < s.length(); i++){
+            if(s.charAt(i) == '(' || s.charAt(i) == '[' || s.charAt(i) == '{'){
+                deque1.push(i);
+            }
+            if(s.charAt(i) == ')' || s.charAt(i) == ']' || s.charAt(i) == '}'){
+                deque2.push(i);
+            }
+        }
+        System.out.println(deque1);
+        System.out.println(deque2);
+        return false;
+    }
+    static class MyQueue {
+        Stack<Integer> stack1 = new Stack<>();
+        Stack<Integer> stack2 = new Stack<>();
+        public MyQueue() {
+
+        }
+
+        public void push(int x) {
+            if(stack1.isEmpty()){
+                stack1.push(x);
+            }
+            while (!stack1.isEmpty()){
+                stack2.push(stack1.pop());
+            }
+            while (!stack2.isEmpty()){
+                stack1.push(stack2.pop());
+            }
+        }
+
+        public int pop() {
+            return stack1.pop();
+        }
+
+        public int peek() {
+            return stack1.peek();
+        }
+
+        public boolean empty() {
+            return stack1.isEmpty() && stack2.isEmpty();
+        }
     }
     public static void bubbleSort(int[] nums){
         for(int i = 0; i < nums.length; i++){
