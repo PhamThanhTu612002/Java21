@@ -1,6 +1,7 @@
 const API_URL = "http://localhost:8000/todos";
 const todolist = document.getElementById("todolist");
 const btnAdd = document.getElementById("btn-add");
+const btnSearch = document.getElementById("btn-search");
 const getAllToDo = async () => {
     try {
         const allToDO = await axios.get(API_URL);
@@ -74,3 +75,31 @@ async function editToDo(id) {
     }
     getAllToDo();
 }
+const toDoTxt2 = document.getElementById("todo-search");
+const listsearch = document.getElementById("listSearch");
+btnSearch.addEventListener("click",async () =>{
+    if(toDoTxt2.value.trim() === ""){
+        alert("Không được để trống");
+        return;
+    }
+    try {
+        let res = await axios.get(API_URL+`/?title_like=${toDoTxt2.value.trim()}`);
+        const listSearch = res.data;
+        let html = "";
+        if(listSearch.length > 0){
+            listSearch.forEach(toDo => {
+                html += `<li>
+                        <input type="checkbox" ${toDo.status == true ? 'checked' : ''} onchange="toggleStatus(${toDo.id})">
+                        <span class="${toDo.status == true ? 'active' : ''}">${toDo.title}</span>
+                        <button id="btnEdit" onclick="editToDo(${toDo.id})">Sửa</button>
+                        <button id="btnDelete" onclick="deleteToDo(${toDo.id})">Xóa</button>
+                        </li>`
+            })
+            listsearch.innerHTML = html;
+        }else{
+            listsearch.innerHTML = `<li>Không tìm thấy</li>`;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+})
