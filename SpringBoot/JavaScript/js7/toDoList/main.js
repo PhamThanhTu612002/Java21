@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8000/todos";
+const API_URL = "https://todolist-3zuz.onrender.com/todos";
 const todolist = document.getElementById("todolist");
 const btnAdd = document.getElementById("btn-add");
 const btnSearch = document.getElementById("btn-search");
