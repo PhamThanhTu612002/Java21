@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cc27d823-10aa-49c6-ad4a-03d7742cf72d" name="Changes" comment="" />
+    <list default="true" id="cc27d823-10aa-49c6-ad4a-03d7742cf72d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../springboot-course" beforeDir="false" afterPath="$PROJECT_DIR$/../springboot-course" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -23,9 +25,9 @@
       </MavenGeneralSettings>
     </option>
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 5
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="2Zcp8AU8EpSch7OiFaQgYNg9Hh5" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -37,7 +39,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "D:/Java21/SpringBoot/Spring_Boot/springBoot_day01/demo",
+    "last_opened_file_path": "D:/Java21/SpringBoot/Spring_Boot/springBoot_day01/demo1",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -63,6 +65,7 @@
       <option name="presentableId" value="Default" />
       <updated>1702731061436</updated>
       <workItem from="1702731062605" duration="704000" />
+      <workItem from="1702969548946" duration="15000" />
     </task>
     <servers />
   </component>
