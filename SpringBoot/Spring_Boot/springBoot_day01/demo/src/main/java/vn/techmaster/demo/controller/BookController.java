@@ -1,10 +1,13 @@
 package vn.techmaster.demo.controller;
 
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 import vn.techmaster.demo.model.Book;
+import vn.techmaster.demo.service.BookService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,27 +17,28 @@ import java.util.List;
 * @Controller       : Có thể trả về giao diện (view template), các dữ liệu dạng JSON, XML, ....
 * @RestController   : Chỉ trả về các dữ liệu dạng JSON, XML, ....
 * @GetMapping   : Định nghĩa API cho GET method (http://localhost:8080/books)
+* @Controller + @ResponseBody = @RestController
+* Sử dụng đối tượng ResponseEntity<T> để tra về dữ liệu dạng JSON : là class đại diện cho response
 * */
 @RestController
 public class BookController {
-    private List<Book> listBooks = new ArrayList<>();
+    @Autowired
+    private BookService bookService;
 
-    public BookController() {
-        listBooks.add(new Book("OX-13", "Gone with the wind", "Cuong", 1945));
-        listBooks.add(new Book("OX-14", "Chi Dau", "Nam Cao", 1943));
-    }
+//    @ResponseStatus(HttpStatus.CREATED)//trả về 201
+//    @ResponseBody
+//    @GetMapping("/books")
+//    public List<Book> getAllBooks(){
+//        return listBooks;
+//    }
     @GetMapping("/books")
-    public List<Book> getAllBooks(){
-        return listBooks;
+    public ResponseEntity<List<Book>> getAllBooks(){
+        List<Book> books = bookService.getAllBooks();
+        return new ResponseEntity<>(books,HttpStatus.CREATED);
     }
     //@PathVariable : đọc giá trị tham số trên URL
     @GetMapping("/books/{id}")
-    public Book getBookById(@PathVariable String id){
-        for (Book book : listBooks) {
-            if (book.getId().equals(id)){
-                return book;
-            }
-        }
-        return null;
+    public Book getBookById(@PathVariable int id){
+        return bookService.getBookById(id);
     }
 }
