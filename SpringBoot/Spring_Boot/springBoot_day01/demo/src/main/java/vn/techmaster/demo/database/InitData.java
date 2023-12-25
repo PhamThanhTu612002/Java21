@@ -25,5 +25,6 @@ public class InitData implements CommandLineRunner{
 //        BookDB.bookList = reader.readFile(resourceUrl.getPath().toString());
         BookDB.bookList = csvFileReader.readFile(resourceUrl.getPath());
         System.out.println(BookDB.bookList.size());
+        BookDB.bookList.forEach(System.out::println);
     }
 }

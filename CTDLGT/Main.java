@@ -44,6 +44,38 @@ public class Main {
         System.out.println(deque2);
         return false;
     }
+    public boolean backspaceCompare(String s, String t) {
+        Stack<Character> stackS = new Stack<>();
+        Stack<Character> stackT = new Stack<>();
+        for(char str : s.toCharArray()){
+            stackS.push(str);
+        }
+        for(char str : t.toCharArray()){
+            stackT.push(str);
+        }
+        s = "";
+        for(char str : stackS){
+            if(str == '#'){
+                stackS.pop();
+                stackS.pop();
+            }else{
+                s += str;
+            }
+        }
+        t = "";
+        for(char str : stackT){
+            if(str == '#'){
+                stackT.pop();
+                stackT.pop();
+            }else{
+                s += str;
+            }
+        }
+        if(s.equals(t)){
+            return true;
+        }
+        return false;
+    }
     static class MyQueue {
         Stack<Integer> stack1 = new Stack<>();
         Stack<Integer> stack2 = new Stack<>();
