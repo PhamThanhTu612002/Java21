@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Detail</title>
+</head>
+<body>
+    <h1 th:if="${detailStudent == null}">Không tìm thấy học viên</h1>
+    <ul th:if="${detailStudent != null}">
+        <li th:text="'id = '+${detailStudent.id}"></li>
+        <li th:text="|name = ${detailStudent.name}|"></li>
+        <li>email = <th:block th:text="${detailStudent.email}"></th:block></li>
+        <li th:text="${detailStudent.phone}"></li>
+        <li th:text="${detailStudent.score}"></li>
+    </ul>
+</body>
+</html>

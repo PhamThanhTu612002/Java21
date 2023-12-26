@@ -37,14 +37,14 @@ public class PersonDAOImpl implements PersonDAO {
     public List<String> getSortedJobs() {
         List<String> listJob = new ArrayList<>();
         PersonDB.personList.forEach(person -> listJob.add(person.getJob()));
-        return listJob.stream().sorted().toList();
+        return listJob.stream().distinct().sorted().toList();
     }
 
     @Override
     public List<String> getSortedCities() {
         List<String> listCities= new ArrayList<>();
         PersonDB.personList.forEach(person -> listCities.add(person.getCity()));
-        return listCities.stream().sorted().toList();
+        return listCities.stream().distinct().sorted().toList();
     }
 
     @Override

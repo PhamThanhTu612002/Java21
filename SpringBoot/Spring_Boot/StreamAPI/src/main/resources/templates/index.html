@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Person Management</title>
+</head>
+<body>
+    <h1>Person Management</h1>
+    <ul>
+        <li><a th:href="@{/persons}">Liệt kê danh sách tất cả người</a></li>
+        <li><a th:href="@{/sortPersons}">Liệt kê danh sách sắp xếp theo name A - Z</a></li>
+        <li><a th:href="@{/jobs}">Liệt kê danh sách sắp xếp theo nghề nghiệp từ A - Z</a></li>
+        <li><a th:href="@{/cities}">Liệt kê danh sách tất cả thành phố sắp xếp từ A - Z</a></li>
+    </ul>
+</body>
+</html>

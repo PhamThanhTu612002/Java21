@@ -3,6 +3,8 @@ package vn.techmaster.streamapi.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,29 +14,37 @@ import vn.techmaster.streamapi.service.PersonService;
 import java.util.List;
 import java.util.Map;
 
-@RestController
+@Controller
 public class PersonController {
     @Autowired
     PersonService personService;
+    @GetMapping("/")
+    public String getHome(){
+        return "index";
+    }
     @GetMapping("/persons")
-    public ResponseEntity<List<Person>> getAllPersons(){
-        return new ResponseEntity<>(personService.getAllPersons(), HttpStatus.CREATED);
+    public String getAllPersons(Model model){
+        model.addAttribute("persons",personService.getAllPersons());
+        return "getAll";
     }
     @GetMapping("/sortPersons")
-    public ResponseEntity<List<Person>> sortPersonsByName(){
-        return new ResponseEntity<>(personService.sortPeopleByFullName(),HttpStatus.OK);
+    public String sortPersonsByName(Model model){
+        model.addAttribute("persons2",personService.sortPeopleByFullName());
+        return "sortedPersonByFullName";
     }
     @GetMapping("/sortReversePerson")
     public ResponseEntity<List<Person>> sortPersonsByNameReverse(){
         return new ResponseEntity<>(personService.sortPeopleByFullNameReversed(),HttpStatus.OK);
     }
     @GetMapping("/jobs")
-    public ResponseEntity<List<String>> getSortJobs(){
-        return new ResponseEntity<>(personService.getSortedJobs(),HttpStatus.OK);
+    public String getSortJobs(Model model){
+        model.addAttribute("persons3",personService.getSortedJobs());
+        return "getSortedJobs";
     }
     @GetMapping("/cities")
-    public ResponseEntity<List<String>> getSortCities(){
-        return new ResponseEntity<>(personService.getSortedCities(),HttpStatus.OK);
+    public String getSortCities(Model model){
+        model.addAttribute("persons4",personService.getSortedCities());
+        return "getSortedCities";
     }
     @GetMapping("/femaleNames")
     public ResponseEntity<List<String>> femaleNames(){
