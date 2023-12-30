@@ -83,8 +83,9 @@ public class PersonController {
         return new ResponseEntity<>(personService.aboveAverageSalary(),HttpStatus.OK);
     }
     @GetMapping("/groupPeopleByCity")
-    public ResponseEntity<Map<String,List<Person>>> groupPeopleByCity(){
-        return new ResponseEntity<>(personService.groupPeopleByCity(),HttpStatus.OK);
+    public String groupPeopleByCity(Model model){
+        model.addAttribute("persons",personService.groupPeopleByCity());
+        return "groupPeopleByCity";
     }
     @GetMapping("/groupJobByCount")
     public ResponseEntity<Map<String,Integer>> groupJobByCount(){

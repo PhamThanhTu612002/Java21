@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail Product</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .detail-product{
+            display: flex;
+            margin-left: 200px;
+        }
+        img{
+            box-shadow: 0 1px 2px 0 rgba(60,64,67,.1), 0 2px 6px 2px rgba(60,64,67,.15);
+        }
+        .detail{
+            margin-left: 100px;
+            width: 400px;
+        }
+        .name-product{
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .price-product{
+            display: flex;
+        }
+        .des-product{
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        .price-product{
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        .price{
+            margin-right: 30px;
+            color: red;
+        }
+        .price-discount{
+            text-decoration: line-through;
+            color: gray;
+        }
+        i{
+            color: yellow;
+        }
+        h1{
+            display: flex;
+            justify-content: center;
+        }
+        a{
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1><a th:href="@{/}">HOME</a></h1>
+    <h1>Product <th:block th:text="${product.getId()}">></th:block></h1>
+    <div class="detail-product">
+        <div>
+            <img width="500px" th:src="${product.getThumbnail()}" alt="">
+        </div>
+        <div class="detail">
+            <div class="name-product" th:text="${product.getName()}">
+            </div>
+            <div class="des-product" th:text="${product.getDescription()}">
+
+            </div>
+            <div class="price-product">
+                <div class="price">
+                    <th:block th:text="${product.getPrice()}"></th:block> $
+                </div>
+                <div>
+                </div>
+                <div class="price-discount">
+                    <th:block th:text="${product.getPriceDiscount()}"></th:block> $
+                </div>
+            </div>
+            <div class="rate" >
+                <th:block th:text="${product.getRating()}"></th:block> <i class="fa-solid fa-star"></i>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

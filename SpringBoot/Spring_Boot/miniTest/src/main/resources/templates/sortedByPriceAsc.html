@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Danh sách sản phẩm sắp xếp theo giá</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<h2 class="d-flex justify-content-center">Danh sách sản phẩm được sắp xếp tăng dần theo giá</h2>
+<div class="d-flex justify-content-center">
+  <a th:href="@{/sortedByPrice}"><i class="fa-solid fa-filter"></i>Sort Price Asc</a>
+  <a th:href="@{/sortedByPriceDesc}"><i class="fa-solid fa-filter"></i>Sort Price Desc</a>
+</div>
+<div class="product-list">
+  <div class="product-infor-container">
+    <div th:each="product : ${sortedByPrice}" class="product-infor">
+      <a th:href="@{/product/{id} (id = ${product.getId()})}" class="text-decoration-none text-dark">
+        <div class="product-image">
+          <img width="200px" th:src="${product.getThumbnail()}" alt="">
+        </div>
+        <div th:text="${product.getName()}" class="product-name d-flex justify-content-center">
+          Macbook Pro 14 Inch M1 Pro
+        </div>
+        <div class="price">
+          <div class="product-price">
+            <th:block th:text="${product.getPrice()}" ></th:block> <i class="fa-solid fa-dollar-sign"></i>
+          </div>
+          <div class="product-priceDiscount flex-box text-decoration-line-through text-danger">
+            <th:block th:text="${product.getPriceDiscount()}" ></th:block> <i class="fa-solid fa-dollar-sign"></i>
+          </div>
+        </div>
+        <div  class="product-rating">
+          <th:block th:text="${product.getRating()}"></th:block><i class="fa-solid fa-star text-warning"></i>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+</body>
+</html>
