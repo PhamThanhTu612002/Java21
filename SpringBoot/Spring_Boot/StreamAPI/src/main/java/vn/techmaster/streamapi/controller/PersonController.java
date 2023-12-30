@@ -75,12 +75,14 @@ public class PersonController {
         return new ResponseEntity<>(personService.sortedByAgeByMale(),HttpStatus.OK);
     }
     @GetMapping("/longestName")
-    public ResponseEntity<Person> longestName(){
-        return new ResponseEntity<>(personService.longestName(),HttpStatus.OK);
+    public String longestName(Model model){
+        model.addAttribute("longName",personService.longestName());
+        return "longestName";
     }
     @GetMapping("/aboveAvgSalary")
-    public ResponseEntity<List<Person>> aboveAvgSalary(){
-        return new ResponseEntity<>(personService.aboveAverageSalary(),HttpStatus.OK);
+    public String aboveAvgSalary( Model model){
+        model.addAttribute("aboveAvgSalary",personService.aboveAverageSalary());
+        return "aboveAvgSalary";
     }
     @GetMapping("/groupPeopleByCity")
     public String groupPeopleByCity(Model model){
@@ -88,8 +90,9 @@ public class PersonController {
         return "groupPeopleByCity";
     }
     @GetMapping("/groupJobByCount")
-    public ResponseEntity<Map<String,Integer>> groupJobByCount(){
-        return new ResponseEntity<>(personService.groupJobByCount(),HttpStatus.OK);
+    public String groupJobByCount(Model model){
+        model.addAttribute("jobs",personService.groupJobByCount());
+        return "groupJobByCount";
     }
     @GetMapping("/salary{start}/{end}")
     public ResponseEntity<List<Person>> inSalaryRange(@PathVariable int start, @PathVariable int end){

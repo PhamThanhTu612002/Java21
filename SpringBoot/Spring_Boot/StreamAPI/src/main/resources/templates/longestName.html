@@ -5,6 +5,40 @@
     <title>Title</title>
 </head>
 <body>
-
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Người có tên dài nhất</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>FullName</th>
+        <th>Job</th>
+        <th>Gender</th>
+        <th>City</th>
+        <th>Salary</th>
+        <th>BirthDay</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${longName.getId()}"></td>
+        <td th:text="${longName.getFullname()}"></td>
+        <td th:text="${longName.getJob()}"></td>
+        <td th:text="${longName.getGender()}"></td>
+        <td th:text="${longName.getCity()}"></td>
+        <td th:text="${longName.getSalary()}"></td>
+        <td th:text="${longName.getBirthday()}"></td>
+    </tr>
+    </tbody>
+</table>
+<a th:href="@{/}">Home</a>
+</body>
+</html>
 </body>
 </html>
