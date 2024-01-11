@@ -68,5 +68,9 @@ class MovieAppApplicationTests {
         List<Movie> movies = movieRepository.findByMovieTypeAndStatus(MovieType.PHIM_BO,true, Sort.by(Sort.Direction.DESC,"releaseYear"));
         System.out.println(movies.toString());
     }
+    @Test
+    public void updateTitleByID(){
+        movieRepository.updateTitleById("Nhà Bà Nữ",66);
+    }
 
 }

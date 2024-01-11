@@ -4,7 +4,6 @@ import vn.techmaster.streamapi.model.Person;
 
 import java.util.List;
 import java.util.Map;
-
 public interface PersonDAO {
     void printListPeople(List<Person> persons);
 

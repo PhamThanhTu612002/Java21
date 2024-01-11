@@ -1,13 +1,15 @@
 package vn.techmaster.movieapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import vn.techmaster.movieapp.entity.Movie;
 import vn.techmaster.movieapp.model.MovieType;
-import vn.techmaster.movieapp.repository.MovieRepository;
 import vn.techmaster.movieapp.service.WebService;
 
 import java.util.List;
@@ -17,31 +19,50 @@ public class WebController {
     @Autowired
     WebService service;
     @GetMapping("/")
-    public String getHomePage() {
+    public String getHomePage(Model model,
+                              @RequestParam (required = false, defaultValue = "1") Integer page,
+                              @RequestParam (required = false, defaultValue = "6") Integer size) {
+        List<Movie> movies = service.getAllPhimHot(true);
+        Page<Movie> movies2 = service.getAllPhim(MovieType.PHIM_LE,true,page,size);
+        model.addAttribute("movies",movies);
+        model.addAttribute("movies2",movies2);
         return "web/index";
     }
+
+    // phim-bo?page=1&size=12
     @GetMapping("/phim-bo")
-    public String getPhimBo(Model model){
-        List<Movie> movies = service.getAllPhimBo();
-        model.addAttribute("movies1", movies);
+    public String getPhimBo(Model model,
+                            @RequestParam (required = false, defaultValue = "1") Integer page,
+                            @RequestParam (required = false, defaultValue = "12") Integer size){
+        Page<Movie> movies = service.getAllPhim(MovieType.PHIM_BO,true,page,size);
+        model.addAttribute("movies1", movies); // hiển thị dữ liệu
+        model.addAttribute("currentPage", page); // active trang hiện tại
         return "web/phim-bo";
     }
     @GetMapping("/phim-le")
-    public String getPhimLe(Model model){
-        List<Movie> movies = service.getAllPhimLe();
-        model.addAttribute("movies2", movies);
+    public String getPhimLe(Model model,
+                            @RequestParam (required = false, defaultValue = "1") Integer page,
+                            @RequestParam (required = false, defaultValue = "12") Integer size){
+        Page<Movie> movies = service.getAllPhim(MovieType.PHIM_LE,true,page,size);
+        model.addAttribute("movies1", movies); // hiển thị dữ liệu
+        model.addAttribute("currentPage", page); // active trang hiện tại
         return "web/phim-le";
     }
     @GetMapping("/phim-chieu-rap")
-    public String getPhimChieuRap(Model model){
-        List<Movie> movies = service.getAllPhimChieuRap();
-        model.addAttribute("movies3",movies);
+    public String getPhimChieuRap(Model model,
+                                  @RequestParam (required = false, defaultValue = "1") Integer page,
+                                  @RequestParam (required = false, defaultValue = "12") Integer size){
+        Page<Movie> movies = service.getAllPhim(MovieType.PHIM_CHIEU_RAP,true,page,size);
+        model.addAttribute("movies1", movies); // hiển thị dữ liệu
+        model.addAttribute("currentPage", page); // active trang hiện tại
         return "web/phim-chieu-rap";
     }
-    @GetMapping("/phim-le/{id}/{slug}")
+    @GetMapping("/phim/{id}/{slug}")
     public String getPhimLeDetail(Model model, @PathVariable Integer id, @PathVariable String slug){
-        Movie movie = service.getPhimLeDetails(id, slug);
+        Movie movie = service.getPhimDetails(id, slug,true);
+        List<Movie> movies = service.getPhimDeCu(9,movie.getMovieType());
+        model.addAttribute("movies1", movies);
         model.addAttribute("movieDetail",movie);
-        return "web/phim-le-detail";
+        return "web/phim-detail";
     }
 }

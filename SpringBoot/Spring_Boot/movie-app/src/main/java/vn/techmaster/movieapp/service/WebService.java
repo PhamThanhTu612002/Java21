@@ -1,6 +1,9 @@
 package vn.techmaster.movieapp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import vn.techmaster.movieapp.entity.Movie;
@@ -14,16 +17,20 @@ public class WebService {
     @Autowired
     MovieRepository movieRepository;
 
-    public List<Movie> getAllPhimLe(){
-        return movieRepository.findByMovieTypeAndStatus(MovieType.PHIM_LE,true, Sort.by(Sort.Direction.DESC,"publishedAt"));
+    public List<Movie> getAllPhim(MovieType movieType,boolean status,Sort sort){
+        return movieRepository.findByMovieTypeAndStatus(movieType,status, sort);
     }
-    public List<Movie> getAllPhimBo(){
-        return movieRepository.findByMovieTypeAndStatus(MovieType.PHIM_BO,true, Sort.by(Sort.Direction.DESC,"publishedAt"));
+    public Page<Movie> getAllPhim(MovieType movieType, boolean status,Integer page,Integer size){
+        return movieRepository.findByMovieTypeAndStatus(movieType,status, PageRequest.of(page-1,size,Sort.by("publishedAt").descending()));
+        //page trong jpa bắt băt đầu từ 0
     }
-    public List<Movie> getAllPhimChieuRap(){
-        return movieRepository.findByMovieTypeAndStatus(MovieType.PHIM_CHIEU_RAP,true, Sort.by(Sort.Direction.DESC,"publishedAt"));
+    public Movie getPhimDetails(Integer id,String slug,boolean status){
+        return movieRepository.findByIdAndSlugAndStatus(id,slug,status);
     }
-    public Movie getPhimLeDetails(Integer id,String slug){
-        return movieRepository.findByIdAndSlugAndMovieType(id,slug,MovieType.PHIM_LE);
+    public List<Movie> getAllPhimHot(boolean status){
+        return movieRepository.findTop4ByStatusOrderByViewDesc(status);
+    }
+    public List<Movie> getPhimDeCu(int rating,MovieType movieType){
+        return movieRepository.findTop6ByRatingAndMovieTypeOrderByViewDesc(rating,movieType);
     }
 }

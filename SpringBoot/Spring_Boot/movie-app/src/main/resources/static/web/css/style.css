@@ -11,3 +11,8 @@ img {
     height: 100px;
     object-fit: cover;
 }
+.movie_detail img{
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
