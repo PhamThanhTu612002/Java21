@@ -53,7 +53,7 @@ public interface MovieRepository extends JpaRepository<Movie,Integer> {
     Movie findByIdAndSlugAndStatus(Integer id, String slug, boolean status);
     List<Movie> findTop4ByStatusOrderByViewDesc(boolean status);
 
-    List<Movie> findTop6ByRatingAndMovieTypeOrderByViewDesc(int rating,MovieType movieType);
+    List<Movie> findTop6ByRatingGreaterThanAndIdNotAndStatusAndMovieTypeOrderByViewDesc(int rating,int id,boolean status,MovieType movieType);
     //Thay đổi thông tin đối tượng
     //update
     @Modifying
@@ -65,19 +65,19 @@ public interface MovieRepository extends JpaRepository<Movie,Integer> {
     //insert
 
     // Tìm kiếm phim theo tiêu đề chứa từ khóa
-    @Query("SELECT m FROM Movie m where m.title like ?1")
+    @Query("SELECT m FROM Movie m where m.title like CONCAT('%',?1,'%') ")
     List<Movie> findByTitleContainingJPQL(String title);
-    @Query(value = "SELECT m FROM movies m WHERE m.title LIKE ?1",nativeQuery = true)
+    @Query(value = "SELECT m FROM movies m WHERE m.title LIKE CONCAT('%',?1,'%')",nativeQuery = true)
     List<Movie> findByTitleContainingNQ(String title);
 
     // Kiểm tra phim có tồn tại theo tiêu đề
-    @Query("SELECT m from Movie m where m.title = ?1")
+    @Query("SELECT case when count(m) > 0 then true else false end from Movie m where m.title = ?1")
     boolean existsByTitleJPQL(String title);
-    @Query(value = "SELECT m FROM movies m WHERE m.title = ?1",nativeQuery = true)
+    @Query(value = "SELECT case when count(m) > 0 then true else false end FROM movies m WHERE m.title = ?1",nativeQuery = true)
     boolean existsByTitleNQ(String title);
 
     // Đếm số lượng phim theo tiêu đề
-    @Query("SELECT count(m.id) FROM Movie m WHERE m.title like ?1")
+    @Query("SELECT count(m) FROM Movie m WHERE m.title like ?1")
     long countByTitleJQPL(String title);
     @Query(value = "SELECT count(m.id) FROM movies m WHERE m.title like ?1", nativeQuery = true)
     long countByTitleNQ(String title);
@@ -86,13 +86,14 @@ public interface MovieRepository extends JpaRepository<Movie,Integer> {
     @Query("SELECT m FROM Movie m WHERE m.movieType = ?1 and m.status = ?2 ORDER BY m.publishedAt desc")
     List<Movie> findByTypeAndStatusOrderByPublishedAtDescJPQL(MovieType type, boolean status);
 
-    @Query(value = "SELECT m FROM movies m WHERE m.movieType = ?1 and m.status = ?2 ORDER BY m.publishedAt desc",nativeQuery = true)
+    @Query(value = "SELECT m FROM movies m WHERE m.movieType = ?1 and m.status = ?2 ORDER BY published_at desc",nativeQuery = true)
     List<Movie> findByTypeAndStatusOrderByPublishedAtDescNQ(MovieType type, boolean status);
 
     // Phân trang phim theo type và status
     @Query("SELECT m FROM Movie m WHERE m.movieType=?1 and m.status = ?2")
     Page<Movie> findByTypeAndStatusJQPL(MovieType type, boolean status, Pageable pageable);
 
-    @Query(value = "SELECT m FROM movies m WHERE m.movieType=?1 and m.status = ?2",nativeQuery = true)
+    @Query(value = "SELECT * FROM movies m WHERE movie_type=?1 and status = ?2",nativeQuery = true,
+    countQuery = "SELECT count(m) FROM movies m WHERE movie_type=?1 and status = ?2")
     Page<Movie> findByTypeAndStatusNQ(MovieType type, boolean status, Pageable pageable);
 }

@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import vn.techmaster.movieapp.entity.Blog;
 import vn.techmaster.movieapp.entity.Movie;
 import vn.techmaster.movieapp.model.MovieType;
 import vn.techmaster.movieapp.service.WebService;
@@ -24,8 +25,10 @@ public class WebController {
                               @RequestParam (required = false, defaultValue = "6") Integer size) {
         List<Movie> movies = service.getAllPhimHot(true);
         Page<Movie> movies2 = service.getAllPhim(MovieType.PHIM_LE,true,page,size);
+        List<Blog> blogs = service.get4Blog(true);
         model.addAttribute("movies",movies);
         model.addAttribute("movies2",movies2);
+        model.addAttribute("blogs",blogs);
         return "web/index";
     }
 
@@ -60,9 +63,24 @@ public class WebController {
     @GetMapping("/phim/{id}/{slug}")
     public String getPhimLeDetail(Model model, @PathVariable Integer id, @PathVariable String slug){
         Movie movie = service.getPhimDetails(id, slug,true);
-        List<Movie> movies = service.getPhimDeCu(9,movie.getMovieType());
+        List<Movie> movies = service.getPhimDeCu(8,movie.getId(),true,movie.getMovieType());
         model.addAttribute("movies1", movies);
         model.addAttribute("movieDetail",movie);
         return "web/phim-detail";
+    }
+    @GetMapping("/blog")
+    public String getBlog(Model model,
+                          @RequestParam (required = false, defaultValue = "1") Integer page,
+                          @RequestParam (required = false, defaultValue = "6") Integer size){
+        Page<Blog> blogs = service.getAllBlog(true,page,size);
+        model.addAttribute("blogs",blogs);
+        model.addAttribute("currentPage", page);
+        return "web/blog";
+    }
+    @GetMapping("/blog/{id}/{slug}")
+    public String getBlogDetail(Model model,@PathVariable Integer id,@PathVariable String slug){
+        Blog blog = service.getBlogDetail(id,slug,true);
+        model.addAttribute("blog", blog);
+        return "web/blog-detail";
     }
 }
