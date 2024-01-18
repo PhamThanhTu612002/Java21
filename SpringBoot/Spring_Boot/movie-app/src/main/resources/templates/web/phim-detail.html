@@ -130,41 +130,7 @@
             </div>
             <p class="review-content" th:text="${review.getContent()}">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Similique enim veritatis, provident vel voluptas asperiores nam rem commodi</p>
             <div class="cmt-action mb-3">
-              <a href="javascript:void(0)" class="text-primary text-decoration-underline me-2" data-bs-toggle="modal" data-bs-target="#modal-update-review" >Sửa</a>
-              <div class="modal fade" id="modal-update-review" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="exampleModalLabel2">Bình luận</h1>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <div>
-                        <h5 class="text-center" th:text="${movieDetail.title}"> </h5>
-                        <div class="rating-container text-center mb-3">
-                          <span class="rating-item fs-5" data-value="1"><i class="fa fa-star"></i></span>
-                          <span class="rating-item fs-5" data-value="2"><i class="fa fa-star"></i></span>
-                          <span class="rating-item fs-5" data-value="3"><i class="fa fa-star"></i></span>
-                          <span class="rating-item fs-5" data-value="4"><i class="fa fa-star"></i></span>
-                          <span class="rating-item fs-5" data-value="5"><i class="fa fa-star"></i></span>
-                          <span class="rating-item fs-5" data-value="6"><i class="fa fa-star"></i></span>
-                          <span class="rating-item fs-5" data-value="7"><i class="fa fa-star"></i></span>
-                          <span class="rating-item fs-5" data-value="8"><i class="fa fa-star"></i></span>
-                          <span class="rating-item fs-5" data-value="9"><i class="fa fa-star"></i></span>
-                          <span class="rating-item fs-5" data-value="10"><i class="fa fa-star"></i></span>
-                        </div>
-                      </div>
-                      <div class="form-floating">
-                        <textarea class="form-control" placeholder="Viết bình luận" id="floatingTextarea3" style="height: 100px"></textarea>
-                        <label for="floatingTextarea3">Bình luận</label>
-                      </div>
-                    </div>
-                    <div class="modal-footer d-flex justify-content-center">
-                      <button id="upsertBtn2" type="button" class="btn btn-danger" th:onclick="|updateReview(${review.id},${movieDetail.id})|">Sửa</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <a href="" class="text-primary text-decoration-underline me-2" data-bs-toggle="modal" data-bs-target="#modal-update-review" th:onclick="|getIdReview(${review.id})|" >Sửa</a>
               <a id="deleteReview" href="javascript:void(0)" class="text-danger text-decoration-underline me-2" th:onclick="|deleteReview(${review.id})|" >Xóa</a>
             </div>
           </div>
@@ -173,6 +139,40 @@
     </div>
   </div>
 </section>
+<div class="modal fade" id="modal-update-review" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel2">Bình luận</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <h5 class="text-center" th:text="${movieDetail.title}"> </h5>
+          <div class="rating-container text-center mb-3">
+            <span class="rating-item fs-5" data-value="1"><i class="fa fa-star"></i></span>
+            <span class="rating-item fs-5" data-value="2"><i class="fa fa-star"></i></span>
+            <span class="rating-item fs-5" data-value="3"><i class="fa fa-star"></i></span>
+            <span class="rating-item fs-5" data-value="4"><i class="fa fa-star"></i></span>
+            <span class="rating-item fs-5" data-value="5"><i class="fa fa-star"></i></span>
+            <span class="rating-item fs-5" data-value="6"><i class="fa fa-star"></i></span>
+            <span class="rating-item fs-5" data-value="7"><i class="fa fa-star"></i></span>
+            <span class="rating-item fs-5" data-value="8"><i class="fa fa-star"></i></span>
+            <span class="rating-item fs-5" data-value="9"><i class="fa fa-star"></i></span>
+            <span class="rating-item fs-5" data-value="10"><i class="fa fa-star"></i></span>
+          </div>
+        </div>
+        <div class="form-floating">
+          <textarea class="form-control" placeholder="Viết bình luận" id="floatingTextarea3" style="height: 100px"></textarea>
+          <label for="floatingTextarea3">Bình luận</label>
+        </div>
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button id="upsertBtn2" type="button" class="btn btn-danger" th:onclick="|updateReview(${movieDetail.getId()})|">Sửa</button>
+      </div>
+    </div>
+  </div>
+</div>
 <section class="py-2">
   <div class="container">
     <h2 class="mb-3">Phim Đề Cử</h2>

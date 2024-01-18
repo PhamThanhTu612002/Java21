@@ -60,9 +60,14 @@ const createReview = async (movieId) => {
         console.log(error)
     });
 }
-const updateReview = async (reviewId,movieId) => {
+let reivewIdUpdated =0;
+const getIdReview = (reviewID) =>{
+    reivewIdUpdated = reviewID;
+}
+const updateReview = async (movieId) => {
+    console.log("123");
     const content = document.querySelector('#floatingTextarea3');
-    axios.put("http://localhost:8081/api/reviews/"+reviewId,{
+    axios.put("http://localhost:8081/api/reviews/"+reivewIdUpdated,{
         content: content.value,
         movieId: movieId,
         rating: countStar
