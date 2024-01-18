@@ -63,7 +63,16 @@ const createReview = async (movieId) => {
 let reivewIdUpdated =0;
 const getIdReview = (reviewID) =>{
     reivewIdUpdated = reviewID;
+    const bntUpdate = document.querySelectorAll("#updateReview");
+    console.log(bntUpdate)
+    const ratingContent = document.querySelectorAll(".review-content");
+    const ratingStars = document.querySelectorAll(".rating-number");
+    console.log(ratingContent[1].innerText);
+    console.log(ratingStars[1].innerText.trim().split("/")[0]);
+    const content = document.querySelector("#floatingTextarea3");
 }
+
+
 const updateReview = async (movieId) => {
     console.log("123");
     const content = document.querySelector('#floatingTextarea3');

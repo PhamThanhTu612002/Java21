@@ -130,7 +130,7 @@
             </div>
             <p class="review-content" th:text="${review.getContent()}">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Similique enim veritatis, provident vel voluptas asperiores nam rem commodi</p>
             <div class="cmt-action mb-3">
-              <a href="" class="text-primary text-decoration-underline me-2" data-bs-toggle="modal" data-bs-target="#modal-update-review" th:onclick="|getIdReview(${review.id})|" >Sửa</a>
+              <a id="updateReview" href="" class="text-primary text-decoration-underline me-2" data-bs-toggle="modal" data-bs-target="#modal-update-review" th:onclick="|getIdReview(${review.id})|" >Sửa</a>
               <a id="deleteReview" href="javascript:void(0)" class="text-danger text-decoration-underline me-2" th:onclick="|deleteReview(${review.id})|" >Xóa</a>
             </div>
           </div>
@@ -226,10 +226,10 @@
     </div>
   </div>
 </footer>
+<script src="/web/js/main.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.5/axios.min.js"></script>
-<script src="/web/js/main.js"></script>
 </body>
 </html>
