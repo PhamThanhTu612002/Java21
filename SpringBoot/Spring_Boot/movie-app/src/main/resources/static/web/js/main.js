@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 const createReview = async (movieId) => {
-    const content = document.querySelector('.form-control');
+    const content = document.querySelector('#floatingTextarea2');
     axios.post("http://localhost:8081/api/reviews",{
         content: content.value,
         movieId: movieId,
@@ -61,7 +61,7 @@ const createReview = async (movieId) => {
     });
 }
 const updateReview = async (reviewId,movieId) => {
-    const content = document.querySelector('.form-control');
+    const content = document.querySelector('#floatingTextarea3');
     axios.put("http://localhost:8081/api/reviews/"+reviewId,{
         content: content.value,
         movieId: movieId,
