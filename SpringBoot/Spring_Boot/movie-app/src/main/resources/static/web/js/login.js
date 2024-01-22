@@ -13,11 +13,6 @@ btnLogin.addEventListener("click", () => {
     axios.post('/api/auth/login', data)
         .then(function (response){
             toastr.success('Đăng nhập thành công')
-            linkLogin.parentNode.removeChild(linkLogin);
-            linkRegiser.parentNode.removeChild(linkRegiser)
-            const linkLogout = document.createElement('a')
-            linkLogout.textContent = 'Logout'
-            navbar.appendChild(linkLogout);
             window.location.href = '/';
         })
         .catch(function (error) {
@@ -25,3 +20,4 @@ btnLogin.addEventListener("click", () => {
             toastr.error(error.response.data.message)
         })
 })
+
