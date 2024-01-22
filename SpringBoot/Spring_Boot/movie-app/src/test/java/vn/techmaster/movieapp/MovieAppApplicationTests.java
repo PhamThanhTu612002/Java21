@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import vn.techmaster.movieapp.entity.*;
 import vn.techmaster.movieapp.model.MovieType;
 import vn.techmaster.movieapp.model.Role;
@@ -36,9 +37,9 @@ class MovieAppApplicationTests {
     private ReviewRepository reviewRepository;
     @Autowired
     private BlogRepository blogRepository;
-//    @Autowired
-//    private EpisodeRepository episodeRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Test
     void save_all_genres() {
@@ -141,8 +142,8 @@ class MovieAppApplicationTests {
         for (int i = 0; i < 10; i++){
             User user = User.builder()
                     .fullname(faker.name().fullName())
-                    .username(faker.name().username())
-                    .password("123456")
+                    .email(faker.internet().emailAddress())
+                    .password(passwordEncoder.encode("123456"))
                     .avatar(faker.internet().image())
                     .role(i==0 || i==1 ? Role.ADMIN : Role.USER)
                     .build();

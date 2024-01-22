@@ -19,7 +19,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)// id tự động tăng
     Integer id;
-    String username;
+    String email;
 
     @Column(nullable = false)
     String password;

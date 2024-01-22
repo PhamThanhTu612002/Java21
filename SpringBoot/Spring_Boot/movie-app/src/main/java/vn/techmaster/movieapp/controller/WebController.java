@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import vn.techmaster.movieapp.entity.Blog;
 import vn.techmaster.movieapp.entity.Movie;
@@ -93,5 +94,14 @@ public class WebController {
         Blog blog = service.getBlogDetail(id,slug,true);
         model.addAttribute("blog", blog);
         return "web/blog-detail";
+    }
+    @GetMapping("/sign-up")
+    public String getSignUpPage(){
+        return "web/signup";
+    }
+
+    @GetMapping("/login")
+    public String getLoginPage(){
+        return "web/login";
     }
 }
