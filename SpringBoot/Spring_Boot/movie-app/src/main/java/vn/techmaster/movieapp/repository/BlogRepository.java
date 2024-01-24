@@ -13,4 +13,7 @@ public interface BlogRepository extends JpaRepository<Blog,Integer> {
     List<Blog> findTop4ByStatusOrderByPublishedAtDesc(boolean status);
     Page<Blog> findByStatusOrderByPublishedAtDesc(boolean status , Pageable pageable);
     Blog findByIdAndSlugAndStatus(Integer id, String slug, boolean status);
+
+    Page<Blog> findAllByOrderByCreatedAtDesc(Pageable pageable);
+    Blog findBlogById(Integer id);
 }

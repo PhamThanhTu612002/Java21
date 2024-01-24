@@ -47,10 +47,13 @@ const renderReview = (reviews) => {
               <p class="rating-number fw-semibold">${review.rating}/10<i class="fa fa-star text-warning me-2"></i>${review.ratingText}</p>
             </div>
             <p class="review-content">${review.content}</p>
-            <div class="cmt-action mb-3">
-              <a id="updateReview" href="javascript:void(0)" class="text-primary text-decoration-underline me-2"  onclick="openModalUpdate(${review.id})" >Sửa</a>
-              <a id="deleteReview" href="javascript:void(0)" class="text-danger text-decoration-underline me-2" onclick="deleteReview(${review.id})" >Xóa</a>
-            </div>
+            ${currentUser && currentUser.id === review.user.id ?
+                `<div class="cmt-action mb-3">
+                  <a id="updateReview" href="javascript:void(0)" class="text-primary text-decoration-underline me-2"  onclick="openModalUpdate(${review.id})" >Sửa</a>
+                  <a id="deleteReview" href="javascript:void(0)" class="text-danger text-decoration-underline me-2" onclick="deleteReview(${review.id})" >Xóa</a>
+                </div>`
+                :``
+        }
           </div>
         </div>`
     }).join('')

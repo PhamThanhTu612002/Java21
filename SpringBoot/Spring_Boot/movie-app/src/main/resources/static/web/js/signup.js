@@ -12,11 +12,16 @@ btnRegister.addEventListener('click',() =>{
     }
     axios.post('/api/auth/register', data)
         .then(function (response){
-            toastr.success('Đăng ký thành công')
-            window.location.href = '/login';
+            if (response.status === 200){
+                toastr.success('Đăng ký thành công')
+                setTimeout(() =>{
+                    window.location.href = '/login';
+                },1500)
+            }
+
         })
         .catch(function (error) {
             console.log(error);
-            toastr.error(error.response.data.message)
+            toastr.error('Đăng ký thất bại');
         })
 })

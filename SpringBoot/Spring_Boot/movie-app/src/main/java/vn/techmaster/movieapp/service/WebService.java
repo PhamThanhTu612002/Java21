@@ -46,4 +46,11 @@ public class WebService {
     public Blog getBlogDetail(Integer id, String slug, boolean status){
         return blogRepository.findByIdAndSlugAndStatus(id,slug,status);
     }
+
+    public Page<Blog> getAllBlog(Integer page,Integer size){
+        return blogRepository.findAllByOrderByCreatedAtDesc(PageRequest.of(page,size));
+    }
+    public Blog getBlogDetail(Integer id){
+        return blogRepository.findBlogById(id);
+    }
 }

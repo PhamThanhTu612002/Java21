@@ -1,5 +1,6 @@
 package vn.techmaster.movieapp.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import vn.techmaster.movieapp.entity.Blog;
 import vn.techmaster.movieapp.entity.Movie;
 import vn.techmaster.movieapp.entity.Review;
+import vn.techmaster.movieapp.entity.User;
 import vn.techmaster.movieapp.model.MovieType;
 import vn.techmaster.movieapp.service.ReviewService;
 import vn.techmaster.movieapp.service.WebService;
@@ -24,6 +26,8 @@ public class WebController {
     WebService service;
     @Autowired
     ReviewService reviewService;
+    @Autowired
+    HttpSession session;
     @GetMapping("/")
     public String getHomePage(Model model,
                               @RequestParam (required = false, defaultValue = "1") Integer page,
@@ -97,11 +101,19 @@ public class WebController {
     }
     @GetMapping("/sign-up")
     public String getSignUpPage(){
+        User user = (User) session.getAttribute("currentUser");
+        if (user != null){
+            return "redirect:/";
+        }
         return "web/signup";
     }
 
     @GetMapping("/login")
     public String getLoginPage(){
+        User user = (User) session.getAttribute("currentUser");
+        if (user != null){
+            return "redirect:/";
+        }
         return "web/login";
     }
 }

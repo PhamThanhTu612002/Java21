@@ -1,93 +1,32 @@
 <!doctype html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" th:replace="~{web/layout/layout :: layout(~{:: title}, ~{:: #css}, ~{:: #main-content}, ~{:: #js})}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>phimhay.org</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-  <link rel="stylesheet" th:href="@{/web/css/style.css}">
+  <title th:text="${blog.title}">phimhay.org</title>
+  <th:block id="css"></th:block>
 </head>
 <body>
-<header class="bg-dark">
-  <nav class="navbar navbar-expand-lg">
+
+<th:block id="main-content">
+  <section class="py-2">
     <div class="container">
-      <a class="navbar-brand bg-light" th:href="@{/}">
-        <img class="logo" height="100px" th:src="@{/web/image/logo.png}" alt="">
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <a class="nav-link active text-white" aria-current="page" th:href="@{/}">Trang Chủ</a>
-          <a class="nav-link active text-white" th:href="@{/phim-bo}">Phim Bộ</a>
-          <a class="nav-link active text-white" th:href="@{/phim-chieu-rap}">Phim Chiếu Rạp</a>
-          <a class="nav-link active text-white" th:href="@{/phim-le}">Phim Lẻ</a>
-          <a class="nav-link active text-white" href="">Thể Loại</a>
-          <a class="nav-link active text-white" th:href="@{/login}">Đăng nhập</a>
-          <a class="nav-link active text-white" th:href="@{/sign-up}">Đăng ký</a>
-        </div>
-      </div>
+      <a th:href="@{/}">Trang chủ</a> > <a th:href="@{/blog}">Tin Tức</a> > <p class="d-inline" th:text="${blog.title}">Top 15 Phim Cổ Trang Trung Quốc Hay Không Thể Bỏ Lỡ Năm 2023</p>
+      <h3 th:text="${blog.title}" class="pt-3">Top 15 Phim Cổ Trang Trung Quốc Hay Không Thể Bỏ Lỡ Năm 2023</h3>
+      <p class="fst-italic">Ngày <th:block th:text="${blog.publishedAt.date}"></th:block>, <th:block th:text="${#dates.monthName(blog.publishedAt)}"></th:block>, Năm <th:block th:text="${#dates.year(blog.publishedAt)}"></th:block></p>
+      <p th:text="${blog.description}">Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio quasi delectus molestiae reprehenderit sit sint aperiam obcaecati pariatur suscipit? Eius assumenda culpa iste, non illo vel ad debitis alias ducimus.
+        Officia vel suscipit dolores dolorum ducimus maiores aspernatur, explicabo repellat, fugit facilis harum impedit nobis magni sequi vitae! Aperiam doloremque recusandae quas dolor voluptatem suscipit dicta eveniet. Iste, officia. Nobis?
+        Quasi libero delectus, repellat ab dignissimos dicta! Fugit commodi aperiam hic dolor! Corporis, maxime? Quisquam non aliquid nam in unde maiores expedita adipisci officiis, tempore nulla veritatis, laboriosam dignissimos placeat.
+        Ab vitae rem possimus vel magnam aperiam eos atque. Distinctio tenetur fugit architecto obcaecati ratione impedit totam at laborum dolores! Quisquam, vero? Tenetur, sit corrupti! Placeat ea porro accusamus ut.
+        Placeat facilis iure unde possimus incidunt vitae officiis numquam, maxime, deleniti accusamus accusantium, molestias quos! Praesentium veritatis consectetur cupiditate mollitia soluta accusamus aliquid minima, debitis ab eligendi, porro quisquam nostrum?
+        Quam in ratione, iste doloribus quidem nihil sed deserunt eaque! Aperiam porro sequi iusto nobis illum deserunt neque quidem, facilis ipsa, quae, voluptates culpa quas ratione adipisci nemo pariatur asperiores.
+        Impedit ex esse officia dicta, quidem, consequuntur harum tenetur sunt quas iusto, corrupti id? Autem ratione quod, quis impedit, placeat dolores laborum recusandae harum at iusto fugiat, quibusdam quae itaque.
+        Omnis ullam totam quos pariatur ad vero rerum nemo praesentium illo in, dicta earum fugiat minima doloribus at inventore corrupti veritatis voluptatum quis quia modi eveniet? Deserunt nobis enim recusandae.
+        Ipsum, nostrum repellat. Voluptatem maxime voluptate fuga maiores odio, nulla quo aperiam reiciendis deleniti quaerat soluta veniam adipisci quos quis, enim blanditiis debitis impedit eaque. Dolorum laudantium numquam beatae cumque!
+        Laborum minus molestiae suscipit vero perspiciatis porro, debitis exercitationem dolorem totam corporis eos temporibus eveniet. Vero, repudiandae asperiores optio atque at soluta velit iusto dolorum quisquam numquam impedit cumque ipsam.</p>
     </div>
-  </nav>
-</header>
-<section class="py-2">
-  <div class="container">
-    <a th:href="@{/}">Trang chủ</a> > <a th:href="@{/blog}">Tin Tức</a> > <p class="d-inline" th:text="${blog.title}">Top 15 Phim Cổ Trang Trung Quốc Hay Không Thể Bỏ Lỡ Năm 2023</p>
-    <h3 th:text="${blog.title}" class="pt-3">Top 15 Phim Cổ Trang Trung Quốc Hay Không Thể Bỏ Lỡ Năm 2023</h3>
-    <p class="fst-italic">Ngày <th:block th:text="${blog.publishedAt.date}"></th:block>, <th:block th:text="${#dates.monthName(blog.publishedAt)}"></th:block>, Năm <th:block th:text="${#dates.year(blog.publishedAt)}"></th:block></p>
-    <p th:text="${blog.description}">Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio quasi delectus molestiae reprehenderit sit sint aperiam obcaecati pariatur suscipit? Eius assumenda culpa iste, non illo vel ad debitis alias ducimus.
-      Officia vel suscipit dolores dolorum ducimus maiores aspernatur, explicabo repellat, fugit facilis harum impedit nobis magni sequi vitae! Aperiam doloremque recusandae quas dolor voluptatem suscipit dicta eveniet. Iste, officia. Nobis?
-      Quasi libero delectus, repellat ab dignissimos dicta! Fugit commodi aperiam hic dolor! Corporis, maxime? Quisquam non aliquid nam in unde maiores expedita adipisci officiis, tempore nulla veritatis, laboriosam dignissimos placeat.
-      Ab vitae rem possimus vel magnam aperiam eos atque. Distinctio tenetur fugit architecto obcaecati ratione impedit totam at laborum dolores! Quisquam, vero? Tenetur, sit corrupti! Placeat ea porro accusamus ut.
-      Placeat facilis iure unde possimus incidunt vitae officiis numquam, maxime, deleniti accusamus accusantium, molestias quos! Praesentium veritatis consectetur cupiditate mollitia soluta accusamus aliquid minima, debitis ab eligendi, porro quisquam nostrum?
-      Quam in ratione, iste doloribus quidem nihil sed deserunt eaque! Aperiam porro sequi iusto nobis illum deserunt neque quidem, facilis ipsa, quae, voluptates culpa quas ratione adipisci nemo pariatur asperiores.
-      Impedit ex esse officia dicta, quidem, consequuntur harum tenetur sunt quas iusto, corrupti id? Autem ratione quod, quis impedit, placeat dolores laborum recusandae harum at iusto fugiat, quibusdam quae itaque.
-      Omnis ullam totam quos pariatur ad vero rerum nemo praesentium illo in, dicta earum fugiat minima doloribus at inventore corrupti veritatis voluptatum quis quia modi eveniet? Deserunt nobis enim recusandae.
-      Ipsum, nostrum repellat. Voluptatem maxime voluptate fuga maiores odio, nulla quo aperiam reiciendis deleniti quaerat soluta veniam adipisci quos quis, enim blanditiis debitis impedit eaque. Dolorum laudantium numquam beatae cumque!
-      Laborum minus molestiae suscipit vero perspiciatis porro, debitis exercitationem dolorem totam corporis eos temporibus eveniet. Vero, repudiandae asperiores optio atque at soluta velit iusto dolorum quisquam numquam impedit cumque ipsam.</p>
-  </div>
-</section>
-<footer class="bg-dark py-4 text-white">
-  <div class="container">
-    <div class="row">
-      <div class="col-4">
-        <img class="bg-white" width="300px" th:src="@{/web/image/logo.png}" alt="">
-        <p class="mt-2">Motchill - Xem phim Online Vietsub chất lượng cao miễn phí, nhiều thể loại phim phong phú, đặc sắc, giao diện trực quan, thuận tiện, tốc độ tải nhanh, thường xuyên cập nhật các bộ phim mới.</p>
-      </div>
-      <div class="col-2">
-        <h5 class="text-uppercase mb-3">Danh Mục</h5>
-        <p><a class="text-decoration-none text-white" th:href="@{/blog}">Tin Tức</a></p>
-        <p><a class="text-decoration-none text-white" th:href="@{/phim-chieu-rap}">Phim Chiếu Rạp</a></p>
-        <p><a class="text-decoration-none text-white" th:href="@{/phim-le}">Phim Lẻ</a></p>
-        <p><a class="text-decoration-none text-white" th:href="@{/phim-bo}">Phim Bộ</a></p>
-      </div>
-      <div class="col-2">
-        <h5 class="text-uppercase mb-3">Danh Mục</h5>
-        <p>Tin Tức</p>
-        <p>Phim Chiếu Rạp</p>
-        <p>Phim Lẻ</p>
-        <p>Tivi Show</p>
-      </div>
-      <div class="col-2">
-        <h5 class="text-uppercase mb-3">Danh Mục</h5>
-        <p>Tin Tức</p>
-        <p>Phim Chiếu Rạp</p>
-        <p>Phim Lẻ</p>
-        <p>Tivi Show</p>
-      </div>
-      <div class="col-2">
-        <h5 class="text-uppercase mb-3">Danh Mục</h5>
-        <p>Tin Tức</p>
-        <p>Phim Chiếu Rạp</p>
-        <p>Phim Lẻ</p>
-        <p>Tivi Show</p>
-      </div>
-    </div>
-  </div>
-</footer>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  </section>
+</th:block>
+<th:block id="js"></th:block>
 </body>
 </html>
