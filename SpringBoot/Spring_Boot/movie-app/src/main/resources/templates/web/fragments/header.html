@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<header class="bg-dark">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand bg-light" th:href="@{/}">
+                <img class="logo" height="100px" th:src="@{/web/image/logo.png}" alt="">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link active text-white" aria-current="page" th:href="@{/}">Trang Chủ</a>
+                    <a class="nav-link active text-white" th:href="@{/phim-bo}">Phim Bộ</a>
+                    <a class="nav-link active text-white" th:href="@{/phim-chieu-rap}">Phim Chiếu Rạp</a>
+                    <a class="nav-link active text-white" th:href="@{/phim-le}">Phim Lẻ</a>
+                    <a class="nav-link active text-white" href="">Thể Loại</a>
+                    <a th:if="${session.currentUser == null}" class="nav-link active text-white" id="login" th:href="@{/login}">Đăng nhập</a>
+                    <a th:if="${session.currentUser == null}" class="nav-link active text-white" id="register" th:href="@{/sign-up}">Đăng ký</a>
+                    <a th:if="${session.currentUser != null}" class="nav-link text-white" >Xin chào bạn, <span th:text="${session.currentUser.fullname}"></span></a>
+                    <a th:if="${session.currentUser != null}" class="nav-link active text-white" id="logout" href="javascript:void(0)" onclick="logout()">Đăng Xuất</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+</body>
+</html>
