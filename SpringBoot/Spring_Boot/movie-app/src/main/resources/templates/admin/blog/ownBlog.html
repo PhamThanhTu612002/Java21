@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{admin/layout/layout :: layout(~{:: title}, ~{:: #css}, ~{:: .container-fluid}, ~{:: #js})}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>All Blog</title>
+    <th:block id="css">
+    </th:block>
+</head>
+<body>
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-1">
+        <h1 class="h3 mb-0 text-gray-800">Blog</h1>
+    </div>
+
+    <!-- Content Row -->
+    <div class="row">
+        <div class="col-3 mb-2">
+            <a th:href="@{/admin/blog/create}"><button class="btn btn-primary"><i class="fas fa-plus" style="color: #ffffff;"></i> Viết bài</button></a>
+            <button class="btn btn-primary mx-3"><i class="fas fa-redo" style="color: #ffffff;"></i> Làm lại</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <table id="table-blog" class="table table-bordered table-sm table-hover">
+                <thead>
+                <tr>
+                    <th>Tiêu đề</th>
+                    <th>Danh mục</th>
+                    <th>Trạng thái</th>
+                    <th>Ngày tạo</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="blog : ${blogs}">
+                    <td><a th:href="@{/admin/blog/{id}/detail (id = ${blog.id}) } "><th:block th:text="${blog.title}"></th:block></a></td>
+                    <td>Backend</td>
+                    <td th:text="${blog.status} ? 'Công khai' : 'Nháp'">Bài viết 1</td>
+                    <td th:text="${#dates.format(blog.createdAt,'dd/MM/yyyy')}">Bài viết 1</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- End of Content Wrapper -->
+</div>
+<th:block id="js">
+    <script src="/admin/datatables.min.js"></script>
+    <script th:inline="javascript">
+        $('#table-blog').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
+    </script>
+</th:block>
+</body>
+</html>

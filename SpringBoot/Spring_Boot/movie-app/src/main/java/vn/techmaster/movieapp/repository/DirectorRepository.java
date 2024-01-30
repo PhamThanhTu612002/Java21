@@ -6,4 +6,5 @@ import vn.techmaster.movieapp.entity.Director;
 
 @Repository
 public interface DirectorRepository extends JpaRepository<Director,Integer> {
+    Director findDirectorById(Integer id);
 }

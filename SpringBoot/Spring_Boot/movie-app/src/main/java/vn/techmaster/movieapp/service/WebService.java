@@ -53,4 +53,8 @@ public class WebService {
     public Blog getBlogDetail(Integer id){
         return blogRepository.findBlogById(id);
     }
+    public Page<Blog> getAllBlogById(Integer id,Integer page,Integer size){
+        return blogRepository.findBlogByUser_IdOrderByCreatedAtDesc(id,PageRequest.of(page,size));
+    }
+
 }

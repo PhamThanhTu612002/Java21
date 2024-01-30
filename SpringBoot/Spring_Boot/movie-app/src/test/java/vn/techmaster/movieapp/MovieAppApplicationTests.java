@@ -55,11 +55,12 @@ class MovieAppApplicationTests {
     void save_all_actors() {
         Faker faker = new Faker();
         for(int i = 0; i < 20; i++){
+            String name = faker.name().fullName();
             Actor actor = Actor.builder()
-                    .actor_name(faker.name().fullName())
+                    .actor_name(name)
                     .birthday(faker.date().birthday())
                     .description(faker.lorem().paragraph())
-                    .avatar(faker.avatar().image())
+                    .avatar(generateLinkImage(name))
                     .build();
             actorRepository.save(actor);
         }
@@ -68,11 +69,12 @@ class MovieAppApplicationTests {
     void save_all_directors() {
         Faker faker = new Faker();
         for(int i = 0; i < 20; i++){
+            String name = faker.name().fullName();
             Director director = Director.builder()
-                    .director_name(faker.name().fullName())
+                    .director_name(name)
                     .birthday(faker.date().birthday())
                     .description(faker.lorem().paragraph())
-                    .avatar(faker.avatar().image())
+                    .avatar(generateLinkImage(name))
                     .build();
             directorRepository.save(director);
         }
@@ -122,7 +124,7 @@ class MovieAppApplicationTests {
                     .title(title)
                     .slug(slugify.slugify(title))
                     .description(faker.lorem().paragraph())
-                    .poster(faker.company().logo())
+                    .poster(generateLinkImage(title))
                     .movieType(MovieType.values()[faker.number().numberBetween(2,3)])
                     .releaseYear(faker.number().numberBetween(2018,2024))
                     .status(status)
@@ -140,11 +142,12 @@ class MovieAppApplicationTests {
     void save_all_users() {
         Faker faker = new Faker();
         for (int i = 0; i < 10; i++){
+            String name = faker.name().fullName();
             User user = User.builder()
                     .fullname(faker.name().fullName())
                     .email(faker.internet().emailAddress())
                     .password(passwordEncoder.encode("123456"))
-                    .avatar(faker.internet().image())
+                    .avatar(generateLinkImage(name))
                     .role(i==0 || i==1 ? Role.ADMIN : Role.USER)
                     .build();
             userRepository.save(user);
@@ -177,7 +180,7 @@ class MovieAppApplicationTests {
                     .slug(slugify.slugify(title))
                     .description(faker.lorem().paragraph())
                     .content(faker.lorem().paragraph())
-                    .thumbnail(faker.internet().image())
+                    .thumbnail(generateLinkImage(title))
                     .status(status)
                     .createdAt(createdAt)
                     .updatedAt(createdAt)
@@ -251,5 +254,14 @@ class MovieAppApplicationTests {
         System.out.println(pageData.getContent().size());
         System.out.println(pageData.getTotalElements());
         pageData.forEach(System.out::println);
+    }
+    // get first character from string, and to uppercase
+    private static String getCharacter(String str) {
+        return str.substring(0, 1).toUpperCase();
+    }
+
+    // generate link author avatar follow struct : https://placehold.co/200x200?text=[...]
+    public static String generateLinkImage(String name) {
+        return "https://placehold.co/200x200?text=" + getCharacter(name);
     }
 }

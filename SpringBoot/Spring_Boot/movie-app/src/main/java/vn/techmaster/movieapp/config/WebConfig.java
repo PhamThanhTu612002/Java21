@@ -9,11 +9,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
     @Autowired
-    private final AuthenticationInterceptor authenticationInterceptor;
+    AuthenticationInterceptor authenticationInterceptor;
+    @Autowired
+    RoleBasedAuthInterceptor roleBasedAuthInterceptor;
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(authenticationInterceptor)
                 //chỉ áp dụng cho các request tới các đường dẫn bên dưới
                 .addPathPatterns("/api/reviews/**");
+        registry.addInterceptor(roleBasedAuthInterceptor)
+                .addPathPatterns("/admin","/admin/**","/api/admin/**");
     }
 }
