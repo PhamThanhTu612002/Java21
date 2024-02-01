@@ -1,9 +1,12 @@
 package vn.techmaster.movieapp.service;
 
+import com.github.slugify.Slugify;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import vn.techmaster.movieapp.entity.Blog;
 import vn.techmaster.movieapp.entity.Director;
 import vn.techmaster.movieapp.exception.ResourceNotFoundException;
 import vn.techmaster.movieapp.model.request.UpsertDirectorRequest;
@@ -18,6 +21,10 @@ import java.util.List;
 public class DirectorService {
     @Autowired
     DirectorRepository directorRepository;
+    @Autowired
+    public FileService fileService;
+    @Autowired
+    private final Slugify slugify;
     public List<Director> getAllDirectors() {
         return directorRepository.findAll();
     }
@@ -47,5 +54,15 @@ public class DirectorService {
         Director director = directorRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Director not found"));
 
         directorRepository.delete(director);
+    }
+
+    public String uploadFile(Integer id, MultipartFile file) {
+        Director director = directorRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Director ko thấy"));
+        String path = fileService.uploadFile(file);
+
+        director.setAvatar(path);
+        directorRepository.save(director);
+        return path;
     }
 }

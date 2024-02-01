@@ -1,5 +1,6 @@
 package vn.techmaster.movieapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -25,6 +26,8 @@ public class Director {
     @Column(columnDefinition = "TEXT")
     String description;
     String avatar;
+
+    @JsonIgnore
     @ManyToMany(mappedBy = "directors")
     List<Movie> movies;
 }

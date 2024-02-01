@@ -1,10 +1,13 @@
 package vn.techmaster.movieapp.service;
 
+import com.github.slugify.Slugify;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import vn.techmaster.movieapp.entity.Actor;
+import vn.techmaster.movieapp.entity.Director;
 import vn.techmaster.movieapp.entity.Movie;
 import vn.techmaster.movieapp.exception.ResourceNotFoundException;
 import vn.techmaster.movieapp.model.request.UpsertMovieRequest;
@@ -25,6 +28,10 @@ public class MovieService {
     ActorRepository actorRepository;
     @Autowired
     DirectorRepository directorRepository;
+    @Autowired
+    public FileService fileService;
+    @Autowired
+    private final Slugify slugify;
 
     public List<Movie> getAllMovies() {
         return movieRepository.findAll();
@@ -64,6 +71,16 @@ public class MovieService {
     public void deleteMovie(Integer id) {
         Movie movie = movieRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Movie not found"));
 
-        movieRepository.deleteById(id);
+        movieRepository.delete(movie);
+    }
+
+    public String uploadFile(Integer id, MultipartFile file) {
+        Movie movie = movieRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Movie ko thấy"));
+        String path = fileService.uploadFile(file);
+
+        movie.setPoster(path);
+        movieRepository.save(movie);
+        return path;
     }
 }

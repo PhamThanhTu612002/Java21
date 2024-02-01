@@ -5,8 +5,6 @@ tinymce.init({
     tinycomments_mode: 'embedded'
 });
 
-var editorValue = $("#default-editor").val();
-console.log(editorValue);
 // $('#multiple-select-field .select2')( {
 //     theme: "bootstrap-5",
 //     width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',

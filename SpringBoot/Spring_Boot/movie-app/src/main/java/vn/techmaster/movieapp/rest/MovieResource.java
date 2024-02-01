@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import vn.techmaster.movieapp.entity.Movie;
 import vn.techmaster.movieapp.model.request.UpsertMovieRequest;
 import vn.techmaster.movieapp.service.MovieService;
@@ -28,5 +29,10 @@ public class MovieResource {
     public ResponseEntity<?> deleteMovie(@PathVariable Integer id){
         movieService.deleteMovie(id);
         return ResponseEntity.noContent().build();
+    }
+    @PostMapping("/{id}/upload-thumbnail")
+    public ResponseEntity<?> uploadThumbnail(@PathVariable Integer id,@RequestParam("file") MultipartFile file){
+        String filePath = movieService.uploadFile(id,file);
+        return ResponseEntity.ok(filePath);
     }
 }

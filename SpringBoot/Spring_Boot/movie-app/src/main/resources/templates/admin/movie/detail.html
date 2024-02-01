@@ -27,7 +27,7 @@
                             <div class="col-8">
                                 <div class="form-group">
                                     <label>Tên phim</label>
-                                    <input type="text" class="form-control" id="name" name="name" th:value="${detailMovie.title}">
+                                    <input type="text" class="form-control" id="title" name="title" th:value="${detailMovie.title}">
                                 </div>
                                 <div class="form-group">
                                     <label>Mô tả ngắn</label>
@@ -109,25 +109,37 @@
         });
         $('#form-update-movie').validate({
             rules: {
-                name: {
+                title: {
                     required: true
                 },
                 description: {
                     required: true
                 },
-                birthday:{
+                director:{
+                    required: true
+                },
+                actor:{
+                    required: true
+                },
+                releaseYear:{
                     required: true
                 }
             },
             messages: {
-                name: {
+                title: {
                     required: "Tên không được để trống"
                 },
                 description: {
                     required: "Mô tả ngắn không được để trống"
                 },
-                birthday: {
-                    required: "Ngày sinh không được để trống"
+                director: {
+                    required: "Đạo diễn không được để trống"
+                },
+                actor:{
+                    required: "Diễn viên không được để trống"
+                },
+                releaseYear:{
+                    required: "Năm phát hành không được để trống"
                 }
             },
             errorElement: 'span',
@@ -143,7 +155,7 @@
             }
         });
         // Lưu bài viết
-        const nameEl = document.getElementById('name');
+        const nameEl = document.getElementById('title');
         const descriptionEl = document.getElementById('description');
         const statusEl = document.getElementById("status");
         const movieTypeEl = document.getElementById("movieType");
@@ -173,7 +185,7 @@
                 .then(function (response) {
                     toastr.success('Cập nhật đạo diễn thành công')
                     setTimeout(function () {
-                        window.location.href = '/admin/directors'
+                        window.location.href = '/admin/movies'
                     },1500)
                 })
                 .catch(function (error) {
@@ -184,15 +196,15 @@
         // Xóa bài viết
         const btnDelete = document.getElementById('btn-delete')
         btnDelete.addEventListener('click', function () {
-            const isConfirm = confirm('Bạn có chắc chắn muốn xóa đạo diễn này?')
+            const isConfirm = confirm('Bạn có chắc chắn muốn xóa phim này?')
             if (!isConfirm) {
                 return
             }
             axios.delete(`/api/admin/movies/${detailMovie.id}`)
                 .then(function (response) {
-                    toastr.success('Xóa đạo diễn thành công')
+                    toastr.success('Xóa phim thành công')
                     setTimeout(function () {
-                        window.location.href = '/admin/directors'
+                        window.location.href = '/admin/movies'
                     }, 1500)
                 })
                 .catch(function (error) {
@@ -202,30 +214,30 @@
         })
 
         // Upload image
-        // const imagePreview = document.getElementById('image-preview')
-        // const imageInput = document.getElementById('image')
-        //
-        // imageInput.addEventListener("change", (e) => {
-        //     // Lấy ra file vừa được chọn
-        //     const file = e.target.files[0]
-        //
-        //     // Tạo đối tượng form data để đưa dữ liệu vào gửi đi
-        //     const formData = new FormData()
-        //     formData.append('file', file)
-        //
-        //     // Goọi api sử dung axios
-        //     axios.post(`/api/admin/blogs/${blog.id}/upload-thumbnail`, formData)
-        //         .then(res => {
-        //             // Hiển thị hình ảnh vừa được upload lên
-        //             imagePreview.src = res.data
-        //
-        //             toastr.success('Upload hình ảnh thành công.')
-        //         })
-        //         .catch(err => {
-        //             console.log(err)
-        //             toastr.error(err.response.data.message)
-        //         })
-        // })
+        const imagePreview = document.getElementById('image-preview')
+        const imageInput = document.getElementById('image')
+
+        imageInput.addEventListener("change", (e) => {
+            // Lấy ra file vừa được chọn
+            const file = e.target.files[0]
+
+            // Tạo đối tượng form data để đưa dữ liệu vào gửi đi
+            const formData = new FormData()
+            formData.append('file', file)
+
+            // Goọi api sử dung axios
+            axios.post(`/api/admin/blogs/${detailMovie.id}/upload-thumbnail`, formData)
+                .then(res => {
+                    // Hiển thị hình ảnh vừa được upload lên
+                    imagePreview.src = res.data
+
+                    toastr.success('Upload hình ảnh thành công.')
+                })
+                .catch(err => {
+                    console.log(err)
+                    toastr.error(err.response.data.message)
+                })
+        })
     </script>
 </th:block>
 </body>

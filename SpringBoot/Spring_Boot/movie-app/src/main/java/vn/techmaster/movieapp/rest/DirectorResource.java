@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import vn.techmaster.movieapp.entity.Director;
 import vn.techmaster.movieapp.model.request.UpsertDirectorRequest;
 import vn.techmaster.movieapp.service.DirectorService;
@@ -28,5 +29,10 @@ public class DirectorResource {
     public ResponseEntity<?> deleteDirector(@PathVariable Integer id){
         directorService.deleteDirector(id);
         return ResponseEntity.noContent().build();
+    }
+    @PostMapping("/{id}/upload-thumbnail")
+    public ResponseEntity<?> uploadThumbnail(@PathVariable Integer id,@RequestParam("file") MultipartFile file){
+        String filePath = directorService.uploadFile(id,file);
+        return ResponseEntity.ok(filePath);
     }
 }
