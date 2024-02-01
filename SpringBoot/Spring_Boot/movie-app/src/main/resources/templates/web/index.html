@@ -93,7 +93,7 @@
                     <div class="blog_item bg-body-tertiary p-3 rounded-4 mb-4">
                         <h5 th:text="${blog.title}">Top 15 Phim Cổ Trang Trung Quốc Hay Không Thể Bỏ Lỡ Năm 2023</h5>
                         <p class="fst-italic">Ngày <th:block th:text="${blog.publishedAt.date}"></th:block>, <th:block th:text="${#dates.monthName(blog.publishedAt)}"></th:block>, Năm <th:block th:text="${#dates.year(blog.publishedAt)}"></th:block></p>
-                        <p><th:block th:text="${blog.description.substring(0,100)}"></th:block>.....<a th:href="@{/blog/{id}/{slug} (id=${blog.id},slug=${blog.slug})}">Xem Thêm</a></p>
+                        <p><th:block th:text="${blog.description.substring(0,80)}"></th:block>.....<a th:href="@{/blog/{id}/{slug} (id=${blog.id},slug=${blog.slug})}">Xem Thêm</a></p>
                     </div>
                 </div>
             </div>

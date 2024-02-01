@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{admin/layout/layout :: layout(~{:: title}, ~{:: #css}, ~{:: .container-fluid}, ~{:: #js})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <th:block id="css"></th:block>
+</head>
+<body>
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-1">
+        <h1 class="h3 mb-0 text-gray-800">Director<span> > Chi tiết phim</span></h1>
+    </div>
+    <div class="mb-2">
+        <button class="btn btn-secondary">Quay lại</button>
+        <button class="btn btn-primary mx-2" id="btn-update">Cập nhật</button>
+        <button class="btn btn-danger mx-2" id="btn-delete">Xóa</button>
+    </div>
+    <!-- Content Row -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <form id="form-update-movie">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="form-group">
+                                    <label>Tên phim</label>
+                                    <input type="text" class="form-control" id="name" name="name" th:value="${detailMovie.title}">
+                                </div>
+                                <div class="form-group">
+                                    <label>Mô tả ngắn</label>
+                                    <textarea class="form-control" th:text="${detailMovie.description}" id="description" name="description"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Đạo diễn</label>
+                                    <select class="form-control select2" id="director" name="director" multiple="multiple">
+                                        <option th:each="director : ${directors}"
+                                                th:text="${director.director_name}"
+                                                th:value="${director.id}"
+                                                th:selected="${detailMovie.getDirectors().contains(director)}">
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Diễn viên</label>
+                                    <select class="form-control select2" id="actor" name="actor" multiple="multiple">
+                                        <option th:each="actor : ${actors}"
+                                                th:text="${actor.actor_name}"
+                                                th:value="${actor.getId()}"
+                                            th:selected="${detailMovie.getActors().contains(actor)}">
+                                        </option>
+                                    </select>
+                                </div>
+<!--                                <div class="form-group">-->
+<!--                                    <label>Thể loại</label>-->
+<!--                                    <select class="form-control select2" id="genre" name="genre" multiple="multiple">-->
+<!--                                        <option th:each="director : ${directors}"-->
+<!--                                                th:text="${director.director_name}"-->
+<!--                                                th:value="${director.id}"-->
+<!--                                                th:selected="${detailMovie.getDirectors().contains(directors)}">-->
+<!--                                        </option>-->
+<!--                                    </select>-->
+<!--                                </div>-->
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label>Trạng thái</label>
+                                    <select id="status" class="custom-select" aria-label="select">
+                                        <option th:selected="not ${detailMovie.status}" value="false">Nháp</option>
+                                        <option th:selected="${detailMovie.status}" value="true">Công khai</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Loại phim</label>
+                                    <select id="movieType" class="custom-select" aria-label="select">
+                                        <option th:selected="${detailMovie.movieType.toString() == 'PHIM_CHIEU_RAP'}" value="PHIM_CHIEU_RAP">Phim Chiếu rạp</option>
+                                        <option th:selected="${detailMovie.movieType.toString() == 'PHIM_LE'}" value="PHIM_LE">Phim Lẻ</option>
+                                        <option th:selected="${detailMovie.movieType.toString() == 'PHIM_BO'}" value="PHIM_BO">Phim Bộ</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Năm Phát Hành</label>
+                                    <textarea class="form-control" th:text="${detailMovie.releaseYear}" id="releaseYear" name="releaseYear"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <div class="image-preview-container mb-3">
+                                        <img th:src="${detailMovie.poster}" alt="" id="image-preview" width="400px"/>
+                                    </div>
+                                    <label for="image" class="btn btn-info btn-flat rounded">
+                                        Chọn hình ảnh
+                                    </label>
+                                    <input type="file" id="image" class="d-none">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block id="js">
+    <script th:inline="javascript">
+        const detailMovie = [[${detailMovie}]];
+        $(document).ready(function() {
+            $('.select2').select2();
+        });
+        $('#form-update-movie').validate({
+            rules: {
+                name: {
+                    required: true
+                },
+                description: {
+                    required: true
+                },
+                birthday:{
+                    required: true
+                }
+            },
+            messages: {
+                name: {
+                    required: "Tên không được để trống"
+                },
+                description: {
+                    required: "Mô tả ngắn không được để trống"
+                },
+                birthday: {
+                    required: "Ngày sinh không được để trống"
+                }
+            },
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+        // Lưu bài viết
+        const nameEl = document.getElementById('name');
+        const descriptionEl = document.getElementById('description');
+        const statusEl = document.getElementById("status");
+        const movieTypeEl = document.getElementById("movieType");
+        const releaseYearEl = document.getElementById("releaseYear");
+        const btnUpdate = document.getElementById('btn-update');
+
+        console.log($('#director').val());
+        btnUpdate.addEventListener('click', function () {
+            if (!$('#form-update-movie').valid()) {
+                return;
+            }
+
+            // Gửi dữ liệu lên server
+            const data = {
+                title: nameEl.value,
+                description: descriptionEl.value,
+                directorIds: $('#director').val(),
+                actorIds: $('#actor').val(),
+                status: statusEl.value,
+                type: movieTypeEl.value,
+                releaseYear: releaseYearEl.value
+            }
+
+
+            // Sử dụng axios để gửi dữ liệu lên server
+            axios.put(`/api/admin/movies/${detailMovie.id}`, data)
+                .then(function (response) {
+                    toastr.success('Cập nhật đạo diễn thành công')
+                    setTimeout(function () {
+                        window.location.href = '/admin/directors'
+                    },1500)
+                })
+                .catch(function (error) {
+                    console.log(error)
+                    toastr.error(error.response.data.message)
+                })
+        })
+        // Xóa bài viết
+        const btnDelete = document.getElementById('btn-delete')
+        btnDelete.addEventListener('click', function () {
+            const isConfirm = confirm('Bạn có chắc chắn muốn xóa đạo diễn này?')
+            if (!isConfirm) {
+                return
+            }
+            axios.delete(`/api/admin/movies/${detailMovie.id}`)
+                .then(function (response) {
+                    toastr.success('Xóa đạo diễn thành công')
+                    setTimeout(function () {
+                        window.location.href = '/admin/directors'
+                    }, 1500)
+                })
+                .catch(function (error) {
+                    console.log(error)
+                    toastr.error(error.response.data.message)
+                })
+        })
+
+        // Upload image
+        // const imagePreview = document.getElementById('image-preview')
+        // const imageInput = document.getElementById('image')
+        //
+        // imageInput.addEventListener("change", (e) => {
+        //     // Lấy ra file vừa được chọn
+        //     const file = e.target.files[0]
+        //
+        //     // Tạo đối tượng form data để đưa dữ liệu vào gửi đi
+        //     const formData = new FormData()
+        //     formData.append('file', file)
+        //
+        //     // Goọi api sử dung axios
+        //     axios.post(`/api/admin/blogs/${blog.id}/upload-thumbnail`, formData)
+        //         .then(res => {
+        //             // Hiển thị hình ảnh vừa được upload lên
+        //             imagePreview.src = res.data
+        //
+        //             toastr.success('Upload hình ảnh thành công.')
+        //         })
+        //         .catch(err => {
+        //             console.log(err)
+        //             toastr.error(err.response.data.message)
+        //         })
+        // })
+    </script>
+</th:block>
+</body>
+</html>

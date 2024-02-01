@@ -96,4 +96,6 @@ public interface MovieRepository extends JpaRepository<Movie,Integer> {
     @Query(value = "SELECT * FROM movies m WHERE movie_type=?1 and status = ?2",nativeQuery = true,
     countQuery = "SELECT count(m) FROM movies m WHERE movie_type=?1 and status = ?2")
     Page<Movie> findByTypeAndStatusNQ(MovieType type, boolean status, Pageable pageable);
+
+    Movie findMovieById(Integer id);
 }
