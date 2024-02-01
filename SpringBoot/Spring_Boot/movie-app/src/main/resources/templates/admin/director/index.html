@@ -36,7 +36,7 @@
                     <td><a th:href="@{/admin/directors/{id}/detail (id = ${director.id}) } "><th:block th:text="${director.director_name}"></th:block></a></td>
                     <td th:text="${#dates.format(director.birthday,'dd/MM/yyyy')}"></td>
                     <td th:text="${director.description}">Bài viết 1</td>
-                    <td><img th:src="@{${director.avatar}}" alt=""></td>
+                    <td><img th:src="@{${director.avatar}}" alt="" width="100px" height="100px"></td>
                 </tr>
                 </tbody>
             </table>

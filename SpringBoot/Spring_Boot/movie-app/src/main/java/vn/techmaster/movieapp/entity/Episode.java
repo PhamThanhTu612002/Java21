@@ -20,8 +20,8 @@ public class Episode {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
     String name;
-    Integer display_order;
-    String video_url;
+    Integer displayOrder;
+    String videoUrl;
     Integer duration;
     boolean status;
     Date createdAt;

@@ -37,6 +37,8 @@ class MovieAppApplicationTests {
     private ReviewRepository reviewRepository;
     @Autowired
     private BlogRepository blogRepository;
+    @Autowired
+    private EpisodeRepository episodeRepository;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -125,7 +127,7 @@ class MovieAppApplicationTests {
                     .slug(slugify.slugify(title))
                     .description(faker.lorem().paragraph())
                     .poster(generateLinkImage(title))
-                    .movieType(MovieType.values()[faker.number().numberBetween(2,3)])
+                    .movieType(MovieType.values()[faker.number().numberBetween(0,3)])
                     .releaseYear(faker.number().numberBetween(2018,2024))
                     .status(status)
                     .rating(faker.number().numberBetween(1,10))
@@ -221,7 +223,36 @@ class MovieAppApplicationTests {
 
     @Test
     void save_all_episodes() {
-
+        Random random = new Random();
+        List<Movie> movies = movieRepository.findAll();
+        for (Movie movie : movies) {
+            if(movie.getMovieType() == MovieType.PHIM_BO){
+                //Sử dụng vòng lawpjd để tạo ra 5-10 tập phim
+                for (int i = 0; i < random.nextInt(5) + 5; i++) {
+                    Episode episode = Episode.builder()
+                            .name("Tập" + (i+1))
+                            .status(true)
+                            .display_order(i+1)
+                            .createdAt(new Date())
+                            .publishedAt(new Date())
+                            .updatedAt(new Date())
+                            .movie(movie)
+                            .build();
+                    episodeRepository.save(episode);
+                }
+            }else {
+                Episode episode = Episode.builder()
+                        .name("Tập full")
+                        .status(true)
+                        .display_order(1)
+                        .createdAt(new Date())
+                        .publishedAt(new Date())
+                        .updatedAt(new Date())
+                        .movie(movie)
+                        .build();
+                episodeRepository.save(episode);
+            }
+        }
     }
 //    @Test
 //    void test_methods(){

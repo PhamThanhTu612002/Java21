@@ -21,6 +21,7 @@
                     <a class="nav-link active text-white" th:href="@{/phim-chieu-rap}">Phim Chiếu Rạp</a>
                     <a class="nav-link active text-white" th:href="@{/phim-le}">Phim Lẻ</a>
                     <a class="nav-link active text-white" href="">Thể Loại</a>
+                    <a th:if="${session.currentUser != null}" class="nav-link active text-white" id="manager" th:href="@{/admin}">Trang quản lý</a>
                     <a th:if="${session.currentUser == null}" class="nav-link active text-white" id="login" th:href="@{/login}">Đăng nhập</a>
                     <a th:if="${session.currentUser == null}" class="nav-link active text-white" id="register" th:href="@{/sign-up}">Đăng ký</a>
                     <a th:if="${session.currentUser != null}" class="nav-link text-white" >Xin chào bạn, <span th:text="${session.currentUser.fullname}"></span></a>
