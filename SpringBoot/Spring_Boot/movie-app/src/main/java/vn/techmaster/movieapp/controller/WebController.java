@@ -10,11 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import vn.techmaster.movieapp.entity.Blog;
-import vn.techmaster.movieapp.entity.Movie;
-import vn.techmaster.movieapp.entity.Review;
-import vn.techmaster.movieapp.entity.User;
+import vn.techmaster.movieapp.entity.*;
 import vn.techmaster.movieapp.model.MovieType;
+import vn.techmaster.movieapp.service.EpisodeService;
 import vn.techmaster.movieapp.service.ReviewService;
 import vn.techmaster.movieapp.service.WebService;
 
@@ -28,6 +26,8 @@ public class WebController {
     ReviewService reviewService;
     @Autowired
     HttpSession session;
+    @Autowired
+    EpisodeService episodeService;
     @GetMapping("/")
     public String getHomePage(Model model,
                               @RequestParam (required = false, defaultValue = "1") Integer page,
@@ -36,6 +36,7 @@ public class WebController {
         Page<Movie> movies2 = service.getAllPhim(MovieType.PHIM_LE,true,page,size);
         Page<Movie> movies3 = service.getAllPhim(MovieType.PHIM_CHIEU_RAP,true,page,size);
         Page<Movie> movies4 = service.getAllPhim(MovieType.PHIM_BO,true,page,size);
+
         List<Blog> blogs = service.get4Blog(true);
         model.addAttribute("movies",movies);
         model.addAttribute("movies2",movies2);
@@ -79,10 +80,30 @@ public class WebController {
         List<Movie> movies = service.getPhimDeCu(8,movie.getId(),true,movie.getMovieType());
 
         List<Review> reviews = reviewService.getReviewsOfMovie(movie.getId());
+        List<Episode> episodes = episodeService.getEpisodeOfMovie(id,true);
         model.addAttribute("movies1", movies);
         model.addAttribute("movieDetail",movie);
         model.addAttribute("reviews",reviews);
+        model.addAttribute("episodes",episodes);
         return "web/phim-detail";
+    }
+    @GetMapping("/xem-phim/{id}/{slug}")
+    public String getXemPhimPage(Model model,
+                                 @PathVariable Integer id,
+                                 @PathVariable String slug,
+                                 @RequestParam String tap){
+        Movie movie = service.getPhimDetails(id, slug,true);
+        List<Movie> movies = service.getPhimDeCu(8,movie.getId(),true,movie.getMovieType());
+
+        List<Review> reviews = reviewService.getReviewsOfMovie(movie.getId());
+        List<Episode> episodes = episodeService.getEpisodeOfMovie(id,true);
+        Episode episode = episodeService.getEpisode(id,tap,true);
+        model.addAttribute("movies1", movies);
+        model.addAttribute("movieDetail",movie);
+        model.addAttribute("reviews",reviews);
+        model.addAttribute("episodes",episodes);
+        model.addAttribute("episodeDetail",episode);
+        return "web/xem-phim";
     }
     @GetMapping("/blog")
     public String getBlog(Model model,

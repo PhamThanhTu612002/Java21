@@ -17,9 +17,16 @@
         <div class="col-3">
           <div class="movie_detail">
             <img class="rounded-4" height="300px" th:src="${movieDetail.poster}" alt="">
-            <div class="xem-ngay d-grid gap-2 mt-2">
-              <button class="btn btn-danger">Xem Ngay</button>
-            </div>
+            <th:block th:if="${movieDetail.movieType.toString() == 'PHIM_BO' && episodes.size() > 0}">
+              <div class="xem-ngay d-grid gap-2 mt-2">
+                <a th:href="@{/xem-phim/{id}/{slug} (id=${movieDetail.id},slug = ${movieDetail.slug}, tap=${episodes.get(0).displayOrder})}" class="btn btn-danger">Xem Ngay</a>
+              </div>
+            </th:block>
+            <th:block th:if="${movieDetail.movieType.toString() == 'PHIM_LE' && movieDetail.movieType.toString() == 'PHIM_CHIEU_RAP' && episodes.size() > 0}">
+              <div class="xem-ngay d-grid gap-2 mt-2">
+                <a th:href="@{/xem-phim/{id}/{slug} (id=${movieDetail.id},slug = ${movieDetail.slug}, tap='full')}" class="btn btn-danger">Xem Ngay</a>
+              </div>
+            </th:block>
           </div>
         </div>
         <div class="col-9">
@@ -49,7 +56,15 @@
           </div>
         </div>
       </div>
+      <div class="mt-4" th:if="${movieDetail.movieType.toString() == 'PHIM_BO'}">
+        <h3 class="mb-3">Tập 1</h3>
+        <a class="btn btn-dark me-2"
+           th:each="episode : ${episodes}"
+           th:text="${episode.name}"
+           th:href="@{/xem-phim/{id}/{slug} (id=${movieDetail.id},slug = ${movieDetail.slug}, tap=${episode.displayOrder})}"></a>
+      </div>
     </div>
+
   </section>
   <div th:if="${session.currentUser != null}" class="modal fade" id="modal-review" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
