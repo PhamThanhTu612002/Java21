@@ -20,7 +20,7 @@ public class VideoResource {
     @Autowired
     VideoService videoService;
     @PostMapping
-    public ResponseEntity<?> createVideo(@RequestParam("video")MultipartFile video){
+    public ResponseEntity<?> createVideo(@RequestParam("video") MultipartFile video){
         String path = videoService.uploadVideo(video); // path = api/videos/tenVideo
         return ResponseEntity.ok(path); // status code = 200
     }

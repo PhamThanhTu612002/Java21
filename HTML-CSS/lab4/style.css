@@ -632,3 +632,28 @@ footer{
   .datamaps-subunit.active {
     fill: rgb(252, 141, 89);
   }
+  /* Thiết bị có chiều rộng tối đa 600px */
+@media only screen and (max-width: 600px) {
+    nav {
+      text-align: center;
+    }
+  
+    nav li {
+      display: block;
+      margin-bottom: 5px;
+    }
+  }
+  
+  /* Thiết bị có chiều rộng tối đa 768px */
+  @media only screen and (max-width: 768px) {
+    main {
+      font-size: 14px;
+    }
+  }
+  
+  /* Thiết bị có chiều rộng tối đa 1024px */
+  @media only screen and (max-width: 1024px) {
+    header {
+      font-size: 18px;
+    }
+  }
