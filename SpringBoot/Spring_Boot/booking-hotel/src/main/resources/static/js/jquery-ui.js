@@ -1028,7 +1028,7 @@
                 if (options.using) {
 
                     // Adds feedback as second argument to using callback, if present
-                    using = function(props) {
+                    function using(props) {
                         var left = targetOffset.left - position.left,
                             right = left + targetWidth - elemWidth,
                             top = targetOffset.top - position.top,
