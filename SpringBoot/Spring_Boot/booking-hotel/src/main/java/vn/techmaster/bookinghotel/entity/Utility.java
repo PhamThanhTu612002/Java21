@@ -17,7 +17,7 @@ import vn.techmaster.bookinghotel.model.UtilityType;
 public class Utility {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
+    Integer id;
     String name;
     UtilityType utilityType;
 }
