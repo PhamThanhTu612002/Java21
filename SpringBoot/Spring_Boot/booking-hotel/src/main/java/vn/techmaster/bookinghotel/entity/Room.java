@@ -28,6 +28,7 @@ public class Room {
     Double area;
     Integer quantity_of_bed;
     Boolean smoking;
+    Boolean status;
     Boolean have_breafast;
     Date createdAt;
     Date updatedAt;

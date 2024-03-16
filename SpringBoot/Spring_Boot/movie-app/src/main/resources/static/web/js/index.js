@@ -1,6 +1,6 @@
 function logout(){
     console.log("1213")
-    axios.get('http://localhost:8081/api/auth/logout')
+    axios.get('http://localhost:8082/api/auth/logout')
         .then(function (response){
             if(response.status === 200){
                 toastr.success('Đăng xuất thành công')

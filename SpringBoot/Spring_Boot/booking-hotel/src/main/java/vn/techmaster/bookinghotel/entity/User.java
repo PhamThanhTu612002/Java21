@@ -20,6 +20,8 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)// id tự động tăng
     Integer id;
+
+    @Column(unique = true)
     String email;
 
     @Column(nullable = false)
@@ -31,6 +33,7 @@ public class User {
     String address;
     String avatar;
     Integer status;
+
     @ManyToMany
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" th:fragment="layout(title, css, content, js)">
+<head>
+    <meta charset="UTF-8">
+    <title th:replace="${title}">Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- FAV ICON(BROWSER TAB ICON) -->
+    <link rel="shortcut icon" href="/images/fav.ico" type="image/x-icon">
+    <!-- GOOGLE FONT -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins%7CQuicksand:500,700" rel="stylesheet">
+    <!-- FONTAWESOME ICONS -->
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <!-- ALL CSS FILES -->
+    <link href="/css/materialize.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <!-- RESPONSIVE.CSS ONLY FOR MOBILE AND TABLET VIEWS -->
+    <link href="/css/responsive.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+    <th:block th:replace="${css}"></th:block>
+</head>
+<body>
+<!--Header-->
+<th:block th:replace="~{web/fragments/header :: header}"></th:block>
+
+<!--Content-->
+<th:block th:replace="${content}"></th:block>
+
+<!--Footer-->
+<th:block th:replace="~{web/fragments/footer :: footer}"></th:block>
+
+<!--ALL SCRIPT FILES-->
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery-ui.js"></script>
+<script src="/js/angular.min.js"></script>
+<script src="/js/bootstrap.js" type="text/javascript"></script>
+<script src="/js/materialize.min.js" type="text/javascript"></script>
+<script src="/js/jquery.mixitup.min.js" type="text/javascript"></script>
+<script src="/js/custom.js"></script>
+<th:block th:replace="${js}"></th:block>
+</body>
+</html>

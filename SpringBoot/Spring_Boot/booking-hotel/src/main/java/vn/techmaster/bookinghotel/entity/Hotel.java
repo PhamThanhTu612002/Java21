@@ -25,12 +25,33 @@ public class Hotel {
     String poster;
     String slug;
     Integer rating_star;
+    @Transient
     Integer rating_review;
+    public String getRatingText() {
+        if (rating_review == null) {
+            return "Chưa có đánh giá";
+        }
+
+        // switch rating from 1 to 10
+        return switch (rating_review) {
+            case 1 -> "Tệ";
+            case 2 -> "Kém";
+            case 3 -> "Trung bình";
+            case 4 -> "Tạm được";
+            case 5 -> "Hay";
+            case 6 -> "Rất hay";
+            case 7 -> "Tuyệt vời";
+            case 8 -> "Tuyệt hảo";
+            case 9 -> "Xuất sắc";
+            case 10 -> "Quá tuyệt vời";
+            default -> "Chưa có đánh giá";
+        };
+    }
     String description;
-    Integer status;
+    Boolean status;
     Integer check_in;
     Integer check_out;
-    Integer createdAt;
+    Date createdAt;
     Date updatedAt;
 
     @ManyToOne
@@ -50,4 +71,7 @@ public class Hotel {
             inverseJoinColumns = @JoinColumn(name = "room_id")
     )
     private List<Room> rooms;
+
+    @OneToMany
+    private List<Review> reviews;
 }
