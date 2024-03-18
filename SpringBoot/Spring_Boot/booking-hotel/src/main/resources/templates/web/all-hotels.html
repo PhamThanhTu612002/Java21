@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"  th:replace="~{web/layout/layout :: layout(~{:: title}, ~{:: #css}, ~{:: #main-content}, ~{:: #js})}">
+
+<head>
+	<title>MyHotel - Hotel Booking and Room Booking Online Html Responsive Template</title>
+	<th:block id="css"></th:block>
+</head>
+
+<body data-ng-app="">
+	<th:block id="main-content">
+		<!--TOP SECTION-->
+		<div class="inn-body-section pad-bot-55">
+			<div class="container">
+				<div class="row">
+					<div class="page-head">
+						<h2 th:text="${#strings.concat('Khách sạn ở ',province.name)}">Room Types</h2>
+						<div class="head-title">
+							<div class="hl-1"></div>
+							<div class="hl-2"></div>
+							<div class="hl-3"></div>
+						</div>
+					</div>
+					<div th:each="hotel : ${hotels}">
+						<!--ROOM SECTION-->
+						<div class="room">
+<!--							<div class="ribbon ribbon-top-left"><span>Featured</span>-->
+<!--							</div>-->
+							<!--ROOM IMAGE-->
+							<div class="r1 r-com"><img th:src="${hotel.poster}" alt="" />
+							</div>
+							<!--ROOM RATING-->
+							<div class="r2 r-com">
+								<h4 th:text="${hotel.name}">Master Suite</h4>
+								<div class="r2-ratt">
+									<p>Hạng: <i class="fa fa-star" th:each="star : ${#numbers.sequence(1,hotel.rating_star,1)}"></i></p>
+									<p th:text="${#strings.concat('Địa chỉ: ',hotel.address)}">Excellent  4.5 / 5</p>
+								</div>
+							</div>
+							<!--ROOM AMINITIES-->
+							<div class="r3 r-com">
+								<ul>
+									<li>Ironing facilities</li>
+									<li>Tea/Coffee maker</li>
+									<li>Air conditioning</li>
+									<li>Flat-screen TV</li>
+									<li>Wake-up service</li>
+								</ul>
+							</div>
+							<!--ROOM PRICE-->
+							<div class="r4 r-com" th:if="${hotel.status == true}">
+								<p>Giá 1 đêm chỉ từ</p>
+								<p><span class="room-price-1">5000</span> <span class="room-price">$: 7000</span>
+								</p>
+								<p>Không hoàn tiền</p>
+							</div>
+							<!--ROOM BOOKING BUTTON-->
+							<div class="r5 r-com" th:if="${hotel.status == true}">
+								<div class="r2-available">Available</div>
+								<a th:href="@{/hotel/{id}/{slug} (id = ${hotel.id},slug=${hotel.slug})}" class="inn-room-book">Book</a>
+							</div>
+							<div class="r5 r-com" th:if="${hotel.status == false}">
+								<h2>Hết phòng</h2>
+							</div>
+						</div>
+						<!--END ROOM SECTION-->
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<!--TOP SECTION-->
+	</th:block>
+
+	<th:block id="js"></th:block>
+</body>
+
+</html>

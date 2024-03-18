@@ -28,7 +28,9 @@ public class Booking {
     @JoinColumn(name = "user_id")
     User user;
 
-    Date booking_date;
+    @Column(name = "booking_date")
+    Date bookingDate;
+
     Date check_in_date;
     Date check_out_date;
     Integer amount_adult;

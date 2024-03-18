@@ -25,6 +25,7 @@ public class Hotel {
     String poster;
     String slug;
     Integer rating_star;
+
     @Transient
     Integer rating_review;
     public String getRatingText() {
@@ -65,13 +66,9 @@ public class Hotel {
     )
     private List<Utility> utilities;
 
-    @ManyToMany
-    @JoinTable(name = "hotel_room",
-            joinColumns = @JoinColumn(name = "hotel_id"),
-            inverseJoinColumns = @JoinColumn(name = "room_id")
-    )
-    private List<Room> rooms;
-
     @OneToMany
     private List<Review> reviews;
+
+    @OneToMany(mappedBy = "hotel")
+    private List<HotelRoom> hotelRooms;
 }

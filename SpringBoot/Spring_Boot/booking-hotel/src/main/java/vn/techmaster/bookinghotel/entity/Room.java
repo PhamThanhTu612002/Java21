@@ -45,4 +45,7 @@ public class Room {
             inverseJoinColumns = @JoinColumn(name = "bed_id")
     )
     private List<Bed> beds;
+
+    @OneToMany(mappedBy = "room")
+    private List<HotelRoom> hotelRooms;
 }

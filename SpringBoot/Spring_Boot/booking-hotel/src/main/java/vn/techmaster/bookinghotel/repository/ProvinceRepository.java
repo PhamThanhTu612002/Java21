@@ -5,4 +5,5 @@ import org.springframework.stereotype.Repository;
 import vn.techmaster.bookinghotel.entity.Province;
 @Repository
 public interface ProvinceRepository extends JpaRepository<Province,Integer> {
+    Province findBySlug(String slug);
 }

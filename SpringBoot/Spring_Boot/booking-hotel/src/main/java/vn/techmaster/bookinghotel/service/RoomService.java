@@ -9,7 +9,7 @@ import vn.techmaster.bookinghotel.repository.RoomRepository;
 public class RoomService {
     @Autowired
     RoomRepository roomRepository;
-    public Room getRoomById(Integer id) {
-        return roomRepository.findById(id).get();
+    public Room getRoomById(Integer id,String slug) {
+        return roomRepository.findByIdAndSlug(id,slug);
     }
 }

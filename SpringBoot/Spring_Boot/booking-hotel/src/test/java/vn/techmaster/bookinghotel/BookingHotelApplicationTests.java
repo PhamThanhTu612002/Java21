@@ -40,6 +40,8 @@ class BookingHotelApplicationTests {
     @Autowired
     ReviewRepository reviewRepository;
     @Autowired
+    HotelRoomRepository hotelRoomRepository;
+    @Autowired
     Slugify slugify;
 
     @Test
@@ -159,8 +161,13 @@ class BookingHotelApplicationTests {
     @Test
     void save_all_province(){
         Faker faker = new Faker();
+
         for (int i = 0; i < 10; i++){
-            Province province = Province.builder().name(faker.name().name()).build();
+            String name = faker.name().name();
+            Province province = Province.builder()
+                    .name(name)
+                    .slug(slugify.slugify(name))
+                    .build();
             provinceRepository.save(province);
         }
     }
@@ -187,7 +194,6 @@ class BookingHotelApplicationTests {
                     .createdAt(createdAt)
                     .updatedAt(createdAt)
                     .province(province)
-                    .rooms(roomRepository.findAll())
                     .utilities(utilities.subList(faker.number().numberBetween(0,utilities.size()/2),faker.number().numberBetween(utilities.size()/2,utilities.size())))
                     .build();
             hotelRepository.save(hotel);
@@ -207,6 +213,22 @@ class BookingHotelApplicationTests {
                     .hotel(hotels.get(faker.number().numberBetween(0,hotels.size())))
                     .build();
             reviewRepository.save(review);
+        }
+    }
+    @Test
+    void save_all_hotel_room(){
+        Faker faker = new Faker();
+        for (int i = 1; i <= 10; i++){
+            for (int j = 1; j <= 10; j++){
+                HotelRoom hotelRoom = HotelRoom.builder()
+                        .hotel(hotelRepository.findById(i).get())
+                        .room(roomRepository.findById(j).get())
+                        .price(faker.number().numberBetween(500000,2000000))
+                        .discount(faker.random().nextDouble())
+                        .quantity(faker.random().nextInt(2,10))
+                        .build();
+                hotelRoomRepository.save(hotelRoom);
+            }
         }
     }
     // get first character from string, and to uppercase

@@ -3,20 +3,22 @@
 
 <head>
 	<title>MyHotel - Hotel Booking and Room Booking Online Html Responsive Template</title>
-	<th:block id="css"></th:block>
+	<th:block id="css">
+	</th:block>
 </head>
 
 <body data-ng-app="">
 	<th:block id="main-content">
 		<!--TOP SECTION-->
-		<div class="inn-body-section inn-detail inn-hotel-1">
+		<div class="inn-body-section inn-detail inn-hotel-1" th:style="|background: url(${hotelDetail.poster}) no-repeat;background-attachment: fixed;
+    background-size: 40%;|">
 			<div class="container">
 				<div class="row">
 					<div class="inn-bod">
 						<div class="inn-detail-p1 inn-com">
 							<h2 th:text="${hotelDetail.name}">Golden Gate, United States</h2>
 							<div class="r2-ratt" >
-								<i class="fa fa-star" th:each="star : ${#numbers.sequence(0,hotelDetail.rating_star,1)}"></i>
+								<p>Hạng: <i class="fa fa-star" th:each="star : ${#numbers.sequence(1,hotelDetail.rating_star,1)}"></i></p>
 							</div>
 							<p th:text="${hotelDetail.getDescription()}">Discover two of South America’s greatest cities, Rio de Janeiro and Buenos Aires, at a leisurely pace. A major highlight on this journey is a visit to Iguassu Falls in between your two city stays. It truly is one of the most spectacular sights on Earth. See the impressive falls from both the Brazilian and Argentine sides.</p>
 						</div>
@@ -53,15 +55,17 @@
 								<h2>Loại phòng</h2>
 							</div>
 							<div class="re-room">
-								<ul th:each="room : ${hotelDetail.rooms}">
+								<ul th:each="hotelRoom : ${hotelRooms}">
 									<li>
-										<div class="re-room-list">
-											<div class="col-md-3 re-room-list-1"><img th:src="${room.poster}" alt=""> </div>
-											<div class="col-md-6 re-room-list-2">
-												<h4 th:text="${room.name}">Ultra Deluxe</h4>
-												<p><b>Tiện ích: </b>Television, Wi-Fi, Hair dryer, Towels, Dining, Music, GYM and more.. </p> <span><b>Bao gồm</b> : Free Parking, Breakfast, VAT</span> <span><b>Tối đa </b> : 4 Persons</span> </div>
-											<div class="col-md-3 re-room-list-3"> <span class="hot-list-p3-1">1 đêm</span> <span class="hot-list-p3-2">$940</span> <a href="booking.html" class="hot-page2-alp-quot-btn spec-btn-text">Book Now</a> </div>
-										</div>
+										<a th:href="@{/room/{id}/{slug} (id = ${hotelRoom.room.id},slug = ${hotelRoom.room.slug})}">
+											<div class="re-room-list">
+												<div class="col-md-3 re-room-list-1"><img th:src="${hotelRoom.room.poster}" alt=""> </div>
+												<div class="col-md-6 re-room-list-2">
+													<h4 th:text="${hotelRoom.room.name}">Ultra Deluxe</h4>
+													<p th:text="${#strings.concat('Tiện ích :', hotelRoom.room.area)}"><b>Tiện ích: </b>Television, Wi-Fi, Hair dryer, Towels, Dining, Music, GYM and more.. </p> <span><b>Bao gồm</b> : Free Parking, Breakfast, VAT</span> <span><b>Tối đa </b> : 4 Persons</span> </div>
+												<div class="col-md-3 re-room-list-3"> <span class="hot-list-p3-1">1 đêm</span> <span class="hot-list-p3-2" th:text="${#strings.concat(hotelRoom.price,'Đ')}"></span> <a th:href="@{/room/{id}/{slug} (id = ${hotelRoom.room.id},slug = ${hotelRoom.room.slug})}" class="hot-page2-alp-quot-btn spec-btn-text">Book Now</a> </div>
+											</div>
+										</a>
 									</li>
 								</ul>
 							</div>
@@ -75,9 +79,13 @@
 									<div class="row">
 										<div class="col-md-12 room-rat-body">
 											<div class="room-rat-img"> <img width="10%" th:src="${review.user.avatar}" alt="">
-												<p th:text="${review.user.fullname}">Orange Fab &amp; Weld</p><span>19th January, 2017</span>
+												<p th:text="${review.user.fullname}">Orange Fab &amp; Weld</p> <span th:text="${#dates.format(review.createdAt,'dd/MM/yyyy')}">19th January, 2017</span>
 											</div>
-											<div class="dir-rat-star"> <i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i> </div>
+											<div class="dir-rat-star">
+												<p th:text="${review.getRatingText()}"></p>
+												<i class="fa fa-star" aria-hidden="true" th:each="star : ${#numbers.sequence(1,review.rating,1)}"></i>
+												<i class="fa fa-star-o" aria-hidden="true" th:each="star : ${#numbers.sequence(review.rating,9,1)}"></i>
+											</div>
 											<p th:text="${review.content}">Michael &amp; his team have been helping us with our eqiupment finance for the past 5 years - I think that says a quite a lot.. Michael is always ready to go the extra mile, always available, always helpfull that goes the same for his team that work with him - definatley our first phone call.</p>
 											<ul>
 												<li><a href="#"><span>Thích</span><i class="fa fa-thumbs-o-up"></i></a> </li>
@@ -97,8 +105,7 @@
 						</div>
 						<div class="inn-detail-p1 inn-com room-soc-share">
 							<div class="detail-title">
-								<h2>Share this Hotel</h2>
-								<p>a procedure intended to establish the quality, performance, or reliability of something, especially before it is taken into widespread use.</p>
+								<h2>Chia sẻ khách sạn</h2>
 							</div>
 							<ul>
 								<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i> Facebook</a> </li>

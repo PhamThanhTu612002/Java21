@@ -929,7 +929,7 @@ td {} .inn-com p {} .inn-com-form {} .inn-com-form form {
 /*-------------------------------------------------*/
 
 .inn-booking {
-    background: url(../images/slide2.jpg) no-repeat;
+    background: url(../images/beach.jpg) no-repeat;
     background-attachment: fixed;
     background-size: cover;
     width: 100%;
@@ -3716,6 +3716,7 @@ footer ul li a {
 .disabled {} .disabled span {}
 
 /*-------------------------------------------------------*/
+
 /*  ROOM AND HOTEL DETAILS
 /*-------------------------------------------------------*/
 

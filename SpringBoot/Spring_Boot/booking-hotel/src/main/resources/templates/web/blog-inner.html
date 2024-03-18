@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"  th:replace="~{web/layout/layout :: layout(~{:: title}, ~{:: #css}, ~{:: #main-content}, ~{:: #js})}">
+
+<head>
+	<title>MyHotel - Hotel Booking and Room Booking Online Html Responsive Template</title>
+	<th:block id="css"></th:block>
+</head>
+
+<body data-ng-app="">
+	<th:block id="main-content">
+		<!--TOP SECTION-->
+		<!--TOP BANNER-->
+		<div class="inn-banner">
+			<div class="container">
+				<div class="row">
+					<h4 th:text="${blog.title}"></h4>
+					<ul>
+						<li><a th:href="@{/}">Trang chủ</a>
+						</li>
+						<li><a th:href="@{/blogs}">Bài Viết</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!--TOP SECTION-->
+		<div class="inn-body-section pad-bot-55">
+			<div class="container">
+				<div class="row inn-page-com">
+					<div class="page-head">
+						<h2 th:text="${blog.title}">Restaurant: special 30% offer</h2>
+						<div class="head-title">
+							<div class="hl-1"></div>
+							<div class="hl-2"></div>
+							<div class="hl-3"></div>
+						</div>
+					</div>
+					<!--SERVICES SECTION-->
+					<div class="col-md-8">
+						<div class="row inn-services in-blog">
+							<div class="col-md-4"> <img th:src="${blog.thumbnail}" alt="" /> </div>
+							<div class="col-md-8">
+								<h3 th:text="${blog.title}">Restaurant</h3> <span class="blog-date" th:text="${#dates.format(blog.createdAt,'dd/MM/yyyy')}">Date: December 9, 2017</span>
+								<p th:text="${blog.content}">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+							</div>
+						</div>
+					</div>
+					<<div class="col-md-4">
+						<div class="head-typo typo-com rec-post">
+							<h3>Bài Viết Gần Nhất</h3>
+							<ul th:each="blog : ${latestBlogs}">
+								<li>
+									<div class="rec-po-img"> <img th:src="${blog.thumbnail}" alt="" /> </div>
+									<div class="rec-po-title"> <a href="#"><h4 th:text="${blog.title}">Large car parking</h4></a>
+										<p th:text="${#strings.substring(blog.content,40)}">There are many variations of passages of Lorem Ipsum available</p> <span class="blog-date" th:text="${#dates.format(blog.createdAt,'dd/MM/yyyy')}">Date: December 9, 2017</span> </div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<!--END SERVICES SECTION-->
+				</div>
+			</div>
+		</div>
+		<!--TOP SECTION-->
+	</th:block>
+
+	<th:block id="js"></th:block>
+</body>
+
+</html>

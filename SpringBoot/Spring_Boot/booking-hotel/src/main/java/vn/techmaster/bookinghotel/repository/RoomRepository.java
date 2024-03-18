@@ -6,4 +6,5 @@ import vn.techmaster.bookinghotel.entity.Room;
 
 @Repository
 public interface RoomRepository extends JpaRepository<Room,Integer> {
+    Room findByIdAndSlug(Integer id,String slug);
 }
