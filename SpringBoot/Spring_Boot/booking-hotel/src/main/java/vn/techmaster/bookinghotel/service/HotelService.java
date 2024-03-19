@@ -19,5 +19,8 @@ public class HotelService {
     public List<Hotel> getHotelsByProvince(Province province){
         return hotelRepository.findAllByProvince(province);
     }
+    public List<Hotel> searchHotels(String diadiem, Integer noAdult, Integer noChildren){
+        return hotelRepository.searchHotel(diadiem,noAdult,noChildren);
+    }
 
 }

@@ -80,7 +80,6 @@ class BookingHotelApplicationTests {
     @Test
     void save_all_blog(){
         Faker faker = new Faker();
-
         for (int i = 0; i < 10; i++){
             String titleBlog = faker.book().title();
             boolean status = faker.bool().bool();
@@ -162,7 +161,7 @@ class BookingHotelApplicationTests {
     void save_all_province(){
         Faker faker = new Faker();
 
-        for (int i = 0; i < 10; i++){
+        for (int i = 0; i < 50; i++){
             String name = faker.name().name();
             Province province = Province.builder()
                     .name(name)
@@ -175,7 +174,7 @@ class BookingHotelApplicationTests {
     void save_all_hotel(){
         Faker faker = new Faker();
         List<Utility> utilities = utilityRepository.findByUtilityType(UtilityType.HOTEL);
-        for (int i = 0; i < 10; i++){
+        for (int i = 0; i < 50; i++){
             Province province = provinceRepository.findById(i+1).orElseThrow(() -> new RuntimeException("Không tìm thấy tỉnh"));
             String name = faker.name().name();
             Date createdAt = faker.date().birthday();
@@ -218,7 +217,7 @@ class BookingHotelApplicationTests {
     @Test
     void save_all_hotel_room(){
         Faker faker = new Faker();
-        for (int i = 1; i <= 10; i++){
+        for (int i = 1; i <= 50; i++){
             for (int j = 1; j <= 10; j++){
                 HotelRoom hotelRoom = HotelRoom.builder()
                         .hotel(hotelRepository.findById(i).get())

@@ -747,7 +747,6 @@ td {} .inn-com p {} .inn-com-form {} .inn-com-form form {
     margin-bottom: 50px;
 }
 .page-head h2 {
-    margin-top: 0px;
     font-weight: 600;
     font-size: 42px;
     margin-bottom: 10px;
@@ -4536,4 +4535,7 @@ form .stars label:before {
 }
 .hp-main-overview-block ul li span {
     color: #b1aa9c;
+}
+.msg-error{
+    color: red;
 }

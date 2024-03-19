@@ -69,6 +69,19 @@
 									</li>
 								</ul>
 							</div>
+							<div class="col-md-12" th:if="${hotelRooms.getTotalPages() > 1}">
+								<ul class="pagination">
+									<li th:if="${currentPage > 1}" th:classappend="${currentPage == 1 ? 'disabled' : ''}">
+										<a th:href="@{/hotel/{id}/{slug} (page = ${currentPage - 1},id=${hotelDetail.id},slug=${hotelDetail.slug})}">Previous</a>
+									</li>
+									<li class="waves-effect" th:each="pageNumber : ${#numbers.sequence(1,hotelRooms.getTotalPages())}" th:classappend="${pageNumber == currentPage ? 'active' : ''}">
+										<a th:text="${pageNumber}" th:href="@{/hotel/{id}/{slug} (page=${pageNumber},id=${hotelDetail.id},slug=${hotelDetail.slug})}">1</a>
+									</li>
+									<li th:if="${currentPage < hotelRooms.getTotalPages()}"  th:classappend="${currentPage == hotelRooms.getTotalPages() ? 'disabled' : ''}">
+										<a th:href="@{/hotel/{id}/{slug} (page = ${currentPage + 1},id=${hotelDetail.id},slug=${hotelDetail.slug})}">Next</a>
+									</li>
+								</ul>
+							</div>
 						</div>
 						<div class="inn-detail-p1 inn-com">
 							<div class="detail-title">

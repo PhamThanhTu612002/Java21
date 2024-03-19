@@ -12,13 +12,11 @@
 		<div class="inn-body-section pad-bot-55">
 			<div class="container">
 				<div class="row">
-					<div class="page-head">
+					<div class="page-head" th:if="${province != null}">
 						<h2 th:text="${#strings.concat('Khách sạn ở ',province.name)}">Room Types</h2>
-						<div class="head-title">
-							<div class="hl-1"></div>
-							<div class="hl-2"></div>
-							<div class="hl-3"></div>
-						</div>
+					</div>
+					<div class="page-head" th:if="${province == null}">
+						<h2>Không tìm thấy khách sạn phù hợp</h2>
 					</div>
 					<div th:each="hotel : ${hotels}">
 						<!--ROOM SECTION-->

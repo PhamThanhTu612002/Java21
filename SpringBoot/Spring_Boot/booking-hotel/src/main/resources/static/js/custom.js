@@ -71,10 +71,12 @@ $(function() {
 
 //DATE PICKER	
 $(function() {
+    var currentDate = new Date(); // Lấy ngày hiện tại
     var dateFormat = "mm/dd/yy",
         from = $("#from")
         .datepicker({
             defaultDate: "+1w",
+            dateFormat:"dd/MM/yyyy",
             changeMonth: false,
             numberOfMonths: 1
         })

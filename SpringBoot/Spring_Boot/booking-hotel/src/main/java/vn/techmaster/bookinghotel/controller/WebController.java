@@ -3,6 +3,7 @@ package vn.techmaster.bookinghotel.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import vn.techmaster.bookinghotel.entity.*;
 import vn.techmaster.bookinghotel.service.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class WebController {
@@ -42,11 +45,14 @@ public class WebController {
         return "web/room-details";
     }
     @GetMapping("/hotel/{id}/{slug}")
-    public String getHotelDetail(Model model, @PathVariable Integer id,@PathVariable String slug){
+    public String getHotelDetail(Model model, @PathVariable Integer id,@PathVariable String slug,
+                                 @RequestParam (required = false, defaultValue = "1") Integer page,
+                                 @RequestParam(required = false, defaultValue = "5") Integer size){
         Hotel hotel = hotelService.getHotelById(id,slug);
         List<Review> reviews = reviewService.getReviewsByHotelId(id);
 
-        List<HotelRoom> hotelRooms = hotelRoomService.getHotelRooms(id);
+        Page<HotelRoom> hotelRooms = hotelRoomService.getHotelRooms(id,page,size);
+        model.addAttribute("currentPage",page);
         model.addAttribute("hotelDetail",hotel);
         model.addAttribute("reviews",reviews);
         model.addAttribute("hotelRooms",hotelRooms);
@@ -71,12 +77,14 @@ public class WebController {
         model.addAttribute("latestBlogs",latestBlogs);
         return "web/blog-inner";
     }
-    @GetMapping("/hotels/{slug}")
-    public String getHotelByProvince(Model model,@PathVariable String slug){
-        Province province = provinceService.getProviceBySlug(slug);
-        List<Hotel> hotels = hotelService.getHotelsByProvince(province);
-        model.addAttribute("hotels",hotels);
-        model.addAttribute("province",province);
+    @GetMapping("/hotels")
+    public String getHotelByProvince(Model model,@RequestParam("place") String place, @RequestParam("noAdult") Integer noAdult,@RequestParam("noChildren") Integer noChildren){
+        Optional<Province> province = provinceService.getProvinceByNameLike(place);
+        if (province.isPresent()){
+            List<Hotel> hotels = hotelService.searchHotels(province.get().getName(),noAdult,noChildren);
+            model.addAttribute("hotels",hotels);
+            model.addAttribute("province",province.get());
+        }
         return "web/all-hotels";
     }
 }
