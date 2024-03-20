@@ -63,7 +63,7 @@
 												<div class="col-md-6 re-room-list-2">
 													<h4 th:text="${hotelRoom.room.name}">Ultra Deluxe</h4>
 													<p th:text="${#strings.concat('Tiện ích :', hotelRoom.room.area)}"><b>Tiện ích: </b>Television, Wi-Fi, Hair dryer, Towels, Dining, Music, GYM and more.. </p> <span><b>Bao gồm</b> : Free Parking, Breakfast, VAT</span> <span><b>Tối đa </b> : 4 Persons</span> </div>
-												<div class="col-md-3 re-room-list-3"> <span class="hot-list-p3-1">1 đêm</span> <span class="hot-list-p3-2" th:text="${#strings.concat(hotelRoom.price,'Đ')}"></span> <a th:href="@{/room/{id}/{slug} (id = ${hotelRoom.room.id},slug = ${hotelRoom.room.slug})}" class="hot-page2-alp-quot-btn spec-btn-text">Book Now</a> </div>
+												<div class="col-md-3 re-room-list-3"> <span class="hot-list-p3-1">1 đêm</span> <span class="hot-list-p3-2" th:text="${#numbers.formatCurrency(hotelRoom.price*hotelRoom.discount)}"></span> <a th:href="@{/room/{id}/{slug} (id = ${hotelRoom.room.id},slug = ${hotelRoom.room.slug})}" class="hot-page2-alp-quot-btn spec-btn-text">Book Now</a> </div>
 											</div>
 										</a>
 									</li>

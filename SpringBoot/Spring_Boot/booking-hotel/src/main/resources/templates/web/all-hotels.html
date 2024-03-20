@@ -24,39 +24,35 @@
 <!--							<div class="ribbon ribbon-top-left"><span>Featured</span>-->
 <!--							</div>-->
 							<!--ROOM IMAGE-->
-							<div class="r1 r-com"><img th:src="${hotel.poster}" alt="" />
+							<div class="r1 r-com"><img th:src="${hotel.getKey().poster}" alt="" />
 							</div>
 							<!--ROOM RATING-->
 							<div class="r2 r-com">
-								<h4 th:text="${hotel.name}">Master Suite</h4>
+								<h4 th:text="${hotel.getKey().name}">Master Suite</h4>
 								<div class="r2-ratt">
-									<p>Hạng: <i class="fa fa-star" th:each="star : ${#numbers.sequence(1,hotel.rating_star,1)}"></i></p>
-									<p th:text="${#strings.concat('Địa chỉ: ',hotel.address)}">Excellent  4.5 / 5</p>
+									<p>Hạng: <i class="fa fa-star" th:each="star : ${#numbers.sequence(1,hotel.getKey().rating_star,1)}"></i></p>
+									<p th:text="${#strings.concat('Địa chỉ: ',hotel.getKey().address)}">Excellent  4.5 / 5</p>
 								</div>
 							</div>
 							<!--ROOM AMINITIES-->
 							<div class="r3 r-com">
-								<ul>
-									<li>Ironing facilities</li>
-									<li>Tea/Coffee maker</li>
-									<li>Air conditioning</li>
-									<li>Flat-screen TV</li>
-									<li>Wake-up service</li>
+								<ul th:each="utility : ${hotel.getKey().utilities}">
+									<li th:text="${utility.name}">Ironing facilities</li>
 								</ul>
 							</div>
 							<!--ROOM PRICE-->
-							<div class="r4 r-com" th:if="${hotel.status == true}">
+							<div class="r4 r-com" th:if="${hotel.getKey().status == true}">
 								<p>Giá 1 đêm chỉ từ</p>
-								<p><span class="room-price-1">5000</span> <span class="room-price">$: 7000</span>
+								<p><span class="room-price-1" th:text="${#numbers.formatCurrency(hotel.getValue().price * hotel.getValue().discount)}">5000</span> <span class="room-price" th:text="${#numbers.formatCurrency(hotel.getValue().price)}">$: 7000</span>
 								</p>
 								<p>Không hoàn tiền</p>
 							</div>
 							<!--ROOM BOOKING BUTTON-->
-							<div class="r5 r-com" th:if="${hotel.status == true}">
-								<div class="r2-available">Available</div>
-								<a th:href="@{/hotel/{id}/{slug} (id = ${hotel.id},slug=${hotel.slug})}" class="inn-room-book">Book</a>
+							<div class="r5 r-com" th:if="${hotel.getKey().status == true}">
+								<div class="r2-available">Có sẵn</div>
+								<a th:href="@{/hotel/{id}/{slug} (id = ${hotel.getKey().id},slug=${hotel.getKey().slug})}" class="inn-room-book">Book</a>
 							</div>
-							<div class="r5 r-com" th:if="${hotel.status == false}">
+							<div class="r5 r-com" th:if="${hotel.getKey().status == false}">
 								<h2>Hết phòng</h2>
 							</div>
 						</div>

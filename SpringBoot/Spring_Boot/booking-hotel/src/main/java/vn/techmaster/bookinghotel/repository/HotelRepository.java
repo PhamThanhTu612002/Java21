@@ -24,4 +24,9 @@ public interface HotelRepository extends JpaRepository<Hotel,Integer> {
             "where p.name = ?1 and r.max_adult >= ?2 and r.max_child >= ?3 " +
             "group by h.id",nativeQuery = true)
     List<Hotel> searchHotel(String province,Integer noAdult, Integer noChildren);
+
+    @Query(value = "select count(h.id) from hotels h \n" +
+            "inner join provinces p on h.province_id = p.id\n" +
+            "where p.id = ?1",nativeQuery = true)
+    Integer findNoHotelsInProvince(Integer provinceId);
 }

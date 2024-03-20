@@ -204,7 +204,7 @@ class BookingHotelApplicationTests {
         Faker faker = new Faker();
         List<User> users = userRepository.findAll();
         List<Hotel> hotels = hotelRepository.findAll();
-        for (int i = 0; i < 10; i++){
+        for (int i = 0; i < 100; i++){
             Review review = Review.builder()
                     .content(faker.lorem().sentence())
                     .rating(faker.random().nextInt(1,10))
@@ -217,7 +217,7 @@ class BookingHotelApplicationTests {
     @Test
     void save_all_hotel_room(){
         Faker faker = new Faker();
-        for (int i = 1; i <= 50; i++){
+        for (int i = 1; i <= 90; i++){
             for (int j = 1; j <= 10; j++){
                 HotelRoom hotelRoom = HotelRoom.builder()
                         .hotel(hotelRepository.findById(i).get())

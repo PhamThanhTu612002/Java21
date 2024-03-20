@@ -1264,7 +1264,7 @@ td {} .inn-com p {} .inn-com-form {} .inn-com-form form {
     margin-bottom: 15px;
 }
 .hot-list-p3-2 {
-    font-size: 32px;
+    font-size: 24px;
     font-weight: 600;
     color: #2a2b33;
     padding: 0px 0px;
@@ -2128,7 +2128,7 @@ td {} .inn-com p {} .inn-com-form {} .inn-com-form form {
     /* overflow: hidden; */
     
     padding: 20px;
-    bottom: 0px;
+    bottom: 20px;
     width: 100%;
 }
 .to-ho-hotel-con-2 {} .to-ho-hotel-con-2 h4 {
