@@ -71,7 +71,7 @@ class BookingHotelApplicationTests {
                     .gender(i % 2 == 0 ?"MALE":"FEMALE")
                     .address(faker.address().fullAddress())
                     .avatar(generateLinkImage(name))
-                    .status(faker.random().nextInt(0,2))
+                    .status(faker.bool().bool())
                     .roles(roleRepository.findAllById(Collections.singleton(2)))
                     .build();
             userRepository.save(user);

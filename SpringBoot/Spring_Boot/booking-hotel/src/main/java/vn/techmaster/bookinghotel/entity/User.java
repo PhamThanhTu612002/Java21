@@ -32,7 +32,7 @@ public class User {
     String gender;
     String address;
     String avatar;
-    Integer status;
+    Boolean status;
 
     @ManyToMany
     @JoinTable(name = "user_role",

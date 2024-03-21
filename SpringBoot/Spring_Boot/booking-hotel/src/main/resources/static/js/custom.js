@@ -75,7 +75,6 @@ $(function() {
     var dateFormat = "mm/dd/yy",
         from = $("#from")
         .datepicker({
-            defaultDate: "+1w",
             dateFormat:"dd/MM/yyyy",
             changeMonth: false,
             numberOfMonths: 1
@@ -84,7 +83,6 @@ $(function() {
             to.datepicker("option", "minDate", getDate(this));
         }),
         to = $("#to").datepicker({
-            defaultDate: "+1w",
             changeMonth: false,
             numberOfMonths: 1
         })
@@ -103,3 +101,20 @@ $(function() {
         return date;
     }
 });
+toastr.options = {
+    "closeButton": false,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": false,
+    "positionClass": "toast-top-right",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+}

@@ -25,10 +25,17 @@ public class TokenConfirm {
     Date createdAt;
     Date expiredAt;
     Date confirmedAt;
+
+
     TokenType tokenType;
     @ManyToOne
     @JoinColumn(name = "user_id")
     User user;
+
+    @PrePersist
+    public void prePersist() {
+        createdAt = new Date();
+    }
 
 
 }

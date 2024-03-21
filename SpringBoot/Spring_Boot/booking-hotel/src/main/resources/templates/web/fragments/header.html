@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -64,9 +64,13 @@
                             </li>
                             <li><a th:href="@{/blogs}">Blog</a>
                             </li>
-                            <li><a href="!#" data-toggle="modal" data-target="#modal1">Đăng nhập</a>
+                            <li th:if="${session.MY_SESSION == null}"><a href="!#" data-toggle="modal" data-target="#modal1">Đăng nhập</a>
                             </li>
-                            <li><a href="!#" data-toggle="modal" data-target="#modal2">Đăng ký</a>
+                            <li th:if="${session.MY_SESSION == null}"><a href="!#" data-toggle="modal" data-target="#modal2">Đăng ký</a>
+                            </li>
+                            <li th:if="${session.MY_SESSION != null}"><a th:text="${#strings.concat('Xin chào ',session.MY_SESSION)}"></a>
+                            </li>
+                            <li th:if="${session.MY_SESSION != null}"><a href="javascript:void(0)" th:onclick="logout()">Đăng xuất</a>
                             </li>
                         </ul>
                     </div>
@@ -92,23 +96,24 @@
                 </ul>
             </div>
             <div class="log-in-pop-right">
-                <a href="#" class="pop-close" data-dismiss="modal"><img src="images/cancel.png" alt="">
+                <a href="#" class="pop-close" data-dismiss="modal"><img src="/images/cancel.png" alt="">
                 </a>
                 <h4>Đăng nhập</h4>
                 <p>Nếu chưa có tài khoản, <a href=""> tạo tài khoản mới</a>. Chỉ mất vài phút</p>
-                <form class="s12 ng-pristine ng-valid">
+                <form class="s12 ng-pristine ng-valid" id="formLogin">
                     <div>
                         <div class="input-field s12">
-                            <input type="text" data-ng-model="name" class="validate ng-pristine ng-untouched ng-valid ng-empty">
-                            <label>Tên đăng nhập</label>
+                            <input id="emailLogin" type="text" data-ng-model="name" class="validate ng-pristine ng-untouched ng-valid ng-empty">
+                            <label>Email</label>
                         </div>
                     </div>
                     <div>
                         <div class="input-field s12">
-                            <input type="password" class="validate">
+                            <input id="passwordLogin" type="password" class="validate">
                             <label>Mật khẩu</label>
                         </div>
                     </div>
+                    <div id="error"></div>
                     <div>
                         <div class="s12 log-ch-bx">
                             <p>
@@ -119,7 +124,7 @@
                     </div>
                     <div>
                         <div class="input-field s4">
-                            <i class="waves-effect waves-light log-in-btn waves-input-wrapper" style=""><input type="submit" value="Đăng nhập" class="waves-button-input"></i> </div>
+                            <i class="waves-effect waves-light log-in-btn waves-input-wrapper" style=""><input id="btnLogin" type="button" value="Đăng nhập" class="waves-button-input"></i> </div>
                     </div>
                     <div>
                         <div class="input-field s12"> <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#modal3">Quên mật khẩu</a> | <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#modal2">Tạo tài khoản mới</a> </div>
@@ -145,7 +150,7 @@
                 </ul>
             </div>
             <div class="log-in-pop-right">
-                <a href="#" class="pop-close" data-dismiss="modal"><img src="images/cancel.png" alt="">
+                <a href="#" class="pop-close" data-dismiss="modal"><img src="/images/cancel.png" alt="">
                 </a>
                 <h4>Đăng ký</h4>
                 <p>Nếu chưa có tài khoản, <a href=""> tạo tài khoản mới</a>. Chỉ mất vài phút</p>
@@ -185,6 +190,48 @@
             </div>
         </div>
     </div>
+    <script th:inline="javascript">
+        document.getElementById('btnLogin').addEventListener('click',function (event){
+
+            const emailLogin = document.getElementById('emailLogin');
+            const passwordLogin = document.getElementById('passwordLogin');
+            var dataLogin = {
+                email: emailLogin.value,
+                password: passwordLogin.value
+            }
+            console.log(dataLogin);
+            axios.post('http://localhost:8080/api/auth/login',dataLogin)
+                .then(function (response){
+                    if(response.status === 200){
+                        toastr.success('Đăng nhập thành công');
+                        setTimeout(() =>{
+                            window.location.href = '/';
+                        },1500)
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    toastr.error(error.message);
+                })
+
+        });
+        function logout(){
+            axios.get('http://localhost:8080/api/auth/logout')
+                .then(function (response){
+                    if(response.status === 200){
+                        toastr.success('Đăng xuất thành công');
+                        setTimeout(() =>{
+                            window.location.href = '/';
+                        },1500)
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    toastr.error(error.message);
+                })
+        }
+    </script>
 </header>
 </body>
+
 </html>

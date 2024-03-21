@@ -88,4 +88,8 @@ public class WebController {
         }
         return "web/all-hotels";
     }
+    @GetMapping("/booking")
+    public String getBookingPage(){
+        return "web/booking";
+    }
 }
