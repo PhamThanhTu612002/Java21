@@ -1,7 +1,8 @@
 const inputPlace = document.getElementById("place");
 const inputNoAdult = document.getElementById("no-adult");
 const inputNoChildren = document.getElementById("no-children");
-
+const inputCheckInDate = document.getElementById("from");
+const inputCheckOutDate = document.getElementById("to");
 const formSearch = document.getElementById("formSearch");
 
 
@@ -21,6 +22,18 @@ function validateForm(){
         valid = false;
         displayErrorMessage('error-noChildren','Hãy chọn số lượng trẻ em');
     }
+    if (inputCheckInDate.value ===''){
+        valid = false;
+        displayErrorMessage('error-checkin','Hãy chọn ngày đến');
+    }
+    if (inputCheckOutDate.value ===''){
+        valid = false;
+        displayErrorMessage('error-checkout','Hãy chọn ngày đi');
+    }
+    localStorage.setItem("noAdult",inputNoAdult.value);
+    localStorage.setItem("noChildren",inputNoChildren.value);
+    localStorage.setItem("checkInDate",inputCheckInDate.value);
+    localStorage.setItem("checkOutDate",inputCheckOutDate.value);
 
     return valid;
 

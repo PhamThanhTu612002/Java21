@@ -2,6 +2,8 @@ package vn.techmaster.bookinghotel.service;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,7 +23,6 @@ import vn.techmaster.bookinghotel.repository.RoleRepository;
 import vn.techmaster.bookinghotel.repository.TokenConfirmRepository;
 import vn.techmaster.bookinghotel.repository.UserRepository;
 import vn.techmaster.bookinghotel.security.CustomUserDetailsService;
-import vn.techmaster.bookinghotel.security.JwtUtils;
 
 import java.util.*;
 
@@ -34,15 +35,19 @@ public class AuthService {
     private final RoleRepository roleRepository;
     private final TokenConfirmRepository tokenConfirmRepository;
     private final MailService mailService;
-    private final JwtUtils jwtUtils;
     private final CustomUserDetailsService customUserDetailsService;
     private final HttpSession httpSession;
 
-    public String login(LoginRequest request) {
+    public ResponseEntity<String> login(LoginRequest request) {
+        if(request.getEmail().trim().isEmpty() || request.getEmail().isBlank()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Emai không được để trống");
+        }
+        if(request.getPassword().trim().isEmpty() || request.getPassword().isBlank()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Mật khẩu không được để trống");
+        }
         // Tạo đối tượng xác thực
         UsernamePasswordAuthenticationToken token
                 = new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
-
         try {
             // Tiến hành xác thực
             Authentication authentication = authenticationManager.authenticate(token);
@@ -56,37 +61,58 @@ public class AuthService {
 
             httpSession.setAttribute("MY_SESSION", authentication.getName()); // Lưu email -> session
             // Create JWT token and return
-            return jwtUtils.generateToken(userDetails);
+            return ResponseEntity.ok("Đăng nhập thành công");
 
         } catch (DisabledException e) {
-            throw new RuntimeException("Your account is disabled");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Tài khoản của bạn chưa được xác thực");
         } catch (AuthenticationException e) {
-            throw new RuntimeException("Invalid email/password");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Tài khoản hoặc mật khẩu không đúng");
         }
     }
 
-    public String register(RegisterRequest request) {
+    public ResponseEntity<String> register(RegisterRequest request) {
+        //regex email và mật khẩu
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}$";
+        String passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
+        //Phải nhập họ và tên
+        if (request.getFullname().trim().isEmpty() || request.getFullname().trim().isBlank()){
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Hãy nhập họ và tên");
+        }
+        //kiểm tra email có đúng định dạng ko
+        if (!request.getEmail().matches(emailRegex)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email không hợp lệ");
+        }
         // Kiểm tra xem email đã tồn tại chưa
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
-            throw new RuntimeException("Email already exists");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email đã tồn tại");
         }
 
         // Kiểm tra xem password và confirmPassword có giống nhau không
         if (!request.getPassword().equals(request.getConfirmPassword())) {
-            throw new RuntimeException("Password and confirmPassword do not match");
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Mật khẩu không trùng khớp");
+        }
+        // Mật khẩu có ít nhất 8 ký tự, bao gồm ít nhất một chữ cái viết thường, một chữ cái viết hoa, một số và một ký tự đặc biệt
+        if (!request.getPassword().matches(passwordRegex)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Mật khẩu không hợp lệ");
         }
 
-        // Lưu thông tin user vào database
-        User user = saveUser(request);
 
-        // Tạo confirmToken tương ứng với user
-        TokenConfirm tokenConfirm = saveTokenConfirm(user);
+        try {
+            // Lưu thông tin user vào database
+            User user = saveUser(request);
 
-        // Send mail
-        String link = "http://localhost:8080/xac-thuc-tai-khoan?token=" + tokenConfirm.getToken();
-        mailService.sendMailCreateAccount(user.getEmail(), link);
+            // Tạo confirmToken tương ứng với user
+            TokenConfirm tokenConfirm = saveTokenConfirm(user);
 
-        return "Register successfully";
+            // Send mail
+            String link = "http://localhost:8080/xac-thuc-tai-khoan?token=" + tokenConfirm.getToken();
+            mailService.sendMailCreateAccount(user.getEmail(), link);
+
+            return ResponseEntity.ok().body("Đăng ký thành công");
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Đăng ký thất bại");
+        }
+
     }
     public void logout(){
         httpSession.setAttribute("MY_SESSION", null);
@@ -107,7 +133,7 @@ public class AuthService {
     private User saveUser(RegisterRequest request) {
         // Lưu thông tin user vào database
         User user = new User();
-        user.setFullname(request.getName());
+        user.setFullname(request.getFullname());
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setStatus(false);

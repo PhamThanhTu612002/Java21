@@ -71,24 +71,22 @@ $(function() {
 
 //DATE PICKER	
 $(function() {
-    var currentDate = new Date(); // Lấy ngày hiện tại
     var dateFormat = "mm/dd/yy",
         from = $("#from")
-        .datepicker({
-            dateFormat:"dd/MM/yyyy",
-            changeMonth: false,
-            numberOfMonths: 1
-        })
-        .on("change", function() {
-            to.datepicker("option", "minDate", getDate(this));
-        }),
+            .datepicker({
+                changeMonth: false,
+                numberOfMonths: 1
+            })
+            .on("change", function() {
+                to.datepicker("option", "minDate", getDate(this));
+            }),
         to = $("#to").datepicker({
             changeMonth: false,
             numberOfMonths: 1
         })
-        .on("change", function() {
-            from.datepicker("option", "maxDate", getDate(this));
-        });
+            .on("change", function() {
+                from.datepicker("option", "maxDate", getDate(this));
+            });
 
     function getDate(element) {
         var date;

@@ -33,6 +33,8 @@ public class WebController {
     ReviewService reviewService;
     @Autowired
     ProvinceService provinceService;
+    @Autowired
+    AuthService authService;
     @GetMapping("/")
     public String getHomePage(Model model){
         Map<Province,Integer> provinces = provinceService.getProvincesWithMostHotels();
@@ -91,5 +93,11 @@ public class WebController {
     @GetMapping("/booking")
     public String getBookingPage(){
         return "web/booking";
+    }
+    @GetMapping("/xac-thuc-tai-khoan")
+    public String getAccountConfirmPage(@RequestParam String token, Model model) {
+        Map<String, Object> data = authService.confirmAccount(token);
+        model.addAttribute("data", data);
+        return "web/account-confirm";
     }
 }

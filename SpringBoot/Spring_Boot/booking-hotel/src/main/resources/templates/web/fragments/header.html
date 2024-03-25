@@ -68,7 +68,7 @@
                             </li>
                             <li th:if="${session.MY_SESSION == null}"><a href="!#" data-toggle="modal" data-target="#modal2">Đăng ký</a>
                             </li>
-                            <li th:if="${session.MY_SESSION != null}"><a th:text="${#strings.concat('Xin chào ',session.MY_SESSION)}"></a>
+                            <li th:if="${session.MY_SESSION != null}"><a th:text="${#strings.concat('Xin chào ',#authentication.principal.getFullname())}"></a>
                             </li>
                             <li th:if="${session.MY_SESSION != null}"><a href="javascript:void(0)" th:onclick="logout()">Đăng xuất</a>
                             </li>
@@ -113,7 +113,7 @@
                             <label>Mật khẩu</label>
                         </div>
                     </div>
-                    <div id="error"></div>
+                    <p id="msg-login" class="msg-error" style="color: red"></p>
                     <div>
                         <div class="s12 log-ch-bx">
                             <p>
@@ -157,31 +157,31 @@
                 <form class="s12 ng-pristine ng-valid">
                     <div>
                         <div class="input-field s12">
-                            <input type="text" data-ng-model="name1" class="validate ng-pristine ng-untouched ng-valid ng-empty">
-                            <label>Tên đăng nhập</label>
+                            <input id="fullnameRegister" type="text" data-ng-model="name1" class="validate ng-pristine ng-untouched ng-valid ng-empty">
+                            <label>Họ và tên</label>
                         </div>
                     </div>
                     <div>
                         <div class="input-field s12">
-                            <input type="email" class="validate">
+                            <input id="emailRegister" type="email" class="validate">
                             <label>Email</label>
                         </div>
                     </div>
                     <div>
                         <div class="input-field s12">
-                            <input type="password" class="validate">
+                            <input id="passwordRegister" type="password" class="validate">
                             <label>Mật khẩu</label>
                         </div>
                     </div>
                     <div>
                         <div class="input-field s12">
-                            <input type="password" class="validate">
+                            <input id="confirmedPasswordRegister" type="password" class="validate">
                             <label>Xác nhận lại mật khẩu</label>
                         </div>
                     </div>
                     <div>
                         <div class="input-field s4">
-                            <i class="waves-effect waves-light log-in-btn waves-input-wrapper" style=""><input type="submit" value="Đăng ký" class="waves-button-input"></i> </div>
+                            <i class="waves-effect waves-light log-in-btn waves-input-wrapper" style=""><input id="btnRegister" type="button" value="Đăng ký" class="waves-button-input"></i> </div>
                     </div>
                     <div>
                         <div class="input-field s12"> <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#modal1">Bạn đã có tài khoản ? Đăng nhập</a> </div>
@@ -192,7 +192,6 @@
     </div>
     <script th:inline="javascript">
         document.getElementById('btnLogin').addEventListener('click',function (event){
-
             const emailLogin = document.getElementById('emailLogin');
             const passwordLogin = document.getElementById('passwordLogin');
             var dataLogin = {
@@ -211,9 +210,8 @@
                 })
                 .catch(function (error) {
                     console.log(error);
-                    toastr.error(error.message);
+                    toastr.error(error.response.data);
                 })
-
         });
         function logout(){
             axios.get('http://localhost:8080/api/auth/logout')
@@ -227,9 +225,36 @@
                 })
                 .catch(function (error) {
                     console.log(error);
-                    toastr.error(error.message);
+                    toastr.error(error.response.data);
                 })
         }
+        document.getElementById('btnRegister').addEventListener('click',function (){
+            const fullnameRegister = document.getElementById('fullnameRegister');
+            const emailRegister = document.getElementById('emailRegister');
+            const passwordRegister = document.getElementById('passwordRegister');
+            const confirmedPasswordRegister = document.getElementById('confirmedPasswordRegister');
+
+            const dataRegister = {
+                fullname: fullnameRegister.value,
+                email: emailRegister.value,
+                password: passwordRegister.value,
+                confirmPassword: confirmedPasswordRegister.value
+            }
+            axios.post('http://localhost:8080/api/auth/register',dataRegister)
+                .then(function (response){
+                    if(response.status === 200){
+                        toastr.success('Đăng ký thành công. Hãy vào gmail để xác thực tài khoản');
+                        setTimeout(() =>{
+                            window.location.href = '/';
+                        },1500)
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    toastr.error(error.response.data);
+                })
+
+        });
     </script>
 </header>
 </body>

@@ -17,6 +17,12 @@ import java.util.Collection;
 public class CustomUserDetails implements UserDetails {
     User user;
 
+    public String getAvatar(){
+        return this.user.getAvatar();
+    }
+    public String getFullname(){
+        return this.user.getFullname();
+    }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return user.getRoles().stream()

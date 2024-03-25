@@ -16,14 +16,12 @@ public class AuthApi {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-        String token = authService.login(request);
-        return ResponseEntity.ok(token);
+        return authService.login(request);
     }
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
-        String link = authService.register(request);
-        return ResponseEntity.ok(link);
+        return authService.register(request);
     }
     @GetMapping("/logout")
     public ResponseEntity<?> logout(){
