@@ -602,6 +602,14 @@ td {} .inn-com p {} .inn-com-form {} .inn-com-form form {
     font-family: 'Quicksand', sans-serif;
     color: #333;
 }
+.room-price-2 {
+    /* text-decoration: line-through; */
+    float: right;
+    font-size: 20px;
+    font-weight: 600;
+    font-family: 'Quicksand', sans-serif;
+    color: #0D47A1;
+}
 .room-price span {
     font-size: 35px;
 }
@@ -4538,4 +4546,7 @@ form .stars label:before {
 }
 .msg-error{
     color: red;
+}
+.error-input{
+    border: 1px solid red;
 }

@@ -2,6 +2,7 @@ package vn.techmaster.bookinghotel.service;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,14 +30,22 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-    private final UserRepository userRepository;
-    private final AuthenticationManager authenticationManager;
-    private final PasswordEncoder passwordEncoder;
-    private final RoleRepository roleRepository;
-    private final TokenConfirmRepository tokenConfirmRepository;
-    private final MailService mailService;
-    private final CustomUserDetailsService customUserDetailsService;
-    private final HttpSession httpSession;
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    AuthenticationManager authenticationManager;
+    @Autowired
+    PasswordEncoder passwordEncoder;
+    @Autowired
+    RoleRepository roleRepository;
+    @Autowired
+    TokenConfirmRepository tokenConfirmRepository;
+    @Autowired
+    MailService mailService;
+    @Autowired
+    CustomUserDetailsService customUserDetailsService;
+    @Autowired
+    HttpSession httpSession;
 
     public ResponseEntity<String> login(LoginRequest request) {
         if(request.getEmail().trim().isEmpty() || request.getEmail().isBlank()){
@@ -59,7 +68,7 @@ public class AuthService {
             UserDetails userDetails = customUserDetailsService
                     .loadUserByUsername(authentication.getName());
 
-            httpSession.setAttribute("MY_SESSION", authentication.getName()); // Lưu email -> session
+            httpSession.setAttribute("MY_SESSION", userDetails.getUsername()); // Lưu email -> session
             // Create JWT token and return
             return ResponseEntity.ok("Đăng nhập thành công");
 

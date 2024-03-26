@@ -41,10 +41,14 @@ public class WebController {
         model.addAttribute("provinces",provinces);
         return "web/index";
     }
-    @GetMapping("/room/{id}/{slug}")
-    public String getRoomDetail(Model model, @PathVariable Integer id,@PathVariable String slug){
-        Room room = roomService.getRoomById(id,slug);
+    @GetMapping("hotel/{hotelId}/room/{roomId}/{slug}")
+    public String getRoomDetail(Model model,@PathVariable Integer hotelId, @PathVariable Integer roomId,@PathVariable String slug){
+        HotelRoom hotelRoom = hotelRoomService.getHotelRooms(hotelId,roomId);
+        Room room = roomService.getRoomById(roomId,slug);
+        Hotel hotel = hotelService.getHotelById(hotelRoom.getHotel().getId(),hotelRoom.getHotel().getSlug());
         model.addAttribute("roomDetail",room);
+        model.addAttribute("hotel",hotel);
+
         return "web/room-details";
     }
     @GetMapping("/hotel/{id}/{slug}")
@@ -90,8 +94,15 @@ public class WebController {
         }
         return "web/all-hotels";
     }
-    @GetMapping("/booking")
-    public String getBookingPage(){
+    @GetMapping("/booking/{hotelId}/{roomId}")
+    public String getBookingPage(Model model,@PathVariable Integer hotelId,@PathVariable Integer roomId){
+        HotelRoom hotelRoom = hotelRoomService.getHotelRooms(hotelId,roomId);
+        Hotel hotel = hotelService.getHotelById(hotelRoom.getHotel().getId(),hotelRoom.getHotel().getSlug());
+        Room room = roomService.getRoomById(hotelRoom.getRoom().getId(),hotelRoom.getRoom().getSlug());
+
+        model.addAttribute("hotelRoom",hotelRoom);
+        model.addAttribute("hotel",hotel);
+        model.addAttribute("room",room);
         return "web/booking";
     }
     @GetMapping("/xac-thuc-tai-khoan")
@@ -99,5 +110,9 @@ public class WebController {
         Map<String, Object> data = authService.confirmAccount(token);
         model.addAttribute("data", data);
         return "web/account-confirm";
+    }
+    @GetMapping("/my-booking")
+    public String getMyBookingPage(){
+        return "web/my-booking";
     }
 }

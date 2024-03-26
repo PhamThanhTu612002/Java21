@@ -28,19 +28,19 @@
 								<form class="col s12 ng-pristine ng-valid">
 									<div class="row">
 										<div class="input-field col s12">
-											<input type="text" class="validate">
+											<input id="inputFullName" type="text" class="validate">
 											<label>Họ và tên đầy đủ</label>
 										</div>
 									</div>
 									<div class="row">
 										<div class="input-field col s12">
-											<input type="text" class="validate">
+											<input id="inputPhone" type="text" class="validate">
 											<label>Số điện thoại</label>
 										</div>
 									</div>
 									<div class="row">
 										<div class="input-field col s12">
-											<input type="email" class="validate">
+											<input id="inputEmail" type="email" class="validate">
 											<label>Email</label>
 										</div>
 									</div>
@@ -52,7 +52,7 @@
 									</div>
 									<div class="row">
 										<div class="input-field col s12">
-											<input style="color: #0e0e0e" type="button" value="Đặt phòng" class="btn btn-success">
+											<input id="btnBooking" style="color: #0e0e0e" type="button" value="Đặt phòng" class="btn btn-success">
 										</div>
 									</div>
 								</form>
@@ -63,13 +63,16 @@
 								<h2>Thông tin phòng</h2>
 								<div class="row">
 									<div class="input-field col s12">
-										<h3>Khách sạn ABC</h3>
-										<p>Địa chỉ: <span>Hà nội</span></p>
-										<p>Ngày đến: </p>
-										<p>Ngày đi: </p>
-										<h4>Phòng đôi</h4>
-										<p>Số lượng người lớn: </p>
-										<p>Số lượng trẻ em: </p>
+										<h3 th:text="${#strings.concat('Khách sạn ',hotel.name)}">Khách sạn ABC</h3>
+										<p>Địa chỉ: <span th:text="${hotel.address}">Hà nội</span></p>
+										<p>Ngày đến: <span id="checkInDate"></span></p>
+										<p>Ngày đi: <span id="checkOutDate"></span></p>
+										<h3 th:text="${#strings.concat('Phòng ', room.name)}">Phòng đôi</h3>
+										<p>Số lượng người lớn: <span id="noAdult"></span></p>
+										<p>Số lượng trẻ em: <span id="noChildren"></span> </p>
+										<h4>Tổng cộng thanh toán</h4>
+										<p>Khách sạn: <span class="room-price-2" th:text="${#numbers.formatDecimal(hotelRoom.price*hotelRoom.discount, 0, 'COMMA', 0, 'POINT')}"></span></p>
+										<p>Tổng tiền: <span id="totalPrice" class="room-price-2" th:text="${#numbers.formatDecimal(hotelRoom.price*hotelRoom.discount, 0, 'COMMA', 0, 'POINT')}"></span></p>
 									</div>
 								</div>
 							</div>
@@ -81,7 +84,117 @@
 		</div>
 		<!--TOP SECTION-->
 	</th:block>
-	<th:block id="js"></th:block>
+	<th:block id="js">
+		<script th:inline="javascript">
+			const checkInDateVal= document.getElementById('checkInDate');
+			const checkOutDateVal= document.getElementById('checkOutDate');
+			const noAdult = document.getElementById('noAdult');
+			const noChildren = document.getElementById('noChildren');
+			const email = document.getElementById('inputEmail');
+			const btnBooking = document.getElementById('btnBooking');
+			const inputFullName = document.getElementById('inputFullName');
+			const inputPhone = document.getElementById('inputPhone');
+			const inputEmail = document.getElementById('inputEmail');
+			document.addEventListener("DOMContentLoaded", function() {
+
+				// Lấy dữ liệu từ localStorage
+
+				checkInDateVal.innerText = localStorage.getItem('checkInDate');
+				checkOutDateVal.innerText = localStorage.getItem('checkOutDate');
+				noAdult.innerText = localStorage.getItem('noAdult');
+				noChildren.innerText = localStorage.getItem('noChildren');
+				email.value = localStorage.getItem('email');
+
+				axios.get('http://localhost:8080/api/users?email='+localStorage.getItem('email'))
+						.then(function (response){
+							if(response.status === 200){
+								localStorage.setItem('userId',response.data.id);
+							}
+						})
+						.catch(function (error) {
+							console.log(error);
+						})
+			});
+
+
+			btnBooking.addEventListener('click',function (){
+				if (!validateForm()){
+					return;
+				}
+				const totalPrice = [[${hotelRoom.price*hotelRoom.discount}]];
+				const hotelRoomId = [[${hotelRoom.id}]];
+				console.log(hotelRoomId);
+				const dataBooking = {
+					hotelRoomId: hotelRoomId,
+					userId:localStorage.getItem('userId'),
+					phone: inputPhone.value,
+					bookingDate: new Date(),
+					checkInDate: formatDate(localStorage.getItem('checkInDate')),
+					checkOutDate: formatDate(localStorage.getItem('checkOutDate')),
+					noAdult: localStorage.getItem('noAdult'),
+					noChildren: localStorage.getItem('noChildren'),
+					totalPrice: totalPrice,
+					status: false
+				}
+				axios.post('http://localhost:8080/api/bookings',dataBooking)
+						.then(function (response){
+							if(response.status === 201){
+								toastr.success('Đặt phòng thành công');
+								setTimeout(() =>{
+									window.location.href = '/';
+								},1500)
+							}
+						})
+						.catch(function (error) {
+							console.log(error);
+							toastr.error(error.response.data);
+						})
+			});
+
+			function validateForm(){
+				var valid = true;
+				resetErrorMessages();
+
+				if(inputFullName.value.trim() === ''){
+					valid = false;
+					displayErrorMessage('inputFullName');
+				}
+
+				if (inputPhone.value === ''){
+					valid = false;
+					displayErrorMessage('inputPhone');
+				}
+
+				if (inputEmail.value === ''){
+					valid = false;
+					displayErrorMessage('inputEmail');
+				}
+				return valid;
+			}
+			function resetErrorMessages(){
+				var errorMessages = document.querySelectorAll('.valid');
+				errorMessages.forEach(function (msg) {
+					msg.removeAttribute('style');
+				});
+			}
+			function displayErrorMessage(elementId) {
+				var errorMessageElement = document.querySelector("#"+elementId);
+				errorMessageElement.setAttribute('style','border: 1px solid red;');
+			}
+			function formatDate(stringDate){
+				// Tách các phần của ngày, tháng và năm
+				var dateParts = stringDate.split('/');
+
+				// Lấy các phần riêng biệt
+				var month = dateParts[0];
+				var day = dateParts[1];
+				var year = dateParts[2];
+
+				// Định dạng lại theo mẫu 'YYYY-MM-DD'
+				return year + '-' + month + '-' + day;
+			}
+		</script>
+	</th:block>
 </body>
 
 </html>

@@ -16,6 +16,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         // Có thể trả về giao diện, json object, status, ...
+
         log.error("CustomAuthenticationEntryPoint");
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
     }

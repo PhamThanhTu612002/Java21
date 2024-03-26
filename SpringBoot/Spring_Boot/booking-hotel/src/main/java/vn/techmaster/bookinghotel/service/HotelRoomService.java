@@ -21,5 +21,7 @@ public class HotelRoomService {
     }
 
 
-
+    public HotelRoom getHotelRooms(Integer hotelId, Integer roomId) {
+        return hotelRoomRepository.findHotelRoomByHotel_IdAndRoom_Id(hotelId,roomId);
+    }
 }

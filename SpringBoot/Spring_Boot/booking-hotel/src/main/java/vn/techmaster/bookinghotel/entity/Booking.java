@@ -20,9 +20,9 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "hotel_room_id")
-    Hotel hotel_room_id;
+    HotelRoom hotel_room;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -30,11 +30,11 @@ public class Booking {
 
     @Column(name = "booking_date")
     Date bookingDate;
-
+    String phone;
     Date check_in_date;
     Date check_out_date;
     Integer amount_adult;
     Integer amount_child;
-    Integer status;
+    Boolean status;
     Double total_price;
 }

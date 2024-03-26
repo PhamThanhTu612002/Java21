@@ -53,13 +53,14 @@ public class SecurityConfig {
 
         // Cấu hình đường dẫn , 401, 403
         http.authorizeHttpRequests(authorizeRequests -> {
-            authorizeRequests.anyRequest().permitAll();
+            authorizeRequests.requestMatchers("/booking/**").authenticated()
+                    .anyRequest().permitAll();
         });
 
         // Cấu hình session
-        http.sessionManagement(session -> session
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        );
+//        http.sessionManagement(session -> session
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//        );
 
         // Cấu hình xử lý exception
         http.exceptionHandling(exceptionHandling -> {

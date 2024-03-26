@@ -14,15 +14,30 @@ import vn.techmaster.bookinghotel.service.AuthService;
 public class AuthApi {
     private final AuthService authService;
 
+    /**
+     * API đăng nhập
+     * @param request - thông tin cần để đăng nhập
+     * @return
+     */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         return authService.login(request);
     }
 
+    /**
+     * API đăng ký
+     * @param request - thông tin cần để đăng ký
+     * @return
+     */
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
         return authService.register(request);
     }
+
+    /**
+     * API đăng xuất
+     * @return
+     */
     @GetMapping("/logout")
     public ResponseEntity<?> logout(){
         authService.logout();

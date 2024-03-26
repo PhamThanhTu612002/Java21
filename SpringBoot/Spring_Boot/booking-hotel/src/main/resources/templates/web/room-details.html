@@ -177,7 +177,7 @@
 						<!--=========================================-->
 						<div class="hp-call hp-right-com">
 							<div class="hp-call-in"> <img src="/images/icon/dbc4.png" alt="">
-								<h3>Đặt ngay <span>để được ưu đãi tốt nhất</span></h3><a th:href="@{/booking}">BOOK NOW</a> </div>
+								<h3>Đặt ngay <span>để được ưu đãi tốt nhất</span></h3><a th:href="@{/booking/{hotelId}/{roomId} (hotelId = ${hotel.id},roomId=${roomDetail.id})}">BOOK NOW</a> </div>
 						</div>
 						<!--=========================================-->
 						<!--=========================================-->
@@ -201,7 +201,11 @@
 			</div>
 		</div>
 	</th:block>
-<th:block id="js"></th:block>
+<th:block id="js">
+	<script th:inline="javascript">
+
+	</script>
+</th:block>
 </body>
 
 </html>

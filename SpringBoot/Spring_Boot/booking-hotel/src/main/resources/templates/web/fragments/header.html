@@ -6,6 +6,38 @@
 </head>
 <body>
 <header>
+    <section>
+        <div class="mm">
+            <div class="mm-inn">
+                <div class="mm-logo">
+                    <a th:href="@{/}"><img src="/images/logo.png" alt="">
+                    </a>
+                </div>
+                <div class="mm-icon"><span><i class="fa fa-bars show-menu" aria-hidden="true"></i></span>
+                </div>
+                <div class="mm-menu">
+                    <div class="mm-close"><span><i class="fa fa-times hide-menu" aria-hidden="true"></i></span>
+                    </div>
+                    <ul>
+                        <li><a th:href="@{/}">Trang chủ</a>
+                        </li>
+                        <li><a th:href="@{/blogs}">Blog</a>
+                        </li>
+                        <li th:if="${session.MY_SESSION != null}"><a th:href="@{/my-booking}">Kỳ nghỉ của tôi</a>
+                        </li>
+                        <li th:if="${session.MY_SESSION == null}"><a href="!#" data-toggle="modal" data-target="#modal1">Đăng nhập</a>
+                        </li>
+                        <li th:if="${session.MY_SESSION == null}"><a href="!#" data-toggle="modal" data-target="#modal2">Đăng ký</a>
+                        </li>
+                        <li th:if="${session.MY_SESSION != null}"><a th:text="${#strings.concat('Xin chào ',#authentication.principal.getFullname())}"></a>
+                        </li>
+                        <li th:if="${session.MY_SESSION != null}"><a href="javascript:void(0)" th:onclick="logout()">Đăng xuất</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
     <!--HEADER SECTION-->
     <section>
         <!--TOP SECTION-->
@@ -63,6 +95,8 @@
                                 </ul>
                             </li>
                             <li><a th:href="@{/blogs}">Blog</a>
+                            </li>
+                            <li th:if="${session.MY_SESSION != null}"><a th:href="@{/my-booking}">Kỳ nghỉ của tôi</a>
                             </li>
                             <li th:if="${session.MY_SESSION == null}"><a href="!#" data-toggle="modal" data-target="#modal1">Đăng nhập</a>
                             </li>
@@ -203,8 +237,9 @@
                 .then(function (response){
                     if(response.status === 200){
                         toastr.success('Đăng nhập thành công');
+                        localStorage.setItem('email',emailLogin.value);
                         setTimeout(() =>{
-                            window.location.href = '/';
+                            location.reload();
                         },1500)
                     }
                 })
@@ -218,6 +253,7 @@
                 .then(function (response){
                     if(response.status === 200){
                         toastr.success('Đăng xuất thành công');
+                        localStorage.clear();
                         setTimeout(() =>{
                             window.location.href = '/';
                         },1500)
@@ -245,7 +281,7 @@
                     if(response.status === 200){
                         toastr.success('Đăng ký thành công. Hãy vào gmail để xác thực tài khoản');
                         setTimeout(() =>{
-                            window.location.href = '/';
+                            location.reload();
                         },1500)
                     }
                 })
