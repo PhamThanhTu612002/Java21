@@ -141,7 +141,7 @@
 							if(response.status === 201){
 								toastr.success('Đặt phòng thành công');
 								setTimeout(() =>{
-									window.location.href = '/';
+									window.location.href = '/my-booking?email='+localStorage.getItem('email');
 								},1500)
 							}
 						})

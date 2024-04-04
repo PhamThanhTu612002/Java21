@@ -24,26 +24,46 @@
 							<table class="table">
 								<thead>
 								<tr>
+									<th>Mã booking</th>
 									<th>Địa điểm</th>
 									<th>Khách sạn</th>
 									<th>Trạng thái</th>
+									<th>Chi tiết</th>
 								</tr>
 								</thead>
 								<tbody>
-								<tr>
-									<td>John</td>
-									<td>Doe</td>
-									<td>john@example.com</td>
-								</tr>
-								<tr>
-									<td>Mary</td>
-									<td>Moe</td>
-									<td>mary@example.com</td>
-								</tr>
-								<tr>
-									<td>July</td>
-									<td>Dooley</td>
-									<td>july@example.com</td>
+								<tr th:each="booking : ${bookings}">
+									<td th:text="${booking.getKey().id}">1</td>
+									<td th:text="${booking.getValue().hotel.province.name}">John</td>
+									<td th:text="${booking.getKey().hotel_room.hotel.name}">Doe</td>
+									<td><span th:text="${booking.getKey().status ? 'Thành công': 'Chờ xử lý'}" th:class="${booking.getKey().status ? 'db-success': 'db-not-success'}">Yes</span></td>
+									<td>
+										<button type="button" class="btnDetailBooking" data-toggle="modal" th:attr="data-target='#detailBooking'+${booking.getKey().id}" >Xem</button>
+										<!-- Modal -->
+										<div class="modal fade" th:id="${#strings.concat('detailBooking',booking.getKey().id)}" tabindex="-1" role="dialog" aria-labelledby="detailBooking" aria-hidden="true">
+											<div class="modal-dialog modal-dialog-centered" role="document">
+												<div class="modal-content">
+													<div class="modal-body">
+														<div>
+															<h3 th:text="${#strings.concat('Khách sạn ',booking.getValue().hotel.name)}">Khách sạn ABC</h3>
+															<p>Địa chỉ: <span th:text="${booking.getValue().hotel.address}">Hà nội</span></p>
+															<p>Ngày đến: <span th:text="${#dates.format(booking.getKey().check_in_date,'dd/MM/yyyy')}" id="checkInDate"></span></p>
+															<p>Ngày đi: <span th:text="${#dates.format(booking.getKey().check_out_date,'dd/MM/yyyy')}" id="checkOutDate"></span></p>
+															<h3 th:text="${#strings.concat('Phòng ', booking.getValue().room.name)}">Phòng đôi</h3>
+															<p>Số lượng người lớn: <span th:text="${booking.getKey().amount_adult}" id="noAdult"></span></p>
+															<p>Số lượng trẻ em: <span th:text="${booking.getKey().amount_child}" id="noChildren"></span> </p>
+															<h4>Tổng cộng thanh toán</h4>
+															<p>Khách sạn: <span class="room-price-2" th:text="${#numbers.formatDecimal(booking.getValue().price*booking.getValue().discount, 0, 'COMMA', 0, 'POINT')}"></span></p>
+															<p>Tổng tiền: <span id="totalPrice" class="room-price-2" th:text="${#numbers.formatDecimal(booking.getValue().price*booking.getValue().discount, 0, 'COMMA', 0, 'POINT')}"></span></p>
+														</div>
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</td>
 								</tr>
 								</tbody>
 							</table>
@@ -56,6 +76,8 @@
 		<!--TOP SECTION-->
 	</th:block>
 	<th:block id="js">
+		<script th:inline="javascript">
+		</script>
 	</th:block>
 </body>
 

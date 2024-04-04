@@ -98,10 +98,10 @@
 											<a data-toggle="tab" href="#menu2"><img src="/images/icon/a10.png" alt=""> <span class="tab-hide">Tiện nghi</span>
 											</a>
 										</li>
-										<li>
-											<a data-toggle="tab" href="#menu3"><img src="/images/icon/a11.png" alt=""> <span class="tab-hide">Tính năng khác</span>
-											</a>
-										</li>
+<!--										<li>-->
+<!--											<a data-toggle="tab" href="#menu3"><img src="/images/icon/a11.png" alt=""> <span class="tab-hide">Tính năng khác</span>-->
+<!--											</a>-->
+<!--										</li>-->
 									</ul>
 									<div class="tab-content">
 										<div id="menu1" class="tab-pane fade tab-space active in">
@@ -111,32 +111,28 @@
 													</li>
 													<li>Diện tích : <span th:text="${roomDetail.getArea()}">800 sq. feet</span>
 													</li>
-													<li>View : <span>Sea or Garden view</span>
-													</li>
 													<li>Số giường : <span th:text="${roomDetail.getQuantity_of_bed()}">Available per request</span>
 													</li>
-													<li>Ăn sáng <span>Yes</span>
+													<li>Ăn sáng <span th:text="${roomDetail.have_breafast} ? 'Có':'Không có'">Yes</span>
 													</li>
-													<li>Hút thuốc : <span class="ov-yes">Yes</span>
+													<li>Hút thuốc : <span th:text="${roomDetail.smoking} ? 'Có':'Không'" th:class="${roomDetail.smoking} ? 'ov-yes':'ov-no'">Yes</span>
 													</li>
 												</ul>
 											</div>
 										</div>
 										<div id="menu2" class="tab-pane fade tab-space">
-											<div class="row">
-												<div class="col-md-6 hp-ov-fac"> <img src="/images/hotel/1.jpg" alt=""> </div>
-												<div class="col-md-6">
-													<p>Maecenas erat lorem, vulputate sed ex at, vehicula dignissim risus. Nullam non nisi congue elit cursus tempus. Nunc vel ante nec libero semper maximus. Donec cursus sed massa eget commodo. Phasellus semper neque id iaculis malesuada. Nulla efficitur dui vitae orci blandit tempor. Mauris sed venenatis nibh, sed sodales risus.</p>
-													<p>Nam sit amet tortor in elit fermentum consectetur et sit amet eros. Sed varius velit at eros tempor sodales. Fusce at enim at lectus sollicitudin pharetra at in risus. Donec ut semper turpis. Maecenas lobortis ante ut eros scelerisque, at semper augue ullamcorper.</p>
-												</div>
+											<div class="hp-main-overview">
+												<ul th:each="utility: ${roomDetail.utilities}">
+													<li th:text="${utility.name}">Tối đa</li>
+												</ul>
 											</div>
 										</div>
-										<div id="menu3" class="tab-pane fade tab-space">
-											<p>Maecenas erat lorem, vulputate sed ex at, vehicula dignissim risus. Nullam non nisi congue elit cursus tempus. Nunc vel ante nec libero semper maximus. Donec cursus sed massa eget commodo. Phasellus semper neque id iaculis malesuada. Nulla efficitur dui vitae orci blandit tempor. Mauris sed venenatis nibh, sed sodales risus.</p>
-											<p>Nam sit amet tortor in elit fermentum consectetur et sit amet eros. Sed varius velit at eros tempor sodales. Fusce at enim at lectus sollicitudin pharetra at in risus. Donec ut semper turpis. Maecenas lobortis ante ut eros scelerisque, at semper augue ullamcorper.</p>
-											<p>Maecenas erat lorem, vulputate sed ex at, vehicula dignissim risus. Nullam non nisi congue elit cursus tempus. Nunc vel ante nec libero semper maximus. Donec cursus sed massa eget commodo. Phasellus semper neque id iaculis malesuada. Nulla efficitur dui vitae orci blandit tempor. Mauris sed venenatis nibh, sed sodales risus.</p>
-											<p>Nam sit amet tortor in elit fermentum consectetur et sit amet eros. Sed varius velit at eros tempor sodales. Fusce at enim at lectus sollicitudin pharetra at in risus. Donec ut semper turpis. Maecenas lobortis ante ut eros scelerisque, at semper augue ullamcorper.</p>
-										</div>
+<!--										<div id="menu3" class="tab-pane fade tab-space">-->
+<!--											<p>Maecenas erat lorem, vulputate sed ex at, vehicula dignissim risus. Nullam non nisi congue elit cursus tempus. Nunc vel ante nec libero semper maximus. Donec cursus sed massa eget commodo. Phasellus semper neque id iaculis malesuada. Nulla efficitur dui vitae orci blandit tempor. Mauris sed venenatis nibh, sed sodales risus.</p>-->
+<!--											<p>Nam sit amet tortor in elit fermentum consectetur et sit amet eros. Sed varius velit at eros tempor sodales. Fusce at enim at lectus sollicitudin pharetra at in risus. Donec ut semper turpis. Maecenas lobortis ante ut eros scelerisque, at semper augue ullamcorper.</p>-->
+<!--											<p>Maecenas erat lorem, vulputate sed ex at, vehicula dignissim risus. Nullam non nisi congue elit cursus tempus. Nunc vel ante nec libero semper maximus. Donec cursus sed massa eget commodo. Phasellus semper neque id iaculis malesuada. Nulla efficitur dui vitae orci blandit tempor. Mauris sed venenatis nibh, sed sodales risus.</p>-->
+<!--											<p>Nam sit amet tortor in elit fermentum consectetur et sit amet eros. Sed varius velit at eros tempor sodales. Fusce at enim at lectus sollicitudin pharetra at in risus. Donec ut semper turpis. Maecenas lobortis ante ut eros scelerisque, at semper augue ullamcorper.</p>-->
+<!--										</div>-->
 									</div>
 								</div>
 							</div>

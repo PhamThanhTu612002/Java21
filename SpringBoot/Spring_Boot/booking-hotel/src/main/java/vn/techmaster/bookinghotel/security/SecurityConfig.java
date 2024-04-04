@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.expression.WebExpressionAuthorizationManager;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import vn.techmaster.bookinghotel.security.error.CustomAccessDeniedHandler;
 import vn.techmaster.bookinghotel.security.error.CustomAuthenticationEntryPoint;
@@ -54,6 +55,8 @@ public class SecurityConfig {
         // Cấu hình đường dẫn , 401, 403
         http.authorizeHttpRequests(authorizeRequests -> {
             authorizeRequests.requestMatchers("/booking/**").authenticated()
+                    .requestMatchers("/my-booking/**").authenticated()
+                    .requestMatchers("/manager/**","/manager").hasRole("MANAGER")
                     .anyRequest().permitAll();
         });
 

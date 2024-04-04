@@ -23,6 +23,9 @@ public class CustomUserDetails implements UserDetails {
     public String getFullname(){
         return this.user.getFullname();
     }
+    public String getEmail(){
+        return this.user.getEmail();
+    }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return user.getRoles().stream()

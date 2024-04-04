@@ -3,22 +3,24 @@ package vn.techmaster.bookinghotel.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import vn.techmaster.bookinghotel.entity.*;
+import vn.techmaster.bookinghotel.exception.ResourceNotFoundException;
 import vn.techmaster.bookinghotel.service.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 @Controller
 public class WebController {
-    @Value("${spring.datasource.password}")
-    String value;
     @Autowired
     RoomService roomService;
     @Autowired
@@ -35,6 +37,10 @@ public class WebController {
     ProvinceService provinceService;
     @Autowired
     AuthService authService;
+    @Autowired
+    BookingService bookingService;
+    @Autowired
+    UserService userService;
     @GetMapping("/")
     public String getHomePage(Model model){
         Map<Province,Integer> provinces = provinceService.getProvincesWithMostHotels();
@@ -112,7 +118,17 @@ public class WebController {
         return "web/account-confirm";
     }
     @GetMapping("/my-booking")
-    public String getMyBookingPage(){
+    public String getMyBookingPage(Model model) {
+        // Kiểm tra xác thực người dùng
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserEmail = authentication.getName(); // Lấy email của người dùng hiện tại
+
+        User user = userService.getUserByEmail(currentUserEmail).orElseThrow(() -> new ResourceNotFoundException("Không thấy user này"));
+
+        List<Booking> bookings = bookingService.getBookingByUserId(user.getId());
+        Map<Booking,HotelRoom> bookingHotelMap = bookingService.getBookingHotelRoom(bookings);
+        model.addAttribute("bookings",bookingHotelMap);
+
         return "web/my-booking";
     }
 }

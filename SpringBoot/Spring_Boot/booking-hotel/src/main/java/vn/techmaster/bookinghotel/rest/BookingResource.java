@@ -3,10 +3,7 @@ package vn.techmaster.bookinghotel.rest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import vn.techmaster.bookinghotel.entity.Booking;
 import vn.techmaster.bookinghotel.entity.HotelRoom;
 import vn.techmaster.bookinghotel.entity.User;
@@ -16,7 +13,9 @@ import vn.techmaster.bookinghotel.repository.BookingRepository;
 import vn.techmaster.bookinghotel.repository.HotelRoomRepository;
 import vn.techmaster.bookinghotel.repository.UserRepository;
 
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/bookings")
@@ -55,6 +54,20 @@ public class BookingResource {
         bookingRepository.save(booking);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+    @GetMapping()
+    public ResponseEntity<?> getBookingByEmail(@RequestParam String email){
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy user này"));
+
+        List<Booking> bookings = bookingRepository.findAllById(Collections.singleton(user.getId()));
+        return ResponseEntity.ok(bookings);
+    }
+    @DeleteMapping("/{bookingId}")
+    public ResponseEntity<?> deleteBooking(@PathVariable Integer bookingId){
+        Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new ResourceNotFoundException("Không tifm thấy booking này"));
+
+        bookingRepository.delete(booking);
+        return ResponseEntity.noContent().build();
     }
 
 }

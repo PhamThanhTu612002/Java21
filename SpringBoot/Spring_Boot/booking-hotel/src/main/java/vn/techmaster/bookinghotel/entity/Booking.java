@@ -30,6 +30,7 @@ public class Booking {
 
     @Column(name = "booking_date")
     Date bookingDate;
+    String nameBooking;
     String phone;
     Date check_in_date;
     Date check_out_date;

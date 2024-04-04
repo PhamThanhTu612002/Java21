@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" th:replace="~{web/layout/layout :: layout(~{:: title}, ~{:: #css}, ~{:: #main-content}, ~{:: #js})}">
+
+<head>
+	<title>MyHotel - Hotel Booking and Room Booking Online Html Responsive Template</title>
+	<th:block id="css"></th:block>
+</head>
+
+<body data-ng-app="">
+ 	<th:block id="main-content">
+		<!--DASHBOARD SECTION-->
+		<div class="dashboard">
+			<div class="db-left">
+<!--				<div class="db-left-1">-->
+<!--					<h4>Jana Novakova</h4>-->
+<!--					<p>Newyork, United States</p>-->
+<!--				</div>-->
+				<div class="db-left-2">
+					<ul>
+						<li>
+							<a th:href="@{manager/booking}">Quản lý booking</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="db-cent">
+				<div class="db-cent-1">
+					<p th:text="${#strings.concat('Xin chào ',#authentication.principal.getFullname())}">Hi Jana Novakova,</p>
+					<h4>Chào mừng đến trang quản lý</h4> </div>
+				<div class="db-cent-2">
+					<div class="db-2-main-1">
+						<div class="db-2-main-2"> <img src="/images/icon/dbc5.png" alt=""> <span>Booking hôm nay</span>
+							<h2 th:text="${bookingToday}">12</h2>
+						</div>
+					</div>
+					<div class="db-2-main-1">
+						<div class="db-2-main-2"> <img src="/images/icon/dbc6.png" alt=""> <span>Chờ xác nhận</span>
+							<h2 th:text="${pendingBooking}">04</h2>
+						</div>
+					</div>
+					<div class="db-2-main-1">
+						<div class="db-2-main-2"> <img src="/images/icon/dbc3.png" alt=""> <span>Đã duyệt</span>
+							<h2 th:text="${confirmedBooking}">16</h2> </div>
+					</div>
+				</div>
+			</div>
+<!--			<div class="db-righ">-->
+<!--				<h4>Notifications(18)</h4>-->
+<!--				<ul>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr1.jpg" alt="">-->
+<!--							<h5>Joseph, write a review</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>2 hours ago</span> </a>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr2.jpg" alt="">-->
+<!--							<h5>14 New Messages</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>4 hours ago</span> </a>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr3.jpg" alt="">-->
+<!--							<h5>Ads expairy soon</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>10 hours ago</span> </a>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr4.jpg" alt="">-->
+<!--							<h5>Post free ads - today only</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>12 hours ago</span> </a>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr5.jpg" alt="">-->
+<!--							<h5>listing limit increase</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>14 hours ago</span> </a>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr6.jpg" alt="">-->
+<!--							<h5>mobile app launch</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>18 hours ago</span> </a>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr7.jpg" alt="">-->
+<!--							<h5>Setting Updated</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>20 hours ago</span> </a>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr8.jpg" alt="">-->
+<!--							<h5>Increase listing viewers</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>2 days ago</span> </a>-->
+<!--					</li>-->
+<!--				</ul>-->
+<!--			</div>-->
+		</div>
+		<!--END DASHBOARD SECTION-->
+	</th:block>
+	<th:block id="js">
+
+	</th:block>
+</body>
+
+</html>

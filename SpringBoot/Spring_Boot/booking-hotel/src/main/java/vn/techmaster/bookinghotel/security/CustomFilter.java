@@ -34,7 +34,6 @@ public class CustomFilter extends OncePerRequestFilter {
             // Tạo đối tượng phân quyền
             UsernamePasswordAuthenticationToken authenticationToken
                     = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-
             // Lưu thông tin request (IP, Session ID, ...)
             authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 

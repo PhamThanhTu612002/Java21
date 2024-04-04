@@ -18,8 +18,8 @@ public class ProvinceService {
     @Autowired
     HotelRepository hotelRepository;
 
-    public Province getProvinceBySlug(String slug){
-        return provinceRepository.findBySlug(slug);
+    public List<Province> getAllProvinces(){
+        return provinceRepository.findAll();
     }
     public Optional<Province> getProvinceByNameLike(String name){
         return provinceRepository.findProvinceByNameLike(name);

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" th:replace="~{web/layout/layout :: layout(~{:: title}, ~{:: #css}, ~{:: #main-content}, ~{:: #js})}">
+
+<head>
+	<title>MyHotel - Hotel Booking and Room Booking Online Html Responsive Template</title>
+	<th:block id="css"></th:block>
+</head>
+
+<body data-ng-app="">
+ 	<th:block id="main-content">
+		<!--DASHBOARD SECTION-->
+		<div class="dashboard">
+			<div class="db-left">
+<!--				<div class="db-left-1">-->
+<!--					<h4>Jana Novakova</h4>-->
+<!--					<p>Newyork, United States</p>-->
+<!--				</div>-->
+				<div class="db-left-2">
+					<ul>
+						<li>
+							<a href="dashboard.html">Quản lý booking</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="db-cent">
+				<div class="db-cent-1">
+					<p th:text="${#strings.concat('Xin chào ',#authentication.principal.getFullname())}">Hi Jana Novakova,</p>
+					<h4>Chào mừng đến trang quản lý</h4> </div>
+				<div class="db-cent-3">
+					<div class="db-cent-table db-com-table">
+						<div class="db-title">
+							<h3><img src="/images/icon/dbc5.png" alt=""/> Đơn đặt phòng</h3>
+						</div>
+						<table class="bordered responsive-table">
+							<thead>
+							<tr>
+								<th>#</th>
+								<th>Người đặt phòng</th>
+								<th>Số điện thoại</th>
+								<th>Điểm đến</th>
+								<th>Khách sạn</th>
+								<th>Số người</th>
+								<th>Trạng thái</th>
+								<th>Thực hiện</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr th:each="booking : ${bookings}">
+								<td th:text="${booking.id}">01</td>
+								<td th:text="${booking.nameBooking}">Alvin</td>
+								<td th:text="${booking.phone}">+01 4215 3521</td>
+								<td th:text="${booking.hotel_room.hotel.province.name}">12may</td>
+								<td th:text="${booking.hotel_room.hotel.name}">20may</td>
+								<td th:text="${booking.amount_adult+booking.amount_child}">12</td>
+								<td><a th:text="${booking.status ? 'Thành công' : 'Chờ xác nhận'}" th:class="${booking.status ? 'db-success' : 'db-not-success'}"></a></td>
+								<td><button data-toggle="modal" th:attr="data-target='#editBooking'+${booking.id}"  class="btn-warning btnDetailBooking"><i class="fa fa-pencil-square-o"></i></button>  <button class="btn-danger btnDetailBooking" th:onclick="|deleteBooking(${booking.id})|"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
+								<!-- Modal -->
+								<div class="modal fade" th:id="${#strings.concat('editBooking',booking.id)}" tabindex="-1" role="dialog" aria-labelledby="editBooking" aria-hidden="true">
+									<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+										<div class="modal-content">
+											<div class="modal-body">
+												<div class="col-md-12">
+													<div class="head-typo typo-com collap-expand formEdit">
+														<div class="input-field col-md-6">
+															<p>Mã đặt phòng</p>
+															<input disabled th:value="${booking.id}" type="text" class="validate valid">
+														</div>
+														<div class="input-field col-md-6">
+															<p>Tên người đặt</p>
+															<input th:value="${booking.nameBooking}" th:id="${#strings.concat('bookingName'+booking.id)}" type="text" class="validate valid">
+														</div>
+														<div class="input-field col-md-6">
+															<p>Số điện thoại</p>
+															<input th:value="${booking.phone}" th:id="${#strings.concat('phone'+booking.id)}" type="text" class="validate valid">
+														</div>
+														<div class="input-field col-md-6">
+															<p>Địa điểm</p>
+															<input disabled th:value="${booking.hotel_room.hotel.province.name}" th:id="${#strings.concat('place'+booking.id)}" type="text" class="validate valid">
+														</div>
+														<div class="input-field col-md-6">
+															<p>Khách sạn</p>
+															<input disabled th:value="${booking.hotel_room.hotel.name}" th:id="${#strings.concat('hotel'+booking.id)}" type="text" class="validate valid">
+														</div>
+														<div class="input-field col-md-6">
+															<p>Phòng</p>
+															<select th:id="${#strings.concat('room',booking.id)}">
+																<option th:selected="${booking.hotel_room.room.id.equals(room.room.id)}" th:each="room : ${booking.hotel_room.hotel.hotelRooms}" th:text="${room.room.name}" th:value="${room.room.id}"></option>
+															</select>
+														</div>
+														<div class="input-field col-md-6">
+															<p>Số người lớn</p>
+															<input th:value="${booking.amount_adult}" th:id="${#strings.concat('noAdult'+booking.id)}" type="text" class="validate valid">
+														</div>
+														<div class="input-field col-md-6">
+															<p>Số trẻ em</p>
+															<input th:value="${booking.amount_child}" th:id="${#strings.concat('noChildren'+booking.id)}" type="text" class="validate valid">
+														</div>
+														<div class="input-field col-md-6">
+															<p>Ngày đến</p>
+															<input type="text" th:id="${#strings.concat('checkInDate'+booking.id)}" th:value="${#dates.format(booking.check_in_date,'MM/dd/yyyy')}">
+														</div>
+														<div class="input-field col-md-6">
+															<p>Ngày đi</p>
+															<input type="text" th:id="${#strings.concat('checkOutDate'+booking.id)}" th:value="${#dates.format(booking.check_out_date,'MM/dd/yyyy')}">
+														</div>
+														<div class="input-field col-md-6">
+															<p>Ngày đặt</p>
+															<input type="text" th:id="${#strings.concat('bookingDate'+booking.id)}" th:value="${#dates.format(booking.bookingDate,'MM/dd/yyyy')}">
+														</div>
+														<div class="input-field col-md-6">
+															<p>Trạng thái</p>
+															<select th:id="${#strings.concat('bookingStatus'+booking.id)}">
+																<option th:value="${booking.status ? 'true' : 'false'}" th:selected="${booking.status}">Chờ xử lý</option>
+																<option th:value="${booking.status ? 'true' : 'false'}" th:selected="${booking.status}">Xác nhận</option>
+															</select>
+														</div>
+														<div class="input-field col-md-12 ">
+															<h4>Tổng tiền: <span id="totalPrice" class="room-price-2" th:text="${#numbers.formatDecimal(booking.hotel_room.price*booking.hotel_room.discount, 0, 'COMMA', 0, 'POINT')}"></span></h4>
+														</div>
+														<div class="input-field col-md-12 btnSave">
+															<button id="btnSave" class="btn btn-success" th:onclick="|editBooking(${booking.id})|">Lưu</button>
+														</div>
+													</div>
+												</div>
+
+											</div>
+										</div>
+									</div>
+								</div>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+<!--			<div class="db-righ">-->
+<!--				<h4>Notifications(18)</h4>-->
+<!--				<ul>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr1.jpg" alt="">-->
+<!--							<h5>Joseph, write a review</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>2 hours ago</span> </a>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr2.jpg" alt="">-->
+<!--							<h5>14 New Messages</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>4 hours ago</span> </a>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr3.jpg" alt="">-->
+<!--							<h5>Ads expairy soon</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>10 hours ago</span> </a>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr4.jpg" alt="">-->
+<!--							<h5>Post free ads - today only</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>12 hours ago</span> </a>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr5.jpg" alt="">-->
+<!--							<h5>listing limit increase</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>14 hours ago</span> </a>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr6.jpg" alt="">-->
+<!--							<h5>mobile app launch</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>18 hours ago</span> </a>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr7.jpg" alt="">-->
+<!--							<h5>Setting Updated</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>20 hours ago</span> </a>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr8.jpg" alt="">-->
+<!--							<h5>Increase listing viewers</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>2 days ago</span> </a>-->
+<!--					</li>-->
+<!--				</ul>-->
+<!--			</div>-->
+		</div>
+		<!--END DASHBOARD SECTION-->
+	</th:block>
+	<th:block id="js">
+		<script th:inline="javascript">
+
+			 function deleteBooking(bookingId){
+				if(!confirm("Bạn có chắn chắn xóa không?")){
+					return;
+				}else {
+					axios.delete("http://localhost:8080/api/bookings/" + bookingId)
+							.then(function (response){
+								if(response.status === 204){
+									toastr.success('Xóa thành công');
+									setTimeout(() =>{
+										window.location.reload();
+									},1500)
+								}
+							})
+							.catch(function (error) {
+								console.log(error);
+								toastr.error(error.response.data);
+							})
+				}
+			}
+			// function editBooking(bookingID){
+			// 	const bookingName = document.getElementById('bookingName' + bookingID);
+			// 	const phoneBooking = document.getElementById('phone'+ bookingID);
+			// 	const placeBooking = document.getElementById('place'+ bookingID);
+			// 	const roomBooking = document.getElementById('room'+ bookingID);
+			// 	const noAdultBooking = document.getElementById('noAdult'+ bookingID);
+			// 	const noChildrenBooking = document.getElementById('noChildren'+ bookingID);
+			// 	const checkInDateBooking = document.getElementById('checkInDate'+ bookingID);
+			// 	const checkOutDateBooking = document.getElementById('checkOutDate'+ bookingID);
+			// 	const bookingDate = document.getElementById('bookingDate'+ bookingID);
+			// 	const statusBooking = document.getElementById('bookingStatus'+ bookingID);
+			// 	const btnSave = document.getElementById('btnSave'+ bookingID);
+			// 	var data = {
+			// 		nameBooking: bookingName.value,
+			// 		phone: phoneBooking.value,
+			//
+			// 	}
+			// }
+		</script>
+	</th:block>
+</body>
+
+</html>
