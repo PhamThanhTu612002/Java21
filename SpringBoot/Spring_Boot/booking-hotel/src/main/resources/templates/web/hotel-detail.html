@@ -18,7 +18,7 @@
 						<div class="inn-detail-p1 inn-com">
 							<h2 th:text="${hotelDetail.name}">Golden Gate, United States</h2>
 							<div class="r2-ratt" >
-								<p>Hạng: <i class="fa fa-star" th:each="star : ${#numbers.sequence(1,hotelDetail.rating_star,1)}"></i></p>
+								<p>Hạng: <i class="fa fa-star" style="color: " th:each="star : ${#numbers.sequence(1,hotelDetail.rating_star,1)}"></i></p>
 							</div>
 							<p th:text="${hotelDetail.getDescription()}">Discover two of South America’s greatest cities, Rio de Janeiro and Buenos Aires, at a leisurely pace. A major highlight on this journey is a visit to Iguassu Falls in between your two city stays. It truly is one of the most spectacular sights on Earth. See the impressive falls from both the Brazilian and Argentine sides.</p>
 						</div>

@@ -1,6 +1,8 @@
 package vn.techmaster.bookinghotel.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import vn.techmaster.bookinghotel.entity.Booking;
 import vn.techmaster.bookinghotel.entity.Hotel;
@@ -29,7 +31,6 @@ public class BookingService {
     }
     public Integer bookingToday(){
         LocalDate date = LocalDate.now();
-        System.out.println(date.getDayOfMonth());
         return bookingRepository.countBookingByBookingDate(date.getDayOfMonth());
     }
 
@@ -40,5 +41,7 @@ public class BookingService {
     public List<Booking> getBookingOrderByBookingDateDesc(){
         return bookingRepository.findAll().stream().sorted(Comparator.comparing(Booking::getBookingDate).reversed()).toList();
     }
-
+     public Page<Booking> findBookingsByManagerId(Integer useId,Integer page, Integer size){
+        return bookingRepository.findBookingsByManagerId(useId, PageRequest.of(page-1,size));
+     }
 }

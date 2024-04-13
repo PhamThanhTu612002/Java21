@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" th:replace="~{web/layout/layout :: layout(~{:: title}, ~{:: #css}, ~{:: #main-content}, ~{:: #js})}">
+
+<head>
+	<title>MyHotel - Hotel Booking and Room Booking Online Html Responsive Template</title>
+	<th:block id="css"></th:block>
+</head>
+
+<body data-ng-app="">
+ 	<th:block id="main-content">
+		<!--DASHBOARD SECTION-->
+		<div class="dashboard">
+			<div class="db-left">
+				<div class="db-left-1">
+					<h4>Jana Novakova</h4>
+					<p>Newyork, United States</p>
+				</div>
+				<div class="db-left-2">
+					<ul>
+						<li>
+							<a th:href="@{/manager}">Dashboard</a>
+						</li>
+						<li>
+							<a th:href="@{/manager/booking}">Quản lý booking</a>
+						</li>
+						<li>
+							<a th:href="@{/manager/hotel}">Quản lý khách sạn</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="db-cent">
+				<div class="db-cent-1">
+					<p th:text="${#strings.concat('Xin chào ',#authentication.principal.getFullname())}">Hi Jana Novakova,</p>
+					<h4>Chào mừng đến trang quản lý</h4> </div>
+				<div class="db-cent-3">
+					<div class="db-cent-table db-com-table">
+						<div class="db-title">
+							<h3><img src="/images/icon/dbc5.png" alt=""/> Quản lý khách sạn</h3>
+						</div>
+						<div class="db-title">
+							<button data-target="#modalAddHotel" data-toggle="modal" class="btn btn-primary">Thêm khách sạn</button>
+						</div>
+						<table class="bordered responsive-table">
+							<thead>
+							<tr>
+								<th>#</th>
+								<th>Khách sạn</th>
+								<th>Hạng</th>
+								<th>Địa điểm</th>
+								<th>Trạng thái</th>
+								<th>Thực hiện</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr th:each="hotel : ${hotels2}">
+								<td th:text="${hotel.id}">01</td>
+								<td th:text="${hotel.name}">Alvin</td>
+								<td><i class="fa fa-star" style="color: #FF9800" th:each="star : ${#numbers.sequence(1,hotel.rating_star,1)}"></i></td>
+								<td th:text="${hotel.province.name}">12may</td>
+								<td><a th:text="${hotel.status ? 'Đang hoạt động' : 'Dừng hoạt động'}" th:class="${hotel.status ? 'db-success' : 'db-not-success'}"></a></td>
+								<td><a th:href="@{/manager/hotel/{id}/{slug} (id = ${hotel.id},slug= ${hotel.slug})}" class="btn-warning btnDetailBooking"><i class="fa fa-pencil-square-o"></i> Quản lý</a></td>
+							</tr>
+							</tbody>
+						</table>
+							<!-- Modal -->
+							<div class="modal fade" id="modalAddHotel" tabindex="-1" role="dialog" aria-labelledby="modalAddHotel" aria-hidden="true">
+								<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+									<div class="modal-content">
+										<div class="modal-body">
+											<div class="book-form inn-com-form db-form">
+												<form class="col s12 ng-pristine ng-valid">
+													<div class="row">
+														<div class="input-field col s6">
+															<input id="inputHotelName" type="text" class="validate">
+															<label>Tên khách sạn</label>
+														</div>
+														<div class="input-field col s6">
+															<input id="inputHotelAddress" type="text" class="validate">
+															<label>Địa chỉ</label>
+														</div>
+													</div>
+													<div class="row">
+														<div class="input-field col s6">
+															<input id="inputHotelRatingStar" type="number" max="5" min="0" class="validate">
+															<label>Hạng</label>
+														</div>
+														<div class="input-field col s6">
+															<select id="inputProvince" class="browser-default">
+																<option disabled selected>Chọn địa điểm</option>
+																<option th:each="province : ${provinces}" th:value="${province.id}" th:text="${province.name}"></option>
+															</select>
+														</div>
+													</div>
+													<div class="row">
+														<div class="input-field col s6">
+															<input id="inputCheckIn" type="number" max="24" min="0" class="validate">
+															<label>Giờ check-in</label>
+														</div>
+														<div class="input-field col s6">
+															<input id="inputCheckOut" type="number" max="24" min="0" class="validate">
+															<label>Giờ check-out</label>
+														</div>
+													</div>
+													<div class="row">
+														<div class="file-field input-field col s12">
+															<div class="btn" id="pro-file-upload"> <span>Tải lên</span>
+																<input type="file">
+															</div>
+															<div class="file-path-wrapper">
+																<input id="inputPoster" class="file-path validate" type="text" placeholder="Tải ảnh lên">
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="input-field col s12">
+															<textarea id="inputDescription" class="materialize-textarea" data-length="120"></textarea>
+															<label>Mô tả</label>
+															<span class="character-counter" style="float: right; font-size: 12px; height: 1px;"></span></div>
+													</div>
+													<div class="row">
+														<div class="input-field col s12">
+															<input style="background-color: #0f9d58; border-color: #0f9d58" id="btnAddHotel" type="button" value="Thêm" class="form-btn btn btn-success">
+														</div>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+					</div>
+				</div>
+				<div class="db-pagi" th:if="${hotels2.getTotalPages() > 1}">
+					<ul class="pagination">
+						<li th:if="${currentPage > 1}" th:classappend="${currentPage == 1 ? 'disabled' : ''}">
+							<a th:href="@{/manager/hotel (page = ${currentPage - 1})}"><i class="material-icons">chevron_left</i></a>
+						</li>
+						<li class="waves-effect" th:each="pageNumber : ${#numbers.sequence(1,hotels2.getTotalPages())}" th:classappend="${pageNumber == currentPage ? 'active' : ''}">
+							<a th:text="${pageNumber}" th:href="@{/manager/hotel (page=${pageNumber})}">1</a>
+						</li>
+						<li th:if="${currentPage < hotels2.getTotalPages()}" th:classappend="${currentPage == hotels2.getTotalPages() ? 'disabled' : ''}">
+							<a th:href="@{/manager/hotel (page = ${currentPage + 1})}"><i class="material-icons">chevron_right</i></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+<!--			<div class="db-righ">-->
+<!--				<h4>Notifications(18)</h4>-->
+<!--				<ul>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr1.jpg" alt="">-->
+<!--							<h5>Joseph, write a review</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>2 hours ago</span> </a>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr2.jpg" alt="">-->
+<!--							<h5>14 New Messages</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>4 hours ago</span> </a>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr3.jpg" alt="">-->
+<!--							<h5>Ads expairy soon</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>10 hours ago</span> </a>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr4.jpg" alt="">-->
+<!--							<h5>Post free ads - today only</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>12 hours ago</span> </a>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr5.jpg" alt="">-->
+<!--							<h5>listing limit increase</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>14 hours ago</span> </a>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr6.jpg" alt="">-->
+<!--							<h5>mobile app launch</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>18 hours ago</span> </a>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr7.jpg" alt="">-->
+<!--							<h5>Setting Updated</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>20 hours ago</span> </a>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr8.jpg" alt="">-->
+<!--							<h5>Increase listing viewers</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>2 days ago</span> </a>-->
+<!--					</li>-->
+<!--				</ul>-->
+<!--			</div>-->
+		</div>
+		<!--END DASHBOARD SECTION-->
+	</th:block>
+	<th:block id="js">
+		<script th:inline="javascript">
+
+			 function deleteBooking(bookingId){
+				if(!confirm("Bạn có chắn chắn xóa không?")){
+					return;
+				}else {
+					axios.delete("http://localhost:8080/api/bookings/" + bookingId)
+							.then(function (response){
+								if(response.status === 204){
+									toastr.success('Xóa thành công');
+									setTimeout(() =>{
+										window.location.reload();
+									},1500)
+								}
+							})
+							.catch(function (error) {
+								console.log(error);
+								toastr.error(error.response.data);
+							})
+				}
+			}
+
+			function editBooking(bookingId){
+				const status = document.getElementById('bookingStatus'+ bookingId);
+				let data = {
+					status:status.value
+				}
+				axios.put("http://localhost:8080/api/bookings/" + bookingId, data)
+						.then(function (response){
+							if(response.status === 200){
+								toastr.success('Cập nhật thành công');
+								setTimeout(() =>{
+									window.location.reload();
+								},1500)
+							}
+						})
+						.catch(function (error) {
+							console.log(error);
+							toastr.error(error.response.data);
+						})
+			}
+			const btnAddHotel = document.getElementById("btnAddHotel");
+			 btnAddHotel.addEventListener('click',() => {
+				const inputHotetName = document.getElementById('inputHotelName');
+				const inputHotelAddress = document.getElementById('inputHotelAddress');
+				const inputHotelRatingStar = document.getElementById('inputHotelRatingStar');
+				const inputProvince = document.getElementById('inputProvince');
+				const inputCheckIn = document.getElementById('inputCheckIn');
+				const inputCheckOut = document.getElementById('inputCheckOut');
+				const inputPoster = document.getElementById('inputPoster');
+				const inputDescription = document.getElementById('inputDescription');
+
+				let data = {
+					name: inputHotetName.value,
+					address: inputHotelAddress.value,
+					rating_star: inputHotelRatingStar.value,
+					poster: inputPoster.value,
+					description: inputDescription.value,
+					status: false,
+					check_in: inputCheckIn.value,
+					check_out: inputCheckOut.value,
+					provinceId: inputProvince.value,
+					managerId: localStorage.getItem('userId')
+				}
+				 console.log(data);
+				axios.post('http://localhost:8080/api/hotels',data)
+						.then(function (response){
+							if(response.status === 201){
+								toastr.success('Tạo khách sạn thành công');
+								setTimeout(() =>{
+									window.location.reload();
+								},1500)
+							}
+						})
+						.catch(function (error) {
+							console.log(error);
+							toastr.error(error.response.data);
+						})
+			 })
+
+		</script>
+	</th:block>
+</body>
+
+</html>

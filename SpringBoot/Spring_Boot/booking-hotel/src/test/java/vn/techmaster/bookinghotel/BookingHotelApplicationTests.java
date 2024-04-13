@@ -132,6 +132,16 @@ class BookingHotelApplicationTests {
         }
     }
     @Test
+    void saveNew(){
+        List<Room> rooms = roomRepository.findAll();
+        Faker faker = new Faker();
+        for (Room room : rooms){
+            room.setHave_breafast(faker.bool().bool());
+            room.setSmoking(faker.bool().bool());
+            roomRepository.save(room);
+        }
+    }
+    @Test
     void save_all_room(){
         Faker faker = new Faker();
         List<Utility> utilities = utilityRepository.findByUtilityType(UtilityType.ROOM);

@@ -59,6 +59,10 @@ public class Hotel {
     @JoinColumn(name = "province_id")
     Province province;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    User user;
+
     @ManyToMany
     @JoinTable(name = "hotel_utility",
             joinColumns = @JoinColumn(name = "hotel_id"),

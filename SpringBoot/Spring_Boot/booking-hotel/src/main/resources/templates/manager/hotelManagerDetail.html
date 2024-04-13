@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" th:replace="~{web/layout/layout :: layout(~{:: title}, ~{:: #css}, ~{:: #main-content}, ~{:: #js})}">
+
+<head>
+	<title>MyHotel - Hotel Booking and Room Booking Online Html Responsive Template</title>
+	<th:block id="css"></th:block>
+</head>
+
+<body data-ng-app="">
+ 	<th:block id="main-content">
+		<!--DASHBOARD SECTION-->
+		<div class="dashboard">
+			<div class="db-left">
+				<div class="db-left-1">
+					<h4>Jana Novakova</h4>
+					<p>Newyork, United States</p>
+				</div>
+				<div class="db-left-2">
+					<ul>
+						<li>
+							<a th:href="@{/manager}">Dashboard</a>
+						</li>
+						<li>
+							<a th:href="@{/manager/booking}">Quản lý booking</a>
+						</li>
+						<li>
+							<a th:href="@{/manager/hotel}">Quản lý khách sạn</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="db-cent">
+				<div class="db-cent-1">
+					<p th:text="${#strings.concat('Xin chào ',#authentication.principal.getFullname())}">Hi Jana Novakova,</p>
+					<h4>Chào mừng đến trang quản lý</h4> </div>
+				<div class="db-cent-3">
+					<div class="db-cent-table db-com-table">
+						<div class="db-title">
+							<h3><img src="/images/icon/dbc5.png" alt=""/> <th:block th:text="${hotel.name}"></th:block></h3>
+						</div>
+						<div class="book-form inn-com-form db-form">
+							<form class="col s12 ng-pristine ng-valid ng-submitted">
+								<div class="row">
+									<div class="col s2">
+										<input th:onclick="|editHotel(${hotel.id})|" type="button" value="Cập nhật" style="background-color: red; border-color: red; padding: 5px 20px " class="form-btn">
+									</div>
+								</div>
+								<div class="row">
+									<div class="input-field col s6">
+										<p>Tên khách sạn</p>
+										<input id="inputHotelName" type="text" class="validate" th:value="${hotel.name}">
+									</div>
+									<div class="input-field col s6">
+										<p>Địa chỉ</p>
+										<input id="inputHotelAddress" type="text" class="validate" th:value="${hotel.address}">
+									</div>
+								</div>
+								<div class="row">
+									<div class="input-field col s6">
+										<p>Địa điểm</p>
+										<select id="inputProvince" class="browser-default">
+											<option disabled selected>Chọn địa điểm</option>
+											<option selected th:value="${hotel.province.id}" th:text="${hotel.province.name}"></option>
+										</select>
+									</div>
+									<div class="input-field col s2">
+										<p>Hạng</p>
+										<input id="inputHotelRatingStar" type="number" class="validate" th:value="${hotel.rating_star}">
+									</div>
+									<div class="input-field col s2">
+										<p>Giờ vào(h)</p>
+										<input id="inputCheckIn" type="number" class="validate" th:value="${hotel.check_in}">
+									</div>
+									<div class="input-field col s2">
+										<p>Giờ ra (h)</p>
+										<input id="inputCheckOut" type="number" class="validate" th:value="${hotel.check_out}">
+									</div>
+								</div>
+								<div class="row">
+									<div class="input-field col s6">
+										<p>Trạng thái</p>
+										<select id="statusHotel" class="browser-default">
+											<option value="false" th:selected="${hotel.status}">Dừng hoạt động</option>
+											<option value="true" th:selected="${hotel.status}">Đang hoạt động</option>
+										</select>
+									</div>
+								</div>
+								<div class="row">
+									<div class="file-field input-field col s6">
+										<div class="btn" id="pro-file-upload"> <span>Tải lên</span>
+											<input type="file">
+										</div>
+										<div class="file-path-wrapper">
+											<input id="inputPoster" class="file-path validate" type="text" placeholder="Upload profile picture" th:value="${hotel.poster}">
+										</div>
+									</div>
+									<div class="input-field col s6">
+										<img class="posterHotel" th:src="${hotel.poster}">
+									</div>
+								</div>
+								<div class="row">
+									<div class="input-field col s10">
+										<p>Tiện ích</p>
+										<select multiple>
+											<option value="" disabled selected>Chọn tiện ích</option>
+											<option th:each="utility : ${hotel.utilities}" th:value="${utility.id}" th:text="${utility.name}" th:selected="${utility.name}">Option 1</option>
+										</select>
+									</div>
+									<div class="input-field col s2">
+										<div class="btnAddUtilityHotel">
+											<input data-target="#modalAddUtilityHotel" data-toggle="modal" style="color: #fff; background-color: #337ab7; border-color: #2e6da4;" type="button" class="btn btn-primary" value="Thêm tiện ích">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="input-field col s12">
+										<p>Mô tả</p>
+										<textarea id="inputDescription" class="materialize-textarea" th:text="${hotel.description}"></textarea>
+									</div>
+								</div>
+								<div class="row tableRoom">
+									<div class="db-title">
+										<h3> Phòng trong khách sạn</h3>
+									</div>
+									<div class="db-title">
+										<input data-target="#modalAddHotelRoom" data-toggle="modal" style="color: #fff; background-color: #337ab7; border-color: #2e6da4;" type="button" class="btn btn-primary" value="Thêm phòng">
+									</div>
+									<table class="bordered responsive-table">
+										<thead>
+										<tr>
+											<th>#</th>
+											<th>Tên phòng</th>
+											<th>Diện tích</th>
+											<th>Số giường</th>
+											<th>Giá</th>
+											<th>Khuyến mại</th>
+											<th>Trạng thái</th>
+											<th>Thực hiện</th>
+										</tr>
+										</thead>
+										<tbody>
+										<tr th:each="room : ${hotel.hotelRooms}">
+											<td th:text="${room.room.id}">01</td>
+											<td th:text="${room.room.name}">Alvin</td>
+											<td th:text="${room.room.area}">+01 4215 3521</td>
+											<td th:text="${room.quantity}">12may</td>
+											<td th:text="${room.price}">20may</td>
+											<td th:text="${room.discount}">12</td>
+											<td><a th:text="${room.room.status ? 'Hoạt động' : 'Dừng hoạt động'}" th:class="${room.room.status ? 'db-success' : 'db-not-success'}"></a></td>
+											<td><button type="button" th:data-target="${#strings.concat('#modalEditHotelRoom',room.room.id)}" data-toggle="modal"  class="btn-warning btnDetailBooking"><i class="fa fa-pencil-square-o"> Quản lý</i></button> </td>
+											<!-- Modal -->
+											<div class="modal fade" th:id="${#strings.concat('modalEditHotelRoom',room.room.id)}" tabindex="-1" role="dialog" aria-labelledby="modalEditHotelRoom" aria-hidden="true">
+												<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+													<div class="modal-content">
+														<div style="background: #f6f3ea;border-bottom: 0px solid #e1d1a1;border: 1px solid #e1d1a1;box-shadow: 0px 9px 24px -9px rgba(0, 0, 0, 0.51);padding: 30px" class="modal-body">
+															<div class="book-form inn-com-form db-form">
+																<div class="formEditRoom">
+																	<div class="row">
+																		<div class="input-field col s6">
+																			<p>Tên phòng</p>
+																			<input th:value="${room.room.name}" th:id="${#strings.concat('inputRoomName',room.room.id)}" type="text" class="validate">
+																		</div>
+																		<div class="input-field col s6">
+																			<p>Diện tích</p>
+																			<input th:value="${room.room.area}" th:id="${#strings.concat('inputArea',room.room.id)}" min="1" type="text" class="validate">
+																		</div>
+																	</div>
+																	<div class="row">
+																		<div class="input-field col s6">
+																			<p>Tối đa người lớn</p>
+																			<input th:value="${room.room.max_adult}" th:id="${#strings.concat('inputMaxAdult',room.room.id)}" min="0" type="number" class="validate">
+																		</div>
+																		<div class="input-field col s6">
+																			<p>Tối đa trẻ em</p>
+																			<input th:value="${room.room.max_child}" th:id="${#strings.concat('inputMaxChildren',room.room.id)}" min="0" type="number" class="validate">
+																		</div>
+																	</div>
+																	<div class="row">
+																		<div class="input-field col s6">
+																			<p>Có bữa sáng</p>
+																			<select th:id="${#strings.concat('inputHaveBreakFast',room.room.id)}" class="browser-default">
+																				<option disabled>Chọn</option>
+																				<option value="false" th:selected="${room.room.have_breafast}">Không</option>
+																				<option value="true" th:selected="${room.room.have_breafast}">Có</option>
+																			</select>
+																		</div>
+																		<div class="input-field col s6">
+																			<p>Có được hút thuốc</p>
+																			<select th:id="${#strings.concat('inputSmoking',room.room.id)}" class="browser-default">
+																				<option disabled>Chọn</option>
+																				<option value="false" th:selected="${room.room.smoking}">Không</option>
+																				<option value="true" th:selected="${room.room.smoking}">Có</option>
+																			</select>
+																		</div>
+																	</div>
+																	<div class="row">
+																		<div class="input-field col s6">
+																			<p>Tiện ích</p>
+																			<select multiple th:id="${#strings.concat('inputBeds',room.room.id)}">
+																				<option disabled >Chọn giường</option>
+																				<option th:each="bed : ${beds}" th:value="${bed.id}" th:selected="${room.room.beds.contains(bed)}" th:text="${bed.name}">Option 1</option>
+																			</select>
+																		</div>
+																		<div class="input-field col s6">
+																			<p>Số giường</p>
+																			<input th:value="${room.room.quantity_of_bed}" th:id="${#strings.concat('inputNoBeds',room.room.id)}" min="0" type="number" class="validate">
+																		</div>
+																	</div>
+																	<div class="row">
+																		<div class="input-field col s6">
+																			<p>Giá</p>
+																			<input th:value="${room.price}" th:id="${#strings.concat('inputPrice',room.room.id)}" type="text" class="validate">
+																		</div>
+																		<div class="input-field col s6">
+																			<p>Khuyến mại</p>
+																			<input th:value="${room.discount}" th:id="${#strings.concat('inputDiscount',room.room.id)}" min="1" type="text" class="validate">
+																		</div>
+																	</div>
+																	<div class="row">
+																		<div class="input-field col s12">
+																			<p>Số lượng</p>
+																			<input th:value="${room.quantity}" th:id="${#strings.concat('inputQuantity',room.room.id)}" type="number" class="validate">
+																		</div>
+																	</div>
+																	<div class="row">
+																		<div class="file-field input-field col s6">
+																			<p>Ảnh</p>
+																			<div style="height: 44px" class="btn" th:id="${#strings.concat('pro-file-upload-room2',room.room.id)}"> <span style="color: white">Tải lên</span>
+																				<input type="file">
+																			</div>
+																			<div class="file-path-wrapper">
+																				<input th:value="${room.room.poster}" th:id="${#strings.concat('inputPosterRoom2',room.room.id)}" class="file-path validate" type="text" placeholder="Upload profile picture">
+																			</div>
+																		</div>
+																		<div class="input-field col s6">
+																			<img th:src="${room.room.poster}" class="posterRoom">
+																		</div>
+																	</div>
+																	<div class="row">
+																		<div class="input-field col s6">
+																			<p>Trạng thái </p>
+																			<select th:id="${#strings.concat('inputStatusRoom2',room.room.id)}" class="browser-default">
+																				<option disabled>Chọn</option>
+																				<option value="false" th:selected="${room.room.status}">Dừng hoạt động</option>
+																				<option value="true" th:selected="${room.room.status}">Đang hoạt động</option>
+																			</select>
+																		</div>
+																	</div>
+																	<div class="row">
+																		<div style="display: flex; justify-content: center" class="input-field col s12">
+																			<input th:onclick="|editRoom(${hotel.id})|"  style="color: #fff; background-color: #337ab7; border-color: #2e6da4; width: 100px" type="button" class="btn btn-primary" value="Cập nhật">
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</tr>
+										</tbody>
+									</table>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="db-pagi" th:if="${hotelRooms.getTotalPages() > 1}">
+					<ul class="pagination">
+						<li th:if="${currentPage > 1}" th:classappend="${currentPage == 1 ? 'disabled' : ''}">
+							<a th:href="@{/manager/hotel/{id}/{slug} (page = ${currentPage - 1},id = ${hotel.id},slug=${hotel.slug})}"><i class="material-icons">chevron_left</i></a>
+						</li>
+						<li class="waves-effect" th:each="pageNumber : ${#numbers.sequence(1,hotelRooms.getTotalPages())}" th:classappend="${pageNumber == currentPage ? 'active' : ''}">
+							<a th:text="${pageNumber}" th:href="@{/manager/hotel/{id}/{slug} (page = ${pageNumber},id = ${hotel.id},slug=${hotel.slug})}">1</a>
+						</li>
+						<li th:if="${currentPage < hotelRooms.getTotalPages()}" th:classappend="${currentPage == hotelRooms.getTotalPages() ? 'disabled' : ''}">
+							<a th:href="@{/manager/hotel/{id}/{slug} (page = ${currentPage + 1},id = ${hotel.id},slug=${hotel.slug})}"><i class="material-icons">chevron_right</i></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<!-- Modal -->
+			<div class="modal fade" id="modalAddUtilityHotel" tabindex="-1" role="dialog" aria-labelledby="modalAddUtilityHotel" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h2>Thêm tiện ích</h2>
+						</div>
+						<div class="modal-body">
+							<div class="book-form inn-com-form db-form">
+								<form class="col s12 ng-pristine ng-valid">
+									<div class="row">
+										<div class="input-field col s12">
+											<input id="inputUtilityName" type="text" class="validate">
+											<label>Tên tiện ích</label>
+										</div>
+									</div>
+									<div class="row">
+										<div class="input-field col s12">
+											<input th:onclick="|addUtilityHotel(${hotel.id})|" style="color: #fff; background-color: #337ab7; border-color: #2e6da4;" type="button" class="btn btn-primary" value="Thêm">
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Modal -->
+			<div class="modal fade" id="modalAddHotelRoom" tabindex="-1" role="dialog" aria-labelledby="modalAddHotelRoom" aria-hidden="true">
+				<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-body">
+							<div class="book-form inn-com-form db-form">
+								<form class="col s12 ng-pristine ng-valid">
+									<div class="row">
+										<div class="input-field col s6">
+											<p>Tên phòng</p>
+											<input id="inputRoomName" type="text" class="validate">
+										</div>
+										<div class="input-field col s6">
+											<p>Diện tích</p>
+											<input id="inputArea" min="1" type="text" class="validate">
+										</div>
+									</div>
+									<div class="row">
+										<div class="input-field col s6">
+											<p>Tối đa người lớn</p>
+											<input id="inputMaxAdult" min="0" type="number" class="validate">
+										</div>
+										<div class="input-field col s6">
+											<p>Tối đa trẻ em</p>
+											<input id="inputMaxChildren" min="0" type="number" class="validate">
+										</div>
+									</div>
+									<div class="row">
+										<div class="input-field col s6">
+											<p>Có bữa sáng</p>
+											<select id="inputHaveBreakFast" class="browser-default">
+												<option disabled selected>Chọn</option>
+												<option value="true">Có</option>
+												<option value="false">Không</option>
+											</select>
+										</div>
+										<div class="input-field col s6">
+											<p>Có được hút thuốc</p>
+											<select id="inputSmoking" class="browser-default">
+												<option disabled selected>Chọn</option>
+												<option value="true" >Có</option>
+												<option value="false">Không</option>
+											</select>
+										</div>
+									</div>
+									<div class="row">
+										<div class="input-field col s6">
+											<p>Tiện ích</p>
+											<select multiple id="inputBeds">
+												<option disabled >Chọn giường</option>
+												<option th:each="bed : ${beds}" th:value="${bed.id}" th:text="${bed.name}">Option 1</option>
+											</select>
+										</div>
+										<div class="input-field col s6">
+											<p>Số giường</p>
+											<input id="inputNoBeds" min="0" type="number" class="validate">
+										</div>
+									</div>
+									<div class="row">
+										<div class="file-field input-field col s6">
+											<p>Ảnh</p>
+											<div style="height: 44px" class="btn" id="pro-file-upload-room"> <span style="color: white">Tải lên</span>
+												<input type="file">
+											</div>
+											<div class="file-path-wrapper">
+												<input id="inputPosterRoom" class="file-path validate" type="text" placeholder="Upload profile picture">
+											</div>
+										</div>
+										<div class="input-field col s6">
+											<img class="posterRoom">
+										</div>
+									</div>
+									<div class="row">
+										<div class="input-field col s6">
+											<p>Trạng thái </p>
+											<select id="inputStatusRoom" class="browser-default">
+												<option disabled selected>Chọn</option>
+												<option value="true">Hoạt động</option>
+												<option value="false">Dừng hoạt động</option>
+											</select>
+										</div>
+									</div>
+									<div class="row">
+										<div style="display: flex; justify-content: center" class="input-field col s12">
+											<input th:onclick="|addRoom(${hotel.id})|" style="color: #fff; background-color: #337ab7; border-color: #2e6da4; width: 100px" type="button" class="btn btn-primary" value="Thêm">
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+<!--			<div class="db-righ">-->
+<!--				<h4>Notifications(18)</h4>-->
+<!--				<ul>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr1.jpg" alt="">-->
+<!--							<h5>Joseph, write a review</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>2 hours ago</span> </a>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr2.jpg" alt="">-->
+<!--							<h5>14 New Messages</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>4 hours ago</span> </a>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr3.jpg" alt="">-->
+<!--							<h5>Ads expairy soon</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>10 hours ago</span> </a>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr4.jpg" alt="">-->
+<!--							<h5>Post free ads - today only</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>12 hours ago</span> </a>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr5.jpg" alt="">-->
+<!--							<h5>listing limit increase</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>14 hours ago</span> </a>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr6.jpg" alt="">-->
+<!--							<h5>mobile app launch</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>18 hours ago</span> </a>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr7.jpg" alt="">-->
+<!--							<h5>Setting Updated</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>20 hours ago</span> </a>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr8.jpg" alt="">-->
+<!--							<h5>Increase listing viewers</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>2 days ago</span> </a>-->
+<!--					</li>-->
+<!--				</ul>-->
+<!--			</div>-->
+		</div>
+		<!--END DASHBOARD SECTION-->
+	</th:block>
+	<th:block id="js">
+		<script th:inline="javascript">
+			function editHotel(hotelId) {
+				console.log(123)
+				const inputHotetName = document.getElementById('inputHotelName');
+				const inputHotelAddress = document.getElementById('inputHotelAddress');
+				const inputHotelRatingStar = document.getElementById('inputHotelRatingStar');
+				const inputProvince = document.getElementById('inputProvince');
+				const inputCheckIn = document.getElementById('inputCheckIn');
+				const inputCheckOut = document.getElementById('inputCheckOut');
+				const inputPoster = document.getElementById('inputPoster');
+				const inputDescription = document.getElementById('inputDescription');
+				const statusHotel = document.getElementById('statusHotel');
+
+				let data = {
+					name: inputHotetName.value,
+					address: inputHotelAddress.value,
+					rating_star: inputHotelRatingStar.value,
+					poster: inputPoster.value,
+					description: inputDescription.value,
+					status: statusHotel.value,
+					check_in: inputCheckIn.value,
+					check_out: inputCheckOut.value,
+					provinceId: inputProvince.value,
+					managerId: localStorage.getItem('userId')
+				}
+				console.log(data);
+				axios.put('http://localhost:8080/api/hotels/'+hotelId,data)
+						.then(function (response){
+							if(response.status === 200){
+								toastr.success('Cập nhật khách sạn thành công');
+								setTimeout(() =>{
+									window.location.reload();
+								},1500)
+							}
+						})
+						.catch(function (error) {
+							console.log(error);
+							toastr.error(error.response.data);
+						})
+			}
+			function addUtilityHotel(hotelId){
+				const inputUtilityName = document.getElementById('inputUtilityName');
+
+				const data = {
+					id: hotelId,
+					name: inputUtilityName.value,
+					utilityType : 'HOTEL'
+				}
+				axios.post('http://localhost:8080/api/utilities',data)
+						.then(function (response){
+							if(response.status === 200){
+								toastr.success('Thêm tiện ích thành công');
+								setTimeout(() =>{
+									window.location.reload();
+								},1500)
+							}
+						})
+						.catch(function (error) {
+							console.log(error);
+							toastr.error(error.response.data);
+						})
+
+			}
+			function addRoom(hotelId){
+				const inputRoomName = document.getElementById('inputRoomName');
+				const inputArea = document.getElementById('inputArea');
+				const inputMaxAdult = document.getElementById('inputMaxAdult');
+				const inputMaxChildren = document.getElementById('inputMaxChildren');
+				const inputHaveBreakFast = document.getElementById('inputHaveBreakFast');
+				const inputSmoking = document.getElementById('inputSmoking');
+				const inputBeds = document.getElementById('inputBeds');
+				const inputNoBeds = document.getElementById('inputNoBeds');
+				const inputPosterRoom = document.getElementById('inputPosterRoom');
+				const inputStatusRoom = document.getElementById('inputStatusRoom');
+
+				var listBeds = [];
+				for (var i = 0; i < inputBeds.options.length; i++) {
+					var option = inputBeds.options[i];
+					if (option.selected) {
+						listBeds.push(parseInt(option.value));
+					}
+				}
+				console.log(listBeds);
+
+				const data = {
+					name: inputRoomName.value,
+					poster: inputPosterRoom.value,
+					max_adult: inputMaxAdult.value,
+					max_child: inputMaxChildren.value,
+					area: inputArea.value,
+					quantity_of_bed: inputNoBeds.value,
+					smoking: inputSmoking.value,
+					status: inputStatusRoom.value,
+					have_breafast: inputHaveBreakFast.value,
+					listBeds: listBeds
+				}
+				axios.post('http://localhost:8080/api/rooms/'+hotelId,data)
+						.then(function (response){
+							if(response.status === 200){
+								toastr.success('Thêm phòng thành công');
+								setTimeout(() =>{
+									window.location.reload();
+								},1500)
+							}
+						})
+						.catch(function (error) {
+							console.log(error);
+							toastr.error(error.response.data);
+						})
+			}
+			function editRoom(hotelId){
+
+			}
+		</script>
+	</th:block>
+</body>
+
+</html>

@@ -17,7 +17,7 @@ public class HotelRoomService {
         return hotelRoomRepository.findHotelRoomByHotel_Id(id);
     }
     public Page<HotelRoom> getHotelRooms(Integer hotel_id,Integer page,Integer size){
-        return hotelRoomRepository.findHotelRoomByHotel_Id(hotel_id, PageRequest.of(page,size));
+        return hotelRoomRepository.findHotelRoomByHotel_Id(hotel_id, PageRequest.of(page-1,size));
     }
 
 

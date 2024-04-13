@@ -1,5 +1,7 @@
 package vn.techmaster.bookinghotel.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -29,4 +31,7 @@ public interface HotelRepository extends JpaRepository<Hotel,Integer> {
             "inner join provinces p on h.province_id = p.id\n" +
             "where p.id = ?1",nativeQuery = true)
     Integer findNoHotelsInProvince(Integer provinceId);
+
+    List<Hotel> findByUser_Id(Integer userId);
+    Page<Hotel> findByUser_Id(Integer userId, Pageable pageable);
 }
