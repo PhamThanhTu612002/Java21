@@ -248,7 +248,7 @@
 																	</div>
 																	<div class="row">
 																		<div style="display: flex; justify-content: center" class="input-field col s12">
-																			<input th:onclick="|editRoom(${hotel.id})|"  style="color: #fff; background-color: #337ab7; border-color: #2e6da4; width: 100px" type="button" class="btn btn-primary" value="Cập nhật">
+																			<input th:onclick="|editRoom(${hotel.id},${room.id})|"  style="color: #fff; background-color: #337ab7; border-color: #2e6da4; width: 100px" type="button" class="btn btn-primary" value="Cập nhật">
 																		</div>
 																	</div>
 																</div>
@@ -558,8 +558,58 @@
 							toastr.error(error.response.data);
 						})
 			}
-			function editRoom(hotelId){
+			function editRoom(hotelId,roomId){
+				const inputRoomName = document.getElementById('inputRoomName'+roomId);
+				const inputArea = document.getElementById('inputArea'+roomId);
+				const inputMaxAdult = document.getElementById('inputMaxAdult'+roomId);
+				const inputMaxChildren = document.getElementById('inputMaxChildren'+roomId);
+				const inputHaveBreakFast = document.getElementById('inputHaveBreakFast'+roomId);
+				const inputSmoking = document.getElementById('inputSmoking'+roomId);
+				const inputBeds = document.getElementById('inputBeds'+roomId);
+				const inputNoBeds = document.getElementById('inputNoBeds'+roomId);
+				const inputPosterRoom = document.getElementById('inputPosterRoom'+roomId);
+				const inputStatusRoom = document.getElementById('inputStatusRoom'+roomId);
+				const inputPrice = document.getElementById('inputPrice'+roomId);
+				const inputDiscount = document.getElementById('inputDiscount'+roomId);
+				const inputQuantity = document.getElementById('inputQuantity'+roomId);
 
+				var listBeds = [];
+				for (var i = 0; i < inputBeds.options.length; i++) {
+					var option = inputBeds.options[i];
+					if (option.selected) {
+						listBeds.push(parseInt(option.value));
+					}
+				}
+				console.log(listBeds);
+
+				const data = {
+					name: inputRoomName.value,
+					poster: inputPosterRoom.value,
+					max_adult: inputMaxAdult.value,
+					max_child: inputMaxChildren.value,
+					area: inputArea.value,
+					quantity_of_bed: inputNoBeds.value,
+					smoking: inputSmoking.value,
+					status: inputStatusRoom.value,
+					have_breafast: inputHaveBreakFast.value,
+					listBeds: listBeds,
+					price: inputPrice.value,
+					discount: inputDiscount.value,
+					quantity: inputQuantity.value
+				}
+				axios.put('http://localhost:8080/api/rooms/'+hotelId+'/'+roomId,data)
+						.then(function (response){
+							if(response.status === 200){
+								toastr.success('Cập nhật phòng thành công');
+								setTimeout(() =>{
+									window.location.reload();
+								},1500)
+							}
+						})
+						.catch(function (error) {
+							console.log(error);
+							toastr.error(error.response.data);
+						})
 			}
 		</script>
 	</th:block>

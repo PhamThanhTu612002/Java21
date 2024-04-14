@@ -31,9 +31,14 @@ public class ManagerController {
     BedService bedService;
     @GetMapping("/manager")
     public String getManagerPage(Model model){
-        model.addAttribute("bookingToday",bookingService.bookingToday());
-        model.addAttribute("pendingBooking",bookingService.pendingBooking(false));
-        model.addAttribute("confirmedBooking",bookingService.pendingBooking(true));
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserEmail = authentication.getName(); // Lấy email của người dùng hiện tại
+
+        User user = userService.getUserByEmail(currentUserEmail).orElseThrow(() -> new ResourceNotFoundException("Không thấy user này"));
+
+        model.addAttribute("bookingToday",bookingService.bookingToday(user.getId()));
+        model.addAttribute("pendingBooking",bookingService.pendingBooking(false,user.getId()));
+        model.addAttribute("confirmedBooking",bookingService.pendingBooking(true,user.getId()));
         return "manager/dashboard";
     }
     @GetMapping("/manager/booking")

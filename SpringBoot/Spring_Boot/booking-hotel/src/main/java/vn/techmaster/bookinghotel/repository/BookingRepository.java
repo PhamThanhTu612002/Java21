@@ -13,10 +13,10 @@ import java.util.List;
 @Repository
 public interface BookingRepository extends JpaRepository<Booking,Integer> {
     List<Booking> findByUser_Id(Integer userId);
-    @Query(value = "SELECT count(id) from bookings where day(date(booking_date)) = ?",nativeQuery = true)
-    Integer countBookingByBookingDate(Integer date);
+    @Query(value = "SELECT count(id) from bookings where day(date(booking_date)) = ?1 and user_id = ?2",nativeQuery = true)
+    Integer countBookingByBookingDate(Integer date,Integer userId);
 
-    Integer countBookingByStatus(boolean status);
+    Integer countBookingByStatusAndUser_Id(Boolean status, Integer userId);
 
     @Query(value = "SELECT b.* FROM  bookings b\n" +
             "inner join hotel_room ht\n" +

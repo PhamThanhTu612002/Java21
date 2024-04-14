@@ -78,6 +78,11 @@ public class RoomResource {
         hotelRoom.getRoom().setQuantity_of_bed(roomRequest.getQuantity_of_bed());
         hotelRoom.getRoom().setUpdatedAt(new Date());
         hotelRoom.getRoom().setStatus(roomRequest.getStatus());
+        hotelRoom.setQuantity(roomRequest.getQuantity());
+        hotelRoom.setDiscount(roomRequest.getDiscount());
+        hotelRoom.setPrice(roomRequest.getPrice().intValue());
+
+        hotelRoomRepository.save(hotelRoom);
         return ResponseEntity.ok(hotelRoom);
     }
 }

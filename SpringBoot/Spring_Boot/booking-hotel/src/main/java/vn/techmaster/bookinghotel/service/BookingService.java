@@ -29,13 +29,13 @@ public class BookingService {
         }
         return bookingHotelMap;
     }
-    public Integer bookingToday(){
+    public Integer bookingToday(Integer userId){
         LocalDate date = LocalDate.now();
-        return bookingRepository.countBookingByBookingDate(date.getDayOfMonth());
+        return bookingRepository.countBookingByBookingDate(date.getDayOfMonth(),userId);
     }
 
-    public Integer pendingBooking(boolean status){
-        return bookingRepository.countBookingByStatus(status);
+    public Integer pendingBooking(boolean status,Integer userID){
+        return bookingRepository.countBookingByStatusAndUser_Id(status,userID);
     }
 
     public List<Booking> getBookingOrderByBookingDateDesc(){

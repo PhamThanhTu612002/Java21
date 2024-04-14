@@ -25,4 +25,7 @@ public class RoomRequest {
     Date createdAt;
     Date updatedAt;
     List<Integer> listBeds;
+    Double price;
+    Double discount;
+    Integer quantity;
 }
