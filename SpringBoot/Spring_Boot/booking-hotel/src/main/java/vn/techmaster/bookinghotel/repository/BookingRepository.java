@@ -16,14 +16,9 @@ public interface BookingRepository extends JpaRepository<Booking,Integer> {
     @Query(value = "SELECT count(id) from bookings where day(date(booking_date)) = ?1 and user_id = ?2",nativeQuery = true)
     Integer countBookingByBookingDate(Integer date,Integer userId);
 
-    Integer countBookingByStatusAndUser_Id(Boolean status, Integer userId);
+    Integer countBookingByStatusAndUser_Id(Integer status, Integer userId);
 
-    @Query(value = "SELECT b.* FROM  bookings b\n" +
-            "inner join hotel_room ht\n" +
-            "on b.hotel_room_id = ht.id\n" +
-            "inner join hotels h \n" +
-            "on ht.hotel_id = h.id\n" +
-            "where h.user_id = ?;", nativeQuery = true)
+    @Query(value = "SELECT b.* FROM  bookings b inner join hotel_room ht on b.hotel_room_id = ht.id inner join hotels h on ht.hotel_id = h.id where hotel_id in (select hotel_id from hotels where user_id = ?);;", nativeQuery = true)
     Page<Booking> findBookingsByManagerId(Integer userId, Pageable pageable);
 
 }

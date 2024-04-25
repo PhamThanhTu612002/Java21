@@ -19,48 +19,22 @@
 						<div class="inn-com-form">
 							<form class="col s12">
 								<div class="row">
-									<div class="col s12 avail-title">
-										<h4>Tìm phòng</h4> </div>
-								</div>
-								<div class="row">
-									<div class="input-field col s12 m4 l2">
-										<select>
-											<option value="" disabled selected>Địa điểm</option>
-											<option value="1">Hà Nội</option>
-											<option value="2">Phú Quốc</option>
-											<option value="3">Hạ Long</option>
-											<option value="4">Nha Trang</option>
-											<option value="5">Hội An</option>
-										</select>
+									<div class="input-field col s12 m4 l3">
+										<input id="inputNoAdult" type="number" min="0">
+										<label>Số lượng người lớn</label>
 									</div>
-									<div class="input-field col s12 m4 l2">
-										<select>
-											<option value="" disabled selected>Số người lớn</option>
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-										</select>
+									<div class="input-field col s12 m4 l3">
+										<input id="inputNoChildren" type="number" min="0">
+										<label>So luong tre em</label>
 									</div>
-									<div class="input-field col s12 m4 l2">
-										<select>
-											<option value="" disabled selected>Số trẻ em</option>
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-										</select>
-									</div>
-									<div class="input-field col s12 m4 l2">
+									<div class="input-field col s12 m4 l3">
 										<input type="text" id="from" name="from">
 										<label for="from">Ngày đến</label>
 									</div>
-									<div class="input-field col s12 m4 l2">
+									<div class="input-field col s12 m4 l3">
 										<input type="text" id="to" name="to">
 										<label for="to">Ngày trả</label>
 									</div>
-									<div class="input-field col s12 m4 l2">
-										<input type="submit" value="tìm" class="form-btn"> </div>
 								</div>
 							</form>
 						</div>
@@ -173,7 +147,7 @@
 						<!--=========================================-->
 						<div class="hp-call hp-right-com">
 							<div class="hp-call-in"> <img src="/images/icon/dbc4.png" alt="">
-								<h3>Đặt ngay <span>để được ưu đãi tốt nhất</span></h3><a th:href="@{/booking/{hotelId}/{roomId} (hotelId = ${hotel.id},roomId=${roomDetail.id})}">BOOK NOW</a> </div>
+								<h3>Đặt ngay <span>để được ưu đãi tốt nhất</span></h3><button th:onclick="|bookingRoom(${hotel.id},${roomDetail.id})|">BOOK NOW</button> </div>
 						</div>
 						<!--=========================================-->
 						<!--=========================================-->
@@ -199,7 +173,60 @@
 	</th:block>
 <th:block id="js">
 	<script th:inline="javascript">
+		const noAdult = localStorage.getItem('noAdult');
+		const noChildren = localStorage.getItem('noChildren');
+		const checkInDate = localStorage.getItem('checkInDate');
+		const checkOutDate = localStorage.getItem('checkOutDate');
 
+		const inputNoAdult = document.getElementById('inputNoAdult');
+		const inputNoChildren = document.getElementById('inputNoChildren');
+		const from = document.getElementById('from');
+		const to = document.getElementById('to');
+
+		inputNoAdult.value = noAdult;
+		inputNoChildren.value = noChildren;
+		from.value = checkInDate;
+		to.value = checkOutDate;
+
+		function validateForm(){
+			var valid = true;
+			resetErrorMessages();
+
+			if(inputNoAdult.value.trim() === ''){
+				valid = false;
+				displayErrorMessage('inputNoAdult');
+			}
+
+			if (inputNoChildren.value === ''){
+				valid = false;
+				displayErrorMessage('inputNoChildren');
+			}
+			if (from.value === ''){
+				valid = false;
+				displayErrorMessage('from');
+			}
+			if (to.value === ''){
+				valid = false;
+				displayErrorMessage('to');
+			}
+			return valid;
+		}
+		function resetErrorMessages(){
+			var errorMessages = document.querySelectorAll('input');
+			errorMessages.forEach(function (msg) {
+				msg.removeAttribute('style');
+			});
+		}
+		function displayErrorMessage(elementId) {
+			var errorMessageElement = document.querySelector("#"+elementId);
+			errorMessageElement.setAttribute('style','border: 1px solid red;');
+		}
+		function bookingRoom(hotelId, roomId){
+			if(!validateForm()){
+				return;
+			}
+			window.location.href = 'http://localhost:8080/booking/'+hotelId+'/'+roomId;
+		}
 	</script>
 </th:block>
 </body>

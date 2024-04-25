@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"  th:replace="~{web/layout/layout :: layout(~{:: title}, ~{:: #css}, ~{:: #main-content}, ~{:: #js})}">
+
+<head>
+	<title>MyHotel - Hotel Booking and Room Booking Online Html Responsive Template</title>
+	<th:block id="css"></th:block>
+</head>
+
+<body data-ng-app="">
+	<th:block id="main-content">
+		<div class="inn-body-section pad-bot-55">
+			<div class="container">
+				<div class="row">
+					<div class="page-head">
+						<h2>Lịch sử giao dịch</h2>
+						<div th:if="${paymentsEmpty}" class="head-title">
+							<p style="margin-top: 50px">Bạn chưa có giao dịch nào</p>
+						</div>
+					</div>
+					<div class="row" th:if="${!paymentsEmpty}">
+						<div class="head-typo typo-com">
+							<table class="table">
+								<thead>
+								<tr>
+									<th>Mã thanh toán</th>
+									<th>Người đặt</th>
+									<th>Ngày thanh toán</th>
+									<th>Trạng thái</th>
+								</tr>
+								</thead>
+								<tbody>
+								<tr th:each="payment : ${payments}">
+									<td th:text="${payment.transactionNo}">1</td>
+									<td th:text="${payment.booking.nameBooking}">John</td>
+									<td th:text="${payment.createdAt}">Doe</td>
+									<td><span th:text="${payment.status ? 'Đã thanh toán': 'Chưa thanh toán'}" th:class="${payment.status ? 'db-success': 'db-not-success'}">Yes</span></td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+						<!--END TYPOGRAPHY SECTION-->
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--TOP SECTION-->
+	</th:block>
+	<th:block id="js">
+		<script th:inline="javascript">
+		</script>
+	</th:block>
+</body>
+
+</html>

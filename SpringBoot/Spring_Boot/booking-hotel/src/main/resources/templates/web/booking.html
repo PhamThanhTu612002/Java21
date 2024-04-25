@@ -134,7 +134,7 @@
 					noAdult: localStorage.getItem('noAdult'),
 					noChildren: localStorage.getItem('noChildren'),
 					totalPrice: totalPrice,
-					status: false
+					status: 0
 				}
 				axios.post('http://localhost:8080/api/bookings',dataBooking)
 						.then(function (response){

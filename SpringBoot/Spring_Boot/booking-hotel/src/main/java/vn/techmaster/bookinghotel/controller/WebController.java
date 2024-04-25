@@ -3,6 +3,7 @@ package vn.techmaster.bookinghotel.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 public class WebController {
@@ -41,6 +43,8 @@ public class WebController {
     BookingService bookingService;
     @Autowired
     UserService userService;
+    @Autowired
+    PaymentService paymentService;
     @GetMapping("/")
     public String getHomePage(Model model){
         Map<Province,Integer> provinces = provinceService.getProvincesWithMostHotels();
@@ -64,7 +68,7 @@ public class WebController {
         Hotel hotel = hotelService.getHotelById(id,slug);
         List<Review> reviews = reviewService.getReviewsByHotelId(id);
 
-        Page<HotelRoom> hotelRooms = hotelRoomService.getHotelRooms(id,page,size);
+        Page<HotelRoom> hotelRooms = new PageImpl<>(hotelRoomService.getHotelRooms(id,page,size).stream().filter(hotelRoom -> hotelRoom.getRoom().getStatus() == true).collect(Collectors.toList()));
         model.addAttribute("currentPage",page);
         model.addAttribute("hotelDetail",hotel);
         model.addAttribute("reviews",reviews);
@@ -126,9 +130,25 @@ public class WebController {
         User user = userService.getUserByEmail(currentUserEmail).orElseThrow(() -> new ResourceNotFoundException("Không thấy user này"));
 
         List<Booking> bookings = bookingService.getBookingByUserId(user.getId());
+
         Map<Booking,HotelRoom> bookingHotelMap = bookingService.getBookingHotelRoom(bookings);
         model.addAttribute("bookings",bookingHotelMap);
 
         return "web/my-booking";
+    }
+    @GetMapping("/my-payment")
+    public String getMyPayment(Model model){
+        // Kiểm tra xác thực người dùng
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserEmail = authentication.getName(); // Lấy email của người dùng hiện tại
+
+        User user = userService.getUserByEmail(currentUserEmail).orElseThrow(() -> new ResourceNotFoundException("Không thấy user này"));
+
+        List<Payment> payments = paymentService.getPaymentByUserId(user.getId());
+
+        model.addAttribute("payments",payments);
+        model.addAttribute("paymentsEmpty",payments.isEmpty());
+
+        return "web/my-payment";
     }
 }

@@ -13,15 +13,17 @@ import java.util.Date;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class BookingRequest {
+    Integer id;
     Integer hotelRoomId;
     Integer userId;
-    String phone;
     Date bookingDate;
-    Date checkInDate;
-    Date checkOutDate;
-    Integer noAdult;
-    Integer noChildren;
-    Double totalPrice;
-    Boolean status;
+    String nameBooking;
+    String phone;
+    Date check_in_date;
+    Date check_out_date;
+    Integer amount_adult;
+    Integer amount_child;
+    Integer status;
+    Double total_price;
 
 }

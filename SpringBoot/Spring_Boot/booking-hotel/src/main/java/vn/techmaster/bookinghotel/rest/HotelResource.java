@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import vn.techmaster.bookinghotel.entity.Hotel;
 import vn.techmaster.bookinghotel.entity.Province;
 import vn.techmaster.bookinghotel.entity.User;
@@ -13,8 +14,10 @@ import vn.techmaster.bookinghotel.model.request.HotelRequest;
 import vn.techmaster.bookinghotel.repository.HotelRepository;
 import vn.techmaster.bookinghotel.repository.ProvinceRepository;
 import vn.techmaster.bookinghotel.repository.UserRepository;
+import vn.techmaster.bookinghotel.service.CloudinaryService;
 import vn.techmaster.bookinghotel.service.HotelService;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +34,8 @@ public class HotelResource {
     UserRepository userRepository;
     @Autowired
     HotelService hotelService;
+    @Autowired
+    CloudinaryService cloudinaryService;
     @Autowired
     Slugify slugify;
     @GetMapping("/{provinceId}")
@@ -67,6 +72,11 @@ public class HotelResource {
     @PutMapping("/{id}")
     public ResponseEntity<?> editHotel(@PathVariable Integer id, @RequestBody HotelRequest hotelRequest){
         Hotel hotel = hotelService.updateHotel(id,hotelRequest);
+        return new ResponseEntity<>(hotel,HttpStatus.OK);
+    }
+    @PutMapping(value = "/{id}", params = "imageHotel")
+    public ResponseEntity<?> uploadImage(@PathVariable Integer id, @RequestParam String path){
+        Hotel hotel = hotelService.uploadImage(id,path);
         return new ResponseEntity<>(hotel,HttpStatus.OK);
     }
 }

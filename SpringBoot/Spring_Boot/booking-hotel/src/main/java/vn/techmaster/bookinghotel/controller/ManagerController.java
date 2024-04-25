@@ -37,8 +37,8 @@ public class ManagerController {
         User user = userService.getUserByEmail(currentUserEmail).orElseThrow(() -> new ResourceNotFoundException("Không thấy user này"));
 
         model.addAttribute("bookingToday",bookingService.bookingToday(user.getId()));
-        model.addAttribute("pendingBooking",bookingService.pendingBooking(false,user.getId()));
-        model.addAttribute("confirmedBooking",bookingService.pendingBooking(true,user.getId()));
+        model.addAttribute("pendingBooking",bookingService.pendingBooking(0,user.getId()));
+        model.addAttribute("confirmedBooking",bookingService.pendingBooking(1,user.getId()));
         return "manager/dashboard";
     }
     @GetMapping("/manager/booking")
@@ -64,7 +64,6 @@ public class ManagerController {
         User user = userService.getUserByEmail(currentUserEmail).orElseThrow(() -> new ResourceNotFoundException("Không thấy user này"));
         model.addAttribute("provinces",provinceService.getAllProvinces());
         model.addAttribute("currentPage",page);
-//        model.addAttribute("hotels",hotelService.getHotelsByManager(user.getId()));
         model.addAttribute("hotels2",hotelService.getHotelsByManager2(user.getId(),page,size));
         return "manager/hotelManager";
     }

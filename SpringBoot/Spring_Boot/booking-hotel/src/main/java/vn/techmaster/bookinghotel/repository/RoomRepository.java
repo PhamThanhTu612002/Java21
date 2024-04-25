@@ -9,10 +9,6 @@ import vn.techmaster.bookinghotel.entity.Room;
 public interface RoomRepository extends JpaRepository<Room,Integer> {
     Room findByIdAndSlug(Integer id,String slug);
 
-    @Query(value = "select r.* from rooms r inner join hotel_room hr\n" +
-            "on r.id = hr.room_id\n" +
-            "where hr.hotel_id = ?1\n" +
-            "order by hr.price asc\n" +
-            "limit 1;",nativeQuery = true)
+    @Query(value = "select r.* from rooms r inner join hotel_room hr on r.id = hr.room_id where hr.hotel_id = ?1 and r.status = 1 order by hr.price asc limit 1;",nativeQuery = true)
     Room findLowestRoomInHotel(Integer hotel_id);
 }

@@ -46,6 +46,8 @@
                 <div class="row">
                     <div class="top-bar">
                         <ul>
+                            <li sec:authorize="hasRole('MANAGER')" ><a class='dropdown-button' th:href="@{/manager}">Trang quản lý</a></li>
+                            <li th:if="${session.MY_SESSION != null}"><a class='dropdown-button' th:href="@{/my-payment}">Lịch sử giao dịch</a></li>
                             <li><a class='dropdown-button' href='#' data-activates='dropdown2'>Ngôn ngữ <i class="fa fa-angle-down"></i></a>
                                 <ul id="dropdown2" class="dropdown-content drop-con-man" style="width: 97.6875px; position: absolute; top: 12.8px; left: 720.675px; opacity: 1; display: none;">
                                     <li>

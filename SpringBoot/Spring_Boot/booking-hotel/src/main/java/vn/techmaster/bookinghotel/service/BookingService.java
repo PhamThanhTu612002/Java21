@@ -34,7 +34,7 @@ public class BookingService {
         return bookingRepository.countBookingByBookingDate(date.getDayOfMonth(),userId);
     }
 
-    public Integer pendingBooking(boolean status,Integer userID){
+    public Integer pendingBooking(Integer status,Integer userID){
         return bookingRepository.countBookingByStatusAndUser_Id(status,userID);
     }
 

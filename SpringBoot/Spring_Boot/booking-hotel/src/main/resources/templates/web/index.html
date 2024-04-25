@@ -28,34 +28,19 @@
 									<div class="input-field col s12">
 										<input type="text" name="place" class="validate" id="place">
 										<label>Bạn muốn đi đâu?</label>
-										<p id="error-place" style="color: red"></p>
+										<p class="msg-error" id="error-place" style="color: red"></p>
 									</div>
 								</div>
 								<div class="row">
 									<div class="input-field col s6">
-										<select id="no-adult" name="noAdult">
-											<option value="" disabled selected>Số lượng người lớn</option>
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-										</select>
-<!--										<input type="number" readonly>-->
-<!--										<label for="from">Số lượng người lớn</label>-->
-<!--										<button onclick="decrement()">-</button>-->
-<!--										<button onclick="increment()">+</button>-->
-										<p id="error-noAdult" style="color: red"></p>
+										<input type="number" id="no-adult" name="noAdult" min="0">
+										<label>Số lượng người lớn</label>
+										<p class="msg-error" id="error-noAdult" style="color: red"></p>
 									</div>
 									<div class="input-field col s6">
-										<select id="no-children" name="noChildren">
-											<option value="" disabled selected>Số lượng trẻ em</option>
-											<option value="0">Không có trẻ em</option>
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-										</select>
-										<p id="error-noChildren" style="color: red"></p>
+										<input type="number" id="no-children" name="noChildren" min="0">
+										<label>Số lượng trẻ em</label>
+										<p class="msg-error" id="error-noChildren" style="color: red"></p>
 									</div>
 
 								</div>

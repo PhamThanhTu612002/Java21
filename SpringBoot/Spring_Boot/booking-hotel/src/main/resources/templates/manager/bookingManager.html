@@ -59,7 +59,7 @@
 								<td th:text="${booking.hotel_room.hotel.province.name}">12may</td>
 								<td th:text="${booking.hotel_room.hotel.name}">20may</td>
 								<td th:text="${booking.amount_adult+booking.amount_child}">12</td>
-								<td><a th:text="${booking.status ? 'Thành công' : 'Chờ xác nhận'}" th:class="${booking.status ? 'db-success' : 'db-not-success'}"></a></td>
+								<td><a th:text="${booking.status == 1 ? 'Thành công' : 'Chờ xác nhận'}" th:class="${booking.status == 1 ? 'db-success' : 'db-not-success'}"></a></td>
 								<td><button data-toggle="modal" th:attr="data-target='#editBooking'+${booking.id}"  class="btn-warning btnDetailBooking"><i class="fa fa-pencil-square-o"></i> Quản lý</button> </td>
 							</tr>
 							</tbody>
@@ -131,8 +131,8 @@
 													<div class="input-field col s6">
 														<p>Trạng thái</p>
 														<select class="browser-default" style="height: 45px" th:id="${#strings.concat('bookingStatus'+booking.id)}">
-															<option value="false" th:selected="${booking.status}">Chờ xử lý</option>
-															<option value="true" th:selected="${booking.status}">Xác nhận</option>
+															<option value="0" th:selected="${booking.status == 0}">Chờ xử lý</option>
+															<option value="1" th:selected="${booking.status == 1}">Xác nhận</option>
 														</select>
 													</div>
 												</div>

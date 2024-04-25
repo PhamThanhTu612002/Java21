@@ -42,12 +42,12 @@ public class BookingResource {
                 .hotel_room(hotelRoom)
                 .user(user)
                 .bookingDate(request.getBookingDate())
-                .amount_adult(request.getNoAdult())
-                .amount_child(request.getNoChildren())
+                .amount_adult(request.getAmount_adult())
+                .amount_child(request.getAmount_child())
                 .phone(request.getPhone())
-                .check_in_date(request.getCheckInDate())
-                .check_out_date(request.getCheckOutDate())
-                .total_price(request.getTotalPrice())
+                .check_in_date(request.getCheck_in_date())
+                .check_out_date(request.getCheck_out_date())
+                .total_price(request.getTotal_price())
                 .status(request.getStatus())
                 .build();
 
@@ -77,4 +77,5 @@ public class BookingResource {
         bookingRepository.save(booking);
         return ResponseEntity.ok(booking);
     }
+
 }

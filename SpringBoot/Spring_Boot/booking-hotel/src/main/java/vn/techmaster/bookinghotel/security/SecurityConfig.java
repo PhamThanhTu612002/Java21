@@ -57,6 +57,7 @@ public class SecurityConfig {
             authorizeRequests.requestMatchers("/booking/**").authenticated()
                     .requestMatchers("/my-booking/**").authenticated()
                     .requestMatchers("/manager/**","/manager").hasRole("MANAGER")
+                    .requestMatchers("/submitOrder/**","/vnpay-payment/**").authenticated()
                     .anyRequest().permitAll();
         });
 

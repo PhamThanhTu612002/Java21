@@ -88,21 +88,21 @@
 								<div class="row">
 									<div class="file-field input-field col s6">
 										<div class="btn" id="pro-file-upload"> <span>Tải lên</span>
-											<input type="file">
+											<input id="inputImageHotel" type="file">
 										</div>
 										<div class="file-path-wrapper">
 											<input id="inputPoster" class="file-path validate" type="text" placeholder="Upload profile picture" th:value="${hotel.poster}">
 										</div>
 									</div>
 									<div class="input-field col s6">
-										<img class="posterHotel" th:src="${hotel.poster}">
+										<img id="posterHotel" class="posterHotel" th:src="${hotel.poster}">
 									</div>
 								</div>
 								<div class="row">
 									<div class="input-field col s10">
 										<p>Tiện ích</p>
-										<select multiple>
-											<option value="" disabled selected>Chọn tiện ích</option>
+										<select multiple id="utilitiesHotel">
+											<option value="" disabled >Chọn tiện ích</option>
 											<option th:each="utility : ${hotel.utilities}" th:value="${utility.id}" th:text="${utility.name}" th:selected="${utility.name}">Option 1</option>
 										</select>
 									</div>
@@ -117,6 +117,35 @@
 										<p>Mô tả</p>
 										<textarea id="inputDescription" class="materialize-textarea" th:text="${hotel.description}"></textarea>
 									</div>
+								</div>
+								<div class="row tableRoom">
+									<div class="db-title">
+										<h3> Ảnh trong khách sạn</h3>
+									</div>
+									<div class="db-title">
+										<div class="file-field input-field col s12">
+											<div class="btn" id="pro-file-upload2"><span style="color: white; font-weight: bold">Tải lên</span>
+												<input id="inputImageHotel2" type="file">
+											</div>
+											<div class="file-path-wrapper">
+												<input id="inputPoster2" class="file-path validate" type="text" placeholder="Tải ảnh lên">
+											</div>
+										</div>
+									</div>
+									<table class="bordered responsive-table">
+										<thead>
+											<tr>
+												<th>Ảnh</th>
+												<th>Thực hiện</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="image : ${hotel.imageList}">
+												<td width="50%"><img width="100%" th:src="${image.path}"></td>
+												<td><button class="btn btn-danger" style="margin-left: 20px">Xóa</button></td>
+											</tr>
+										</tbody>
+									</table>
 								</div>
 								<div class="row tableRoom">
 									<div class="db-title">
@@ -158,27 +187,27 @@
 																	<div class="row">
 																		<div class="input-field col s6">
 																			<p>Tên phòng</p>
-																			<input th:value="${room.room.name}" th:id="${#strings.concat('inputRoomName',room.room.id)}" type="text" class="validate">
+																			<input th:value="${room.room.name}" th:id="${#strings.concat('inputRoomName2',room.room.id)}" type="text" class="validate">
 																		</div>
 																		<div class="input-field col s6">
 																			<p>Diện tích</p>
-																			<input th:value="${room.room.area}" th:id="${#strings.concat('inputArea',room.room.id)}" min="1" type="text" class="validate">
+																			<input th:value="${room.room.area}" th:id="${#strings.concat('inputArea2',room.room.id)}" min="1" type="text" class="validate">
 																		</div>
 																	</div>
 																	<div class="row">
 																		<div class="input-field col s6">
 																			<p>Tối đa người lớn</p>
-																			<input th:value="${room.room.max_adult}" th:id="${#strings.concat('inputMaxAdult',room.room.id)}" min="0" type="number" class="validate">
+																			<input th:value="${room.room.max_adult}" th:id="${#strings.concat('inputMaxAdult2',room.room.id)}" min="0" type="number" class="validate">
 																		</div>
 																		<div class="input-field col s6">
 																			<p>Tối đa trẻ em</p>
-																			<input th:value="${room.room.max_child}" th:id="${#strings.concat('inputMaxChildren',room.room.id)}" min="0" type="number" class="validate">
+																			<input th:value="${room.room.max_child}" th:id="${#strings.concat('inputMaxChildren2',room.room.id)}" min="0" type="number" class="validate">
 																		</div>
 																	</div>
 																	<div class="row">
 																		<div class="input-field col s6">
 																			<p>Có bữa sáng</p>
-																			<select th:id="${#strings.concat('inputHaveBreakFast',room.room.id)}" class="browser-default">
+																			<select th:id="${#strings.concat('inputHaveBreakFast2',room.room.id)}" class="browser-default">
 																				<option disabled>Chọn</option>
 																				<option value="false" th:selected="${room.room.have_breafast}">Không</option>
 																				<option value="true" th:selected="${room.room.have_breafast}">Có</option>
@@ -186,7 +215,7 @@
 																		</div>
 																		<div class="input-field col s6">
 																			<p>Có được hút thuốc</p>
-																			<select th:id="${#strings.concat('inputSmoking',room.room.id)}" class="browser-default">
+																			<select th:id="${#strings.concat('inputSmoking2',room.room.id)}" class="browser-default">
 																				<option disabled>Chọn</option>
 																				<option value="false" th:selected="${room.room.smoking}">Không</option>
 																				<option value="true" th:selected="${room.room.smoking}">Có</option>
@@ -196,30 +225,30 @@
 																	<div class="row">
 																		<div class="input-field col s6">
 																			<p>Tiện ích</p>
-																			<select multiple th:id="${#strings.concat('inputBeds',room.room.id)}">
+																			<select multiple th:id="${#strings.concat('inputBeds2',room.room.id)}">
 																				<option disabled >Chọn giường</option>
 																				<option th:each="bed : ${beds}" th:value="${bed.id}" th:selected="${room.room.beds.contains(bed)}" th:text="${bed.name}">Option 1</option>
 																			</select>
 																		</div>
 																		<div class="input-field col s6">
 																			<p>Số giường</p>
-																			<input th:value="${room.room.quantity_of_bed}" th:id="${#strings.concat('inputNoBeds',room.room.id)}" min="0" type="number" class="validate">
+																			<input th:value="${room.room.quantity_of_bed}" th:id="${#strings.concat('inputNoBeds2',room.room.id)}" min="0" type="number" class="validate">
 																		</div>
 																	</div>
 																	<div class="row">
 																		<div class="input-field col s6">
 																			<p>Giá</p>
-																			<input th:value="${room.price}" th:id="${#strings.concat('inputPrice',room.room.id)}" type="text" class="validate">
+																			<input th:value="${room.price}" th:id="${#strings.concat('inputPrice2',room.room.id)}" type="text" class="validate">
 																		</div>
 																		<div class="input-field col s6">
 																			<p>Khuyến mại</p>
-																			<input th:value="${room.discount}" th:id="${#strings.concat('inputDiscount',room.room.id)}" min="1" type="text" class="validate">
+																			<input th:value="${room.discount}" th:id="${#strings.concat('inputDiscount2',room.room.id)}" min="1" type="text" class="validate">
 																		</div>
 																	</div>
 																	<div class="row">
 																		<div class="input-field col s12">
 																			<p>Số lượng</p>
-																			<input th:value="${room.quantity}" th:id="${#strings.concat('inputQuantity',room.room.id)}" type="number" class="validate">
+																			<input th:value="${room.quantity}" th:id="${#strings.concat('inputQuantity2',room.room.id)}" type="number" class="validate">
 																		</div>
 																	</div>
 																	<div class="row">
@@ -248,7 +277,7 @@
 																	</div>
 																	<div class="row">
 																		<div style="display: flex; justify-content: center" class="input-field col s12">
-																			<input th:onclick="|editRoom(${hotel.id},${room.id})|"  style="color: #fff; background-color: #337ab7; border-color: #2e6da4; width: 100px" type="button" class="btn btn-primary" value="Cập nhật">
+																			<input th:onclick="|editRoom(${hotel.id},${room.room.id})|"  style="color: #fff; background-color: #337ab7; border-color: #2e6da4; width: 100px" type="button" class="btn btn-primary" value="Cập nhật">
 																		</div>
 																	</div>
 																</div>
@@ -368,14 +397,14 @@
 										<div class="file-field input-field col s6">
 											<p>Ảnh</p>
 											<div style="height: 44px" class="btn" id="pro-file-upload-room"> <span style="color: white">Tải lên</span>
-												<input type="file">
+												<input id="inputImageRoom" type="file">
 											</div>
 											<div class="file-path-wrapper">
 												<input id="inputPosterRoom" class="file-path validate" type="text" placeholder="Upload profile picture">
 											</div>
 										</div>
 										<div class="input-field col s6">
-											<img class="posterRoom">
+											<img id="posterRoom" class="posterRoom">
 										</div>
 									</div>
 									<div class="row">
@@ -449,7 +478,70 @@
 	</th:block>
 	<th:block id="js">
 		<script th:inline="javascript">
+			const hotelId =  [[${hotel.id}]];
+			const inputImageHotel2 = document.getElementById('inputImageHotel2');
+			const inputPoster2 = document.getElementById('inputPoster2');
+			inputImageHotel2.addEventListener('change', (e) => {
+				const file = e.target.files[0];
+
+				const formData = new FormData()
+				formData.append('file', file)
+				formData.append('folder','hotel')
+
+				// Goọi api sử dung axios
+				axios.post(`http://localhost:8080/api/files/upload/image`, formData)
+						.then(res => {
+							// Hiển thị hình ảnh vừa được upload lên
+							inputPoster2.value = res.data.url;
+							posterHotel.src = res.data.url;
+							console.log(res);
+
+							axios.put(`http://localhost:8080/api/hotels/`+hotelId+'?imageHotel&&path='+ res.data.url)
+									.then(res => {
+										toastr.success('Thêm hình ảnh thành công')
+									})
+									.catch(err => {
+										console.log(err)
+										toastr.error(err.response.data.message)
+									})
+							window.location.reload();
+						})
+						.catch(err => {
+							console.log(err)
+							toastr.error(err.response.data.message)
+						})
+				console.log(inputPoster2.value);
+
+			})
+
+			const posterHotel = document.getElementById('posterHotel');
+			const inputImageHotel = document.getElementById('inputImageHotel');
+			inputImageHotel.addEventListener('change', (e) => {
+				console.log(123)
+				// Lấy ra file vừa được chọn
+				const file = e.target.files[0];
+
+				// Tạo đối tượng form data để đưa dữ liệu vào gửi đi
+				const formData = new FormData()
+				formData.append('file', file)
+				formData.append('folder','hotel')
+
+				// Goọi api sử dung axios
+				axios.post(`http://localhost:8080/api/files/upload/image`, formData)
+						.then(res => {
+							// Hiển thị hình ảnh vừa được upload lên
+							inputPoster.value = res.data.url;
+							posterHotel.src = res.data.url;
+							console.log(res);
+							toastr.success('Upload hình ảnh thành công.')
+						})
+						.catch(err => {
+							console.log(err)
+							toastr.error(err.response.data.message)
+						})
+			})
 			function editHotel(hotelId) {
+
 				console.log(123)
 				const inputHotetName = document.getElementById('inputHotelName');
 				const inputHotelAddress = document.getElementById('inputHotelAddress');
@@ -460,6 +552,16 @@
 				const inputPoster = document.getElementById('inputPoster');
 				const inputDescription = document.getElementById('inputDescription');
 				const statusHotel = document.getElementById('statusHotel');
+				const utilitiesHotel = document.getElementById('utilitiesHotel');
+
+				var listUtilities = [];
+				for (var i = 0; i < utilitiesHotel.options.length; i++) {
+					var option = utilitiesHotel.options[i];
+					if (option.selected) {
+						listUtilities.push(parseInt(option.value));
+					}
+				}
+				console.log(listUtilities);
 
 				let data = {
 					name: inputHotetName.value,
@@ -471,7 +573,8 @@
 					check_in: inputCheckIn.value,
 					check_out: inputCheckOut.value,
 					provinceId: inputProvince.value,
-					managerId: localStorage.getItem('userId')
+					managerId: localStorage.getItem('userId'),
+					listUtilities: listUtilities
 				}
 				console.log(data);
 				axios.put('http://localhost:8080/api/hotels/'+hotelId,data)
@@ -558,20 +661,46 @@
 							toastr.error(error.response.data);
 						})
 			}
+			const posterRoom = document.getElementById('posterRoom');
+			const inputPosterRoom = document.getElementById('inputPosterRoom');
+			inputPosterRoom.addEventListener('change', (e) => {
+				console.log(123)
+				// Lấy ra file vừa được chọn
+				const file = e.target.files[0];
+
+				// Tạo đối tượng form data để đưa dữ liệu vào gửi đi
+				const formData = new FormData()
+				formData.append('file', file)
+				formData.append('folder','room')
+
+				// Goọi api sử dung axios
+				axios.post(`http://localhost:8080/api/files/upload/image`, formData)
+						.then(res => {
+							// Hiển thị hình ảnh vừa được upload lên
+							inputPoster.value = res.data.url;
+							posterRoom.src = res.data.url;
+							console.log(res);
+							toastr.success('Upload hình ảnh thành công.')
+						})
+						.catch(err => {
+							console.log(err)
+							toastr.error(err.response.data.message)
+						})
+			})
 			function editRoom(hotelId,roomId){
-				const inputRoomName = document.getElementById('inputRoomName'+roomId);
-				const inputArea = document.getElementById('inputArea'+roomId);
-				const inputMaxAdult = document.getElementById('inputMaxAdult'+roomId);
-				const inputMaxChildren = document.getElementById('inputMaxChildren'+roomId);
-				const inputHaveBreakFast = document.getElementById('inputHaveBreakFast'+roomId);
-				const inputSmoking = document.getElementById('inputSmoking'+roomId);
-				const inputBeds = document.getElementById('inputBeds'+roomId);
-				const inputNoBeds = document.getElementById('inputNoBeds'+roomId);
-				const inputPosterRoom = document.getElementById('inputPosterRoom'+roomId);
-				const inputStatusRoom = document.getElementById('inputStatusRoom'+roomId);
-				const inputPrice = document.getElementById('inputPrice'+roomId);
-				const inputDiscount = document.getElementById('inputDiscount'+roomId);
-				const inputQuantity = document.getElementById('inputQuantity'+roomId);
+				const inputRoomName = document.getElementById('inputRoomName2'+roomId);
+				const inputArea = document.getElementById('inputArea2'+roomId);
+				const inputMaxAdult = document.getElementById('inputMaxAdult2'+roomId);
+				const inputMaxChildren = document.getElementById('inputMaxChildren2'+roomId);
+				const inputHaveBreakFast = document.getElementById('inputHaveBreakFast2'+roomId);
+				const inputSmoking = document.getElementById('inputSmoking2'+roomId);
+				const inputBeds = document.getElementById('inputBeds2'+roomId);
+				const inputNoBeds = document.getElementById('inputNoBeds2'+roomId);
+				const inputPosterRoom = document.getElementById('inputPosterRoom2'+roomId);
+				const inputStatusRoom = document.getElementById('inputStatusRoom2'+roomId);
+				const inputPrice = document.getElementById('inputPrice2'+roomId);
+				const inputDiscount = document.getElementById('inputDiscount2'+roomId);
+				const inputQuantity = document.getElementById('inputQuantity2'+roomId);
 
 				var listBeds = [];
 				for (var i = 0; i < inputBeds.options.length; i++) {
@@ -580,7 +709,6 @@
 						listBeds.push(parseInt(option.value));
 					}
 				}
-				console.log(listBeds);
 
 				const data = {
 					name: inputRoomName.value,
@@ -597,6 +725,7 @@
 					discount: inputDiscount.value,
 					quantity: inputQuantity.value
 				}
+				console.log(data);
 				axios.put('http://localhost:8080/api/rooms/'+hotelId+'/'+roomId,data)
 						.then(function (response){
 							if(response.status === 200){

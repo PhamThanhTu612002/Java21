@@ -3718,6 +3718,12 @@ footer ul li a {
     line-height: 16px;
     height: 45px;
 }
+#pro-file-upload2 {
+    padding: 17px;
+    line-height: 16px;
+    height: 45px;
+    margin-bottom: 20px;
+}
 #pro-file-upload span {
     color: #fff;
     font-weight: 700;
@@ -3853,6 +3859,18 @@ footer ul li a {
     text-transform: uppercase;
     font-weight: 700;
 }
+.hp-call-in button {
+    display: block;
+    background: #f91942;
+    border-radius: 2px;
+    color: #fff;
+    padding: 15px;
+    margin-top: 15px;
+    text-transform: uppercase;
+    font-weight: 700;
+    width: 100%;
+    border-color: #f91942;
+}
 .hp-book-in {} .like-button {
     background-color: #fafafa;
     border: 1px solid #ddd;
@@ -3925,7 +3943,7 @@ footer ul li a {
     font-weight: 600;
     font-family: 'Quicksand', sans-serif;
     font-size: 15px;
-    background: url('../images/checked.png') no-repeat left center;
+    /*background: url('../images/checked.png') no-repeat left center;*/
     background-size: 14px;
     padding-left: 35px;
     padding-right: 35px;

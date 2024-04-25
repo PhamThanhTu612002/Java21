@@ -15,7 +15,6 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "hotels")
-@ToString
 public class Hotel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,6 +47,7 @@ public class Hotel {
             default -> "Chưa có đánh giá";
         };
     }
+    @Column(columnDefinition = "TEXT")
     String description;
     Boolean status;
     Integer check_in;
@@ -70,9 +70,16 @@ public class Hotel {
     )
     private List<Utility> utilities;
 
-    @OneToMany
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "hotel_image",
+            joinColumns = @JoinColumn(name = "hotel_id"),
+            inverseJoinColumns = @JoinColumn(name = "image_id")
+    )
+    private List<Image> imageList;
+
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Review> reviews;
 
-    @OneToMany(mappedBy = "hotel")
+    @OneToMany(mappedBy = "hotel",fetch = FetchType.LAZY)
     private List<HotelRoom> hotelRooms;
 }

@@ -18,7 +18,7 @@
 						<div class="inn-detail-p1 inn-com">
 							<h2 th:text="${hotelDetail.name}">Golden Gate, United States</h2>
 							<div class="r2-ratt" >
-								<p>Hạng: <i class="fa fa-star" style="color: " th:each="star : ${#numbers.sequence(1,hotelDetail.rating_star,1)}"></i></p>
+								<p>Hạng: <i class="fa fa-star" th:each="star : ${#numbers.sequence(1,hotelDetail.rating_star,1)}"></i></p>
 							</div>
 							<p th:text="${hotelDetail.getDescription()}">Discover two of South America’s greatest cities, Rio de Janeiro and Buenos Aires, at a leisurely pace. A major highlight on this journey is a visit to Iguassu Falls in between your two city stays. It truly is one of the most spectacular sights on Earth. See the impressive falls from both the Brazilian and Argentine sides.</p>
 						</div>
@@ -36,17 +36,8 @@
 								<h2>Thư viện ảnh</h2>
 							</div>
 							<div class="room-photo-all">
-								<div class="col-md-3 room-photo">
-									<div class="gall-grid room-photo-gal"> <img class="materialboxed" data-caption="A picture of a way with a group of trees in a park" th:src="${hotelDetail.poster}" alt="" /> </div>
-								</div>
-								<div class="col-md-3 room-photo">
-									<div class="gall-grid room-photo-gal"> <img class="materialboxed" data-caption="A picture of a way with a group of trees in a park" th:src="${hotelDetail.poster}" alt="" /> </div>
-								</div>
-								<div class="col-md-3 room-photo">
-									<div class="gall-grid room-photo-gal"> <img class="materialboxed" data-caption="A picture of a way with a group of trees in a park" th:src="${hotelDetail.poster}" alt="" /> </div>
-								</div>
-								<div class="col-md-3 room-photo">
-									<div class="gall-grid room-photo-gal"> <img class="materialboxed" data-caption="A picture of a way with a group of trees in a park" th:src="${hotelDetail.poster}" alt="" /> </div>
+								<div class="col-md-3 room-photo" th:each="image: ${hotelDetail.imageList}">
+									<div class="gall-grid room-photo-gal"> <img class="materialboxed" data-caption="A picture of a way with a group of trees in a park" th:src="${image.path}" alt="" /> </div>
 								</div>
 							</div>
 						</div>
@@ -62,7 +53,7 @@
 												<div class="col-md-3 re-room-list-1"><img th:src="${hotelRoom.room.poster}" alt=""> </div>
 												<div class="col-md-6 re-room-list-2">
 													<h4 th:text="${hotelRoom.room.name}">Ultra Deluxe</h4>
-													<p th:text="${#strings.concat('Tiện ích :', hotelRoom.room.area)}"><b>Tiện ích: </b>Television, Wi-Fi, Hair dryer, Towels, Dining, Music, GYM and more.. </p> <span><b>Bao gồm</b> : Free Parking, Breakfast, VAT</span> <span><b>Tối đa </b> : 4 Persons</span> </div>
+													<p th:text="${#strings.concat('Diện tích : ', hotelRoom.room.area)}"></div>
 												<div class="col-md-3 re-room-list-3"> <span class="hot-list-p3-1">1 đêm</span> <span class="hot-list-p3-2" th:text="${#numbers.formatDecimal(hotelRoom.price*hotelRoom.discount, 0, 'COMMA', 0, 'POINT')}"></span> <a th:href="@{/hotel/{hotelId}/room/{roomId}/{slug} (hotelId = ${hotelRoom.hotel.id},roomId = ${hotelRoom.room.id},slug = ${hotelRoom.room.slug})}" class="hot-page2-alp-quot-btn spec-btn-text">Book Now</a> </div>
 											</div>
 										</a>

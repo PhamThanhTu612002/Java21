@@ -4,6 +4,7 @@ import com.github.slugify.Slugify;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import vn.techmaster.bookinghotel.entity.Bed;
 import vn.techmaster.bookinghotel.entity.Hotel;
 import vn.techmaster.bookinghotel.entity.HotelRoom;
@@ -14,6 +15,7 @@ import vn.techmaster.bookinghotel.repository.BedRepository;
 import vn.techmaster.bookinghotel.repository.HotelRepository;
 import vn.techmaster.bookinghotel.repository.HotelRoomRepository;
 import vn.techmaster.bookinghotel.repository.RoomRepository;
+import vn.techmaster.bookinghotel.service.RoomService;
 
 import java.util.Date;
 import java.util.List;
@@ -25,6 +27,8 @@ public class RoomResource {
     HotelRepository hotelRepository;
     @Autowired
     RoomRepository roomRepository;
+    @Autowired
+    RoomService roomService;
     @Autowired
     Slugify slugify;
     @Autowired

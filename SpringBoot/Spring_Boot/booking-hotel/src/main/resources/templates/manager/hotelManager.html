@@ -105,7 +105,7 @@
 													<div class="row">
 														<div class="file-field input-field col s12">
 															<div class="btn" id="pro-file-upload"> <span>Tải lên</span>
-																<input type="file">
+																<input id="inputImage" type="file">
 															</div>
 															<div class="file-path-wrapper">
 																<input id="inputPoster" class="file-path validate" type="text" placeholder="Tải ảnh lên">
@@ -195,7 +195,64 @@
 	</th:block>
 	<th:block id="js">
 		<script th:inline="javascript">
+			const inputHotelName = document.getElementById('inputHotelName');
+			const inputHotelAddress = document.getElementById('inputHotelAddress');
+			const inputHotelRatingStar = document.getElementById('inputHotelRatingStar');
+			const inputProvince = document.getElementById('inputProvince');
+			const inputCheckIn = document.getElementById('inputCheckIn');
+			const inputCheckOut = document.getElementById('inputCheckOut');
+			const inputPoster = document.getElementById('inputPoster');
+			const inputDescription = document.getElementById('inputDescription');
+			function validateForm(){
+				var valid = true;
+				resetErrorMessages();
 
+				if(inputHotelName.value.trim() === ''){
+					valid = false;
+					displayErrorMessage('inputHotelName');
+				}
+
+				if (inputHotelAddress.value === ''){
+					valid = false;
+					displayErrorMessage('inputHotelAddress');
+				}
+
+				if (inputHotelRatingStar.value.trim() === ''){
+					valid = false;
+					displayErrorMessage('inputHotelRatingStar');
+				}
+				if (inputProvince.value.trim() === ''){
+					valid = false;
+					displayErrorMessage('inputProvince');
+				}
+				if (inputCheckIn.value.trim() === ''){
+					valid = false;
+					displayErrorMessage('inputCheckIn');
+				}
+				if (inputCheckOut.value.trim() === ''){
+					valid = false;
+					displayErrorMessage('inputCheckOut');
+				}
+				if (inputPoster.value.trim() === ''){
+					valid = false;
+					displayErrorMessage('inputPoster');
+				}
+				if (inputDescription.value.trim() === ''){
+					valid = false;
+					displayErrorMessage('inputDescription');
+				}
+				return valid;
+			}
+			function resetErrorMessages(){
+				var errorMessages = document.querySelectorAll('.valid');
+				errorMessages.forEach(function (msg) {
+					msg.removeAttribute('style');
+				});
+			}
+			function displayErrorMessage(elementId) {
+				var errorMessageElement = document.querySelector("#"+elementId);
+				errorMessageElement.setAttribute('style','border: 1px solid red;');
+			}
 			 function deleteBooking(bookingId){
 				if(!confirm("Bạn có chắn chắn xóa không?")){
 					return;
@@ -236,42 +293,59 @@
 						})
 			}
 			const btnAddHotel = document.getElementById("btnAddHotel");
+			const inputImage = document.getElementById('inputImage');
 			 btnAddHotel.addEventListener('click',() => {
-				const inputHotetName = document.getElementById('inputHotelName');
-				const inputHotelAddress = document.getElementById('inputHotelAddress');
-				const inputHotelRatingStar = document.getElementById('inputHotelRatingStar');
-				const inputProvince = document.getElementById('inputProvince');
-				const inputCheckIn = document.getElementById('inputCheckIn');
-				const inputCheckOut = document.getElementById('inputCheckOut');
-				const inputPoster = document.getElementById('inputPoster');
-				const inputDescription = document.getElementById('inputDescription');
+				 if (validateForm()){
+					 inputImage.addEventListener("change", (e) => {
+						 // Lấy ra file vừa được chọn
+						 const file = e.target.files[0]
 
-				let data = {
-					name: inputHotetName.value,
-					address: inputHotelAddress.value,
-					rating_star: inputHotelRatingStar.value,
-					poster: inputPoster.value,
-					description: inputDescription.value,
-					status: false,
-					check_in: inputCheckIn.value,
-					check_out: inputCheckOut.value,
-					provinceId: inputProvince.value,
-					managerId: localStorage.getItem('userId')
-				}
-				 console.log(data);
-				axios.post('http://localhost:8080/api/hotels',data)
-						.then(function (response){
-							if(response.status === 201){
-								toastr.success('Tạo khách sạn thành công');
-								setTimeout(() =>{
-									window.location.reload();
-								},1500)
-							}
-						})
-						.catch(function (error) {
-							console.log(error);
-							toastr.error(error.response.data);
-						})
+						 // Tạo đối tượng form data để đưa dữ liệu vào gửi đi
+						 const formData = new FormData()
+						 formData.append('file', file)
+						 formData.append('folder','hotel')
+
+						 // Goọi api sử dung axios
+						 axios.post(`http://localhost:8080/api/files/upload/image`, formData)
+								 .then(res => {
+									 // Hiển thị hình ảnh vừa được upload lên
+									 inputPoster.value = res.url
+
+									 toastr.success('Upload hình ảnh thành công.')
+								 })
+								 .catch(err => {
+									 console.log(err)
+									 toastr.error(err.response.data.message)
+								 })
+					 })
+					 let data = {
+						 name: inputHotelName.value,
+						 address: inputHotelAddress.value,
+						 rating_star: inputHotelRatingStar.value,
+						 poster: inputPoster.value,
+						 description: inputDescription.value,
+						 status: false,
+						 check_in: inputCheckIn.value,
+						 check_out: inputCheckOut.value,
+						 provinceId: inputProvince.value,
+						 managerId: localStorage.getItem('userId')
+					 }
+					 console.log(data);
+
+					 axios.post('http://localhost:8080/api/hotels',data)
+							 .then(function (response){
+								 if(response.status === 201){
+									 toastr.success('Tạo khách sạn thành công');
+									 setTimeout(() =>{
+										 window.location.reload();
+									 },1500)
+								 }
+							 })
+							 .catch(function (error) {
+								 console.log(error);
+								 toastr.error(error.response.data);
+							 })
+				 }
 			 })
 
 		</script>

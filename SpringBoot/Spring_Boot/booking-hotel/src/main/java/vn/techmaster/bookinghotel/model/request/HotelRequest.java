@@ -22,4 +22,5 @@ public class HotelRequest {
     Integer provinceId;
     Integer managerId;
     Boolean status;
+    List<Integer> listUtilities;
 }
