@@ -70,16 +70,16 @@ public class Hotel {
     )
     private List<Utility> utilities;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(name = "hotel_image",
             joinColumns = @JoinColumn(name = "hotel_id"),
             inverseJoinColumns = @JoinColumn(name = "image_id")
     )
     private List<Image> imageList;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany
     private List<Review> reviews;
 
-    @OneToMany(mappedBy = "hotel",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "hotel")
     private List<HotelRoom> hotelRooms;
 }

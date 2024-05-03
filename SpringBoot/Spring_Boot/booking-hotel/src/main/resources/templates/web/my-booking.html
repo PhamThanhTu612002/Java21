@@ -36,7 +36,7 @@
 									<td th:text="${booking.getKey().id}">1</td>
 									<td th:text="${booking.getValue().hotel.province.name}">John</td>
 									<td th:text="${booking.getKey().hotel_room.hotel.name}">Doe</td>
-									<td><span th:text="${booking.getKey().status == 1 ? 'đã xác nhận': 'Chờ xử lý'}" th:class="${booking.getKey().status == 1 ? 'db-success': 'db-not-success'}">Yes</span></td>
+									<td><span th:class="${booking.getKey().status != 0 ? 'db-success': 'db-not-success'}"><th:block th:if="${booking.getKey().status == 0}">Chờ xử lý</th:block><th:block th:if="${booking.getKey().status == 1}">Đã xác nhận</th:block><th:block th:if="${booking.getKey().status == 2}">Đã thanh toán</th:block></span></td>
 									<td>
 										<button type="button" class="btnDetailBooking" data-toggle="modal" th:attr="data-target='#detailBooking'+${booking.getKey().id}" >Xem</button>
 										<a th:if="${booking.getKey().status == 1}" type="button" class="btnDetailBooking" th:href="@{/submitOrder/{bookingId} (bookingId = ${booking.getKey().id})}"> Thanh Toán</a>

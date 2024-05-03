@@ -25,7 +25,7 @@
 									</div>
 									<div class="input-field col s12 m4 l3">
 										<input id="inputNoChildren" type="number" min="0">
-										<label>So luong tre em</label>
+										<label>Số lượng trẻ em</label>
 									</div>
 									<div class="input-field col s12 m4 l3">
 										<input type="text" id="from" name="from">
@@ -50,7 +50,7 @@
 						<div class="row">
 							<div class="hp-section">
 								<div class="hp-sub-tit">
-									<h4>Phòng <span th:text="${roomDetail.getName()}">Master Suite</span></h4>
+									<h4><span th:text="${roomDetail.getName()}">Master Suite</span></h4>
 									<p>Aliquam id tempor sem. Cras molestie risus et lobortis congue. Donec id est consectetur, cursus tellus at, mattis lacus.</p>
 								</div>
 								<div class="hp-amini detai-2p">
@@ -118,25 +118,8 @@
 								<div class="">
 									<div class="h-gal">
 										<ul>
-											<li><img class="materialboxed" data-caption="Hotel Captions" th:src="${roomDetail.poster}" alt="">
+											<li th:each="image : ${roomDetail.imageList}"><img class="materialboxed" data-caption="Hotel Captions" th:src="${image.path}" alt="">
 											</li>
-											<li><img class="materialboxed" data-caption="Hotel Captions" th:src="${roomDetail.poster}" alt="">
-											</li>
-											<li><img class="materialboxed" data-caption="Hotel Captions" th:src="${roomDetail.poster}" alt="">
-											</li>
-											<li><img class="materialboxed" data-caption="Hotel Captions" th:src="${roomDetail.poster}" alt="">
-											</li>
-											<li><img class="materialboxed" data-caption="Hotel Captions" th:src="${roomDetail.poster}" alt="">
-											</li>
-											<li><img class="materialboxed" data-caption="Hotel Captions" th:src="${roomDetail.poster}" alt="">
-											</li>
-											<li><img class="materialboxed" data-caption="Hotel Captions" th:src="${roomDetail.poster}" alt="">
-											</li>
-											<li><img class="materialboxed" data-caption="Hotel Captions" th:src="${roomDetail.poster}" alt="">
-											</li>
-											<li><img class="materialboxed" data-caption="Hotel Captions" th:src="${roomDetail.poster}" alt="">
-											</li>
-
 										</ul>
 									</div>
 								</div>

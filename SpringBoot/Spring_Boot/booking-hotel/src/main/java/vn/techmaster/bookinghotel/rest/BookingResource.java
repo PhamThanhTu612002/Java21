@@ -72,7 +72,6 @@ public class BookingResource {
     @PutMapping("/{bookingId}")
     public ResponseEntity<?> editBooking(@PathVariable Integer bookingId,@RequestBody BookingRequest request){
         Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new ResourceNotFoundException("Không tifm thấy booking này"));
-
         booking.setStatus(request.getStatus());
         bookingRepository.save(booking);
         return ResponseEntity.ok(booking);

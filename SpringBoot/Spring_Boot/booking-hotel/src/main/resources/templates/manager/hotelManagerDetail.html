@@ -34,6 +34,56 @@
 					<p th:text="${#strings.concat('Xin chào ',#authentication.principal.getFullname())}">Hi Jana Novakova,</p>
 					<h4>Chào mừng đến trang quản lý</h4> </div>
 				<div class="db-cent-3">
+					<div class="preloading">
+						<div class="head-typo collap-expand">
+							<div class="preloader-wrapper big active">
+								<div class="spinner-layer spinner-blue">
+									<div class="circle-clipper left">
+										<div class="circle"></div>
+									</div>
+									<div class="gap-patch">
+										<div class="circle"></div>
+									</div>
+									<div class="circle-clipper right">
+										<div class="circle"></div>
+									</div>
+								</div>
+								<div class="spinner-layer spinner-red">
+									<div class="circle-clipper left">
+										<div class="circle"></div>
+									</div>
+									<div class="gap-patch">
+										<div class="circle"></div>
+									</div>
+									<div class="circle-clipper right">
+										<div class="circle"></div>
+									</div>
+								</div>
+								<div class="spinner-layer spinner-yellow">
+									<div class="circle-clipper left">
+										<div class="circle"></div>
+									</div>
+									<div class="gap-patch">
+										<div class="circle"></div>
+									</div>
+									<div class="circle-clipper right">
+										<div class="circle"></div>
+									</div>
+								</div>
+								<div class="spinner-layer spinner-green">
+									<div class="circle-clipper left">
+										<div class="circle"></div>
+									</div>
+									<div class="gap-patch">
+										<div class="circle"></div>
+									</div>
+									<div class="circle-clipper right">
+										<div class="circle"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 					<div class="db-cent-table db-com-table">
 						<div class="db-title">
 							<h3><img src="/images/icon/dbc5.png" alt=""/> <th:block th:text="${hotel.name}"></th:block></h3>
@@ -255,7 +305,7 @@
 																		<div class="file-field input-field col s6">
 																			<p>Ảnh</p>
 																			<div style="height: 44px" class="btn" th:id="${#strings.concat('pro-file-upload-room2',room.room.id)}"> <span style="color: white">Tải lên</span>
-																				<input type="file">
+																				<input th:onchange="|uploadPosterRoom(this,${room.room.id})|" type="file">
 																			</div>
 																			<div class="file-path-wrapper">
 																				<input th:value="${room.room.poster}" th:id="${#strings.concat('inputPosterRoom2',room.room.id)}" class="file-path validate" type="text" placeholder="Upload profile picture">
@@ -293,6 +343,7 @@
 							</form>
 						</div>
 					</div>
+
 				</div>
 				<div class="db-pagi" th:if="${hotelRooms.getTotalPages() > 1}">
 					<ul class="pagination">
@@ -428,6 +479,7 @@
 					</div>
 				</div>
 			</div>
+
 <!--			<div class="db-righ">-->
 <!--				<h4>Notifications(18)</h4>-->
 <!--				<ul>-->
@@ -487,7 +539,7 @@
 				const formData = new FormData()
 				formData.append('file', file)
 				formData.append('folder','hotel')
-
+				showPreloader();
 				// Goọi api sử dung axios
 				axios.post(`http://localhost:8080/api/files/upload/image`, formData)
 						.then(res => {
@@ -498,10 +550,12 @@
 
 							axios.put(`http://localhost:8080/api/hotels/`+hotelId+'?imageHotel&&path='+ res.data.url)
 									.then(res => {
+										hidePreloader()
 										toastr.success('Thêm hình ảnh thành công')
 									})
 									.catch(err => {
 										console.log(err)
+										hidePreloader()
 										toastr.error(err.response.data.message)
 									})
 							window.location.reload();
@@ -525,7 +579,7 @@
 				const formData = new FormData()
 				formData.append('file', file)
 				formData.append('folder','hotel')
-
+				showPreloader();
 				// Goọi api sử dung axios
 				axios.post(`http://localhost:8080/api/files/upload/image`, formData)
 						.then(res => {
@@ -533,10 +587,12 @@
 							inputPoster.value = res.data.url;
 							posterHotel.src = res.data.url;
 							console.log(res);
+							hidePreloader()
 							toastr.success('Upload hình ảnh thành công.')
 						})
 						.catch(err => {
 							console.log(err)
+							hidePreloader()
 							toastr.error(err.response.data.message)
 						})
 			})
@@ -577,9 +633,11 @@
 					listUtilities: listUtilities
 				}
 				console.log(data);
+				showPreloader();
 				axios.put('http://localhost:8080/api/hotels/'+hotelId,data)
 						.then(function (response){
 							if(response.status === 200){
+								hidePreloader()
 								toastr.success('Cập nhật khách sạn thành công');
 								setTimeout(() =>{
 									window.location.reload();
@@ -588,6 +646,7 @@
 						})
 						.catch(function (error) {
 							console.log(error);
+							hidePreloader()
 							toastr.error(error.response.data);
 						})
 			}
@@ -599,9 +658,11 @@
 					name: inputUtilityName.value,
 					utilityType : 'HOTEL'
 				}
+				showPreloader();
 				axios.post('http://localhost:8080/api/utilities',data)
 						.then(function (response){
 							if(response.status === 200){
+								hidePreloader()
 								toastr.success('Thêm tiện ích thành công');
 								setTimeout(() =>{
 									window.location.reload();
@@ -610,6 +671,7 @@
 						})
 						.catch(function (error) {
 							console.log(error);
+							hidePreloader()
 							toastr.error(error.response.data);
 						})
 
@@ -647,9 +709,11 @@
 					have_breafast: inputHaveBreakFast.value,
 					listBeds: listBeds
 				}
+				showPreloader();
 				axios.post('http://localhost:8080/api/rooms/'+hotelId,data)
 						.then(function (response){
 							if(response.status === 200){
+								hidePreloader()
 								toastr.success('Thêm phòng thành công');
 								setTimeout(() =>{
 									window.location.reload();
@@ -658,21 +722,19 @@
 						})
 						.catch(function (error) {
 							console.log(error);
+							hidePreloader()
 							toastr.error(error.response.data);
 						})
 			}
 			const posterRoom = document.getElementById('posterRoom');
-			const inputPosterRoom = document.getElementById('inputPosterRoom');
-			inputPosterRoom.addEventListener('change', (e) => {
-				console.log(123)
-				// Lấy ra file vừa được chọn
-				const file = e.target.files[0];
+			function uploadPosterRoom(file, roomId){
+				const inputPoster = document.getElementById('inputPosterRoom2'+roomId);
 
 				// Tạo đối tượng form data để đưa dữ liệu vào gửi đi
 				const formData = new FormData()
-				formData.append('file', file)
+				formData.append('file', file.files[0])
 				formData.append('folder','room')
-
+				showPreloader();
 				// Goọi api sử dung axios
 				axios.post(`http://localhost:8080/api/files/upload/image`, formData)
 						.then(res => {
@@ -680,13 +742,16 @@
 							inputPoster.value = res.data.url;
 							posterRoom.src = res.data.url;
 							console.log(res);
+							hidePreloader();
 							toastr.success('Upload hình ảnh thành công.')
 						})
 						.catch(err => {
 							console.log(err)
+							hidePreloader();
 							toastr.error(err.response.data.message)
 						})
-			})
+			}
+
 			function editRoom(hotelId,roomId){
 				const inputRoomName = document.getElementById('inputRoomName2'+roomId);
 				const inputArea = document.getElementById('inputArea2'+roomId);
@@ -726,9 +791,11 @@
 					quantity: inputQuantity.value
 				}
 				console.log(data);
+				showPreloader()
 				axios.put('http://localhost:8080/api/rooms/'+hotelId+'/'+roomId,data)
 						.then(function (response){
 							if(response.status === 200){
+								hidePreloader()
 								toastr.success('Cập nhật phòng thành công');
 								setTimeout(() =>{
 									window.location.reload();
@@ -737,8 +804,17 @@
 						})
 						.catch(function (error) {
 							console.log(error);
+							hidePreloader()
 							toastr.error(error.response.data);
 						})
+			}
+			function showPreloader() {
+				document.querySelector('.preloading').style.display = "flex";
+			}
+
+			// Hide preloader
+			function hidePreloader() {
+				document.querySelector('.preloading').style.display = "none";
 			}
 		</script>
 	</th:block>

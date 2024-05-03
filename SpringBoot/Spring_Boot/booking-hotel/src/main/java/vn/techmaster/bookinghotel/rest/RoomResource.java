@@ -71,6 +71,7 @@ public class RoomResource {
     public ResponseEntity<?> editRoom(@PathVariable Integer hotelId,@PathVariable Integer roomId,@RequestBody RoomRequest roomRequest){
         HotelRoom hotelRoom = hotelRoomRepository.findHotelRoomByHotel_IdAndRoom_Id(hotelId,roomId);
 
+        Room room = roomRepository.findById(roomId).orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy phòng"));
         List<Bed> beds = bedRepository.findAllById(roomRequest.getListBeds());
         hotelRoom.getRoom().setBeds(beds);
         hotelRoom.getRoom().setName(roomRequest.getName());
@@ -86,6 +87,9 @@ public class RoomResource {
         hotelRoom.setDiscount(roomRequest.getDiscount());
         hotelRoom.setPrice(roomRequest.getPrice().intValue());
 
+        room.setPoster(roomRequest.getPoster());
+
+        roomRepository.save(room);
         hotelRoomRepository.save(hotelRoom);
         return ResponseEntity.ok(hotelRoom);
     }

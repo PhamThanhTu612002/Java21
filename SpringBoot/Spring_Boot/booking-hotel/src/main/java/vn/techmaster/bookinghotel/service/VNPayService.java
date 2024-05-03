@@ -146,7 +146,8 @@ public class VNPayService {
                         .createdAt(new Date())
                         .status(true).build();
                 paymentRepository.save(payment);
-
+                booking.setStatus(2);
+                bookingRepository.save(booking);
                 return 1;
             } else {
                 String bookingId = request.getParameter("vnp_OrderInfo").split("-")[1];
@@ -163,7 +164,7 @@ public class VNPayService {
                         .createdAt(new Date())
                         .status(false).build();
                 paymentRepository.save(payment);
-                booking.setStatus(2);
+
                 return 0;
             }
         } else {

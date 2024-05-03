@@ -33,7 +33,7 @@
 									<td th:text="${payment.transactionNo}">1</td>
 									<td th:text="${payment.booking.nameBooking}">John</td>
 									<td th:text="${payment.createdAt}">Doe</td>
-									<td><span th:text="${payment.status ? 'Đã thanh toán': 'Chưa thanh toán'}" th:class="${payment.status ? 'db-success': 'db-not-success'}">Yes</span></td>
+									<td><span th:text="${payment.status ? 'Đã thanh toán': 'Lỗi thanh toán'}" th:class="${payment.status ? 'db-success': 'db-not-success'}">Yes</span></td>
 								</tr>
 								</tbody>
 							</table>

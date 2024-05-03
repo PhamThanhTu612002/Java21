@@ -129,11 +129,11 @@
 					userId:localStorage.getItem('userId'),
 					phone: inputPhone.value,
 					bookingDate: new Date(),
-					checkInDate: formatDate(localStorage.getItem('checkInDate')),
-					checkOutDate: formatDate(localStorage.getItem('checkOutDate')),
-					noAdult: localStorage.getItem('noAdult'),
-					noChildren: localStorage.getItem('noChildren'),
-					totalPrice: totalPrice,
+					check_in_date: formatDate(localStorage.getItem('checkInDate')),
+					check_out_date: formatDate(localStorage.getItem('checkOutDate')),
+					amount_adult: localStorage.getItem('noAdult'),
+					amount_child: localStorage.getItem('noChildren'),
+					total_price: totalPrice,
 					status: 0
 				}
 				axios.post('http://localhost:8080/api/bookings',dataBooking)

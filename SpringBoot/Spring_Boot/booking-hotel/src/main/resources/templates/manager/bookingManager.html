@@ -59,8 +59,8 @@
 								<td th:text="${booking.hotel_room.hotel.province.name}">12may</td>
 								<td th:text="${booking.hotel_room.hotel.name}">20may</td>
 								<td th:text="${booking.amount_adult+booking.amount_child}">12</td>
-								<td><a th:text="${booking.status == 1 ? 'Thành công' : 'Chờ xác nhận'}" th:class="${booking.status == 1 ? 'db-success' : 'db-not-success'}"></a></td>
-								<td><button data-toggle="modal" th:attr="data-target='#editBooking'+${booking.id}"  class="btn-warning btnDetailBooking"><i class="fa fa-pencil-square-o"></i> Quản lý</button> </td>
+								<td><a th:class="${booking.status == 1 ? 'db-success' : 'db-not-success'}"><th:block th:if="${booking.status == 0}">Chờ xử lý</th:block><th:block th:if="${booking.status == 1}">Đã xác nhận</th:block><th:block th:if="${booking.status == 2}">Đã thanh toán</th:block></a></td>
+								<td th:if="${booking.status != 2}"><button data-toggle="modal" th:attr="data-target='#editBooking'+${booking.id}"  class="btn-warning btnDetailBooking"><i class="fa fa-pencil-square-o"></i> Quản lý</button> </td>
 							</tr>
 							</tbody>
 						</table>
@@ -258,26 +258,7 @@
 							toastr.error(error.response.data);
 						})
 			}
-			// function editBooking(bookingID){
-			// 	const bookingName = document.getElementById('bookingName' + bookingID);
-			// 	const phoneBooking = document.getElementById('phone'+ bookingID);
-			// 	const placeBooking = document.getElementById('place'+ bookingID);
-			// 	const roomBooking = document.getElementById('room'+ bookingID);
-			// 	const noAdultBooking = document.getElementById('noAdult'+ bookingID);
-			// 	const noChildrenBooking = document.getElementById('noChildren'+ bookingID);
-			// 	const checkInDateBooking = document.getElementById('checkInDate'+ bookingID);
-			// 	const checkOutDateBooking = document.getElementById('checkOutDate'+ bookingID);
-			// 	const bookingDate = document.getElementById('bookingDate'+ bookingID);
-			// 	const statusBooking = document.getElementById('bookingStatus'+ bookingID);
-			// 	const btnSave = document.getElementById('btnSave'+ bookingID);
-			// 	var data = {
-			// 		nameBooking: bookingName.value,
-			// 		phone: phoneBooking.value,
-			//
-			// 	}
-			// }
 		</script>
 	</th:block>
 </body>
-
 </html>
