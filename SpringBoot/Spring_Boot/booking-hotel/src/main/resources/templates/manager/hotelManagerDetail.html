@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org" th:replace="~{web/layout/layout :: layout(~{:: title}, ~{:: #css}, ~{:: #main-content}, ~{:: #js})}">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" th:replace="~{web/layout/layout :: layout(~{:: title}, ~{:: #css}, ~{:: #main-content}, ~{:: #js})}"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
 	<title>MyHotel - Hotel Booking and Room Booking Online Html Responsive Template</title>
@@ -12,8 +13,8 @@
 		<div class="dashboard">
 			<div class="db-left">
 				<div class="db-left-1">
-					<h4>Jana Novakova</h4>
-					<p>Newyork, United States</p>
+					<h4>Hà Nội</h4>
+					<p>Việt Nam</p>
 				</div>
 				<div class="db-left-2">
 					<ul>
@@ -25,6 +26,9 @@
 						</li>
 						<li>
 							<a th:href="@{/manager/hotel}">Quản lý khách sạn</a>
+						</li>
+						<li sec:authorize="hasRole('ADMIN')">
+							<a th:href="@{/manager/user}">Quản lý người dùng</a>
 						</li>
 					</ul>
 				</div>
@@ -145,7 +149,11 @@
 										</div>
 									</div>
 									<div class="input-field col s6">
-										<img id="posterHotel" class="posterHotel" th:src="${hotel.poster}">
+										<div class="room-photo-all">
+											<div class="room-photo">
+												<div class="gall-grid room-photo-gal"> <img class="materialboxed" data-caption="A picture of a way with a group of trees in a park" th:src="${hotel.poster}" alt="" /> </div>
+											</div>
+										</div>
 									</div>
 								</div>
 								<div class="row">
@@ -191,7 +199,13 @@
 										</thead>
 										<tbody>
 											<tr th:each="image : ${hotel.imageList}">
-												<td width="50%"><img width="100%" th:src="${image.path}"></td>
+												<td>
+													<div class="room-photo-all">
+														<div class="col-md-3 room-photo">
+															<div class="gall-grid room-photo-gal"> <img class="materialboxed" data-caption="A picture of a way with a group of trees in a park" th:src="${image.path}" alt="" /> </div>
+														</div>
+													</div>
+												</td>
 												<td><button class="btn btn-danger" style="margin-left: 20px">Xóa</button></td>
 											</tr>
 										</tbody>
@@ -296,9 +310,17 @@
 																		</div>
 																	</div>
 																	<div class="row">
-																		<div class="input-field col s12">
+																		<div class="input-field col s6">
 																			<p>Số lượng</p>
 																			<input th:value="${room.quantity}" th:id="${#strings.concat('inputQuantity2',room.room.id)}" type="number" class="validate">
+																		</div>
+																		<div class="input-field col s6">
+																			<p>Trạng thái </p>
+																			<select th:id="${#strings.concat('inputStatusRoom2',room.room.id)}" class="browser-default">
+																				<option disabled>Chọn</option>
+																				<option value="false" th:selected="${room.room.status}">Dừng hoạt động</option>
+																				<option value="true" th:selected="${room.room.status}">Đang hoạt động</option>
+																			</select>
 																		</div>
 																	</div>
 																	<div class="row">
@@ -312,17 +334,36 @@
 																			</div>
 																		</div>
 																		<div class="input-field col s6">
-																			<img th:src="${room.room.poster}" class="posterRoom">
+																			<div class="room-photo-all">
+																				<div class="col-md-4 room-photo">
+																					<div class="gall-grid room-photo-gal"> <img class="materialboxed" data-caption="A picture of a way with a group of trees in a park" th:src="${room.room.poster}" alt="" /> </div>
+																				</div>
+																			</div>
 																		</div>
 																	</div>
 																	<div class="row">
-																		<div class="input-field col s6">
-																			<p>Trạng thái </p>
-																			<select th:id="${#strings.concat('inputStatusRoom2',room.room.id)}" class="browser-default">
-																				<option disabled>Chọn</option>
-																				<option value="false" th:selected="${room.room.status}">Dừng hoạt động</option>
-																				<option value="true" th:selected="${room.room.status}">Đang hoạt động</option>
-																			</select>
+																		<div class="input-field col s12">
+																			<p>Mô tả</p>
+																			<textarea th:id="${#strings.concat('inputDescriptionRoom',room.room.id)}" class="materialize-textarea" th:text="${room.room.description}"></textarea>
+																		</div>
+																	</div>
+																	<div class="row">
+																		<div class="file-field input-field col s12">
+																			<div style="height: 44px" class="btn" th:id="${#strings.concat('pro-file-upload-room3',room.room.id)}"> <span style="color: white">Tải lên</span>
+																				<input th:onchange="|uploadImageRoom(this,${room.room.id})|" type="file">
+																			</div>
+																			<div class="file-path-wrapper">
+																				<input th:id="${#strings.concat('inputPosterRoom3',room.room.id)}" class="file-path validate" type="text" placeholder="Upload profile picture">
+																			</div>
+																		</div>
+																	</div>
+																	<div class="row">
+																		<div class="file-field input-field col s12">
+																			<div class="room-photo-all">
+																				<div th:each="image : ${room.room.imageList}" class="col-md-1 room-photo">
+																					<div class="gall-grid room-photo-gal"> <img class="materialboxed" data-caption="A picture of a way with a group of trees in a park" th:src="${image.path}" alt="" /> </div>
+																				</div>
+																			</div>
 																		</div>
 																	</div>
 																	<div class="row">
@@ -466,6 +507,12 @@
 												<option value="true">Hoạt động</option>
 												<option value="false">Dừng hoạt động</option>
 											</select>
+										</div>
+									</div>
+									<div class="row">
+										<div class="input-field col s12">
+											<p>Mô tả</p>
+											<textarea id="inputDescriptionRoom" class="materialize-textarea"></textarea>
 										</div>
 									</div>
 									<div class="row">
@@ -687,6 +734,7 @@
 				const inputNoBeds = document.getElementById('inputNoBeds');
 				const inputPosterRoom = document.getElementById('inputPosterRoom');
 				const inputStatusRoom = document.getElementById('inputStatusRoom');
+				const inputDescriptionRoom = document.getElementById('inputDescriptionRoom');
 
 				var listBeds = [];
 				for (var i = 0; i < inputBeds.options.length; i++) {
@@ -707,7 +755,8 @@
 					smoking: inputSmoking.value,
 					status: inputStatusRoom.value,
 					have_breafast: inputHaveBreakFast.value,
-					listBeds: listBeds
+					listBeds: listBeds,
+					description: inputDescriptionRoom.value
 				}
 				showPreloader();
 				axios.post('http://localhost:8080/api/rooms/'+hotelId,data)
@@ -766,6 +815,7 @@
 				const inputPrice = document.getElementById('inputPrice2'+roomId);
 				const inputDiscount = document.getElementById('inputDiscount2'+roomId);
 				const inputQuantity = document.getElementById('inputQuantity2'+roomId);
+				const inputDescriptionRoom = document.getElementById('inputDescriptionRoom'+roomId);
 
 				var listBeds = [];
 				for (var i = 0; i < inputBeds.options.length; i++) {
@@ -788,7 +838,8 @@
 					listBeds: listBeds,
 					price: inputPrice.value,
 					discount: inputDiscount.value,
-					quantity: inputQuantity.value
+					quantity: inputQuantity.value,
+					description: inputDescriptionRoom.value
 				}
 				console.log(data);
 				showPreloader()
@@ -806,6 +857,38 @@
 							console.log(error);
 							hidePreloader()
 							toastr.error(error.response.data);
+						})
+			}
+			function uploadImageRoom(file,roomId){
+				const inputPoster = document.getElementById('inputPosterRoom3'+roomId);
+
+				// Tạo đối tượng form data để đưa dữ liệu vào gửi đi
+				const formData = new FormData()
+				formData.append('file', file.files[0])
+				formData.append('folder','room')
+				showPreloader();
+				// Goọi api sử dung axios
+				axios.post(`http://localhost:8080/api/files/upload/image`, formData)
+						.then(res => {
+							// Hiển thị hình ảnh vừa được upload lên
+							inputPoster.value = res.data.url;
+							console.log(res);
+							axios.put(`http://localhost:8080/api/rooms/`+roomId+'?imageRoom&&path='+ res.data.url)
+									.then(res => {
+										hidePreloader()
+										toastr.success('Thêm hình ảnh thành công')
+									})
+									.catch(err => {
+										console.log(err)
+										hidePreloader()
+										toastr.error(err.response.data.message)
+									})
+							window.location.reload();
+						})
+						.catch(err => {
+							console.log(err)
+							hidePreloader();
+							toastr.error(err.response.data.message)
 						})
 			}
 			function showPreloader() {

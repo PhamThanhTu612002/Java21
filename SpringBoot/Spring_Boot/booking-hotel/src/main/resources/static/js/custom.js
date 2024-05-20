@@ -71,18 +71,20 @@ $(function() {
 
 //DATE PICKER	
 $(function() {
-    var dateFormat = "mm/dd/yy",
+    let dateFormat = "dd/mm/yy";
+    let date = new Date();
         from = $("#from")
             .datepicker({
                 changeMonth: false,
-                numberOfMonths: 1
+                numberOfMonths: 1,
+                minDate: date
             })
             .on("change", function() {
-                to.datepicker("option", "minDate", getDate(this));
+                to.datepicker("option", new Date(), getDate(this));
             }),
         to = $("#to").datepicker({
             changeMonth: false,
-            numberOfMonths: 1
+            minDate: date
         })
             .on("change", function() {
                 from.datepicker("option", "maxDate", getDate(this));

@@ -15,7 +15,7 @@ public interface ProvinceRepository extends JpaRepository<Province,Integer> {
     @Query(value = "select provinces.* from provinces where provinces.name like %?1%",nativeQuery = true)
     Optional<Province> findProvinceByNameLike(String name);
 
-    @Query(value = "select p.id,p.name,p.slug from hotels h \n" +
+    @Query(value = "select p.* from hotels h \n" +
             "inner join provinces p on h.province_id = p.id\n" +
             "group by p.id,p.name,p.slug\n" +
             "order by count(h.id) desc\n" +

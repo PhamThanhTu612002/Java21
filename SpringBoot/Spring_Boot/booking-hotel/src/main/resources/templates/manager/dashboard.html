@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org" th:replace="~{web/layout/layout :: layout(~{:: title}, ~{:: #css}, ~{:: #main-content}, ~{:: #js})}">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" th:replace="~{web/layout/layout :: layout(~{:: title}, ~{:: #css}, ~{:: #main-content}, ~{:: #js})}"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
 	<title>MyHotel - Hotel Booking and Room Booking Online Html Responsive Template</title>
@@ -12,8 +13,8 @@
 		<div class="dashboard">
 			<div class="db-left">
 				<div class="db-left-1">
-					<h4>Jana Novakova</h4>
-					<p>Newyork, United States</p>
+					<h4>Hà Nội</h4>
+					<p>Việt Nam</p>
 				</div>
 				<div class="db-left-2">
 					<ul>
@@ -26,26 +27,30 @@
 						<li>
 							<a th:href="@{/manager/hotel}">Quản lý khách sạn</a>
 						</li>
+						<li sec:authorize="hasRole('ADMIN')">
+							<a th:href="@{/manager/user}">Quản lý người dùng</a>
+						</li>
 					</ul>
 				</div>
 			</div>
 			<div class="db-cent">
 				<div class="db-cent-1">
 					<p th:text="${#strings.concat('Xin chào ',#authentication.principal.getFullname())}">Hi Jana Novakova,</p>
-					<h4>Chào mừng đến trang quản lý</h4> </div>
+					<h4>Chào mừng đến trang quản lý</h4>
+				</div>
 				<div class="db-cent-2">
 					<div class="db-2-main-1">
-						<div class="db-2-main-2"> <img src="/images/icon/dbc5.png" alt=""> <span>Booking hôm nay</span>
+						<div class="db-2-main-2"> <i class="fa fa-plus fa-5x" aria-hidden="true"></i> <span>Booking hôm nay</span>
 							<h2 th:text="${bookingToday}">12</h2>
 						</div>
 					</div>
 					<div class="db-2-main-1">
-						<div class="db-2-main-2"> <img src="/images/icon/dbc6.png" alt=""> <span>Chờ xác nhận</span>
+						<div class="db-2-main-2"> <i class="fa fa-pencil-square-o fa-5x" aria-hidden="true"></i> <span>Chờ xác nhận</span>
 							<h2 th:text="${pendingBooking}">04</h2>
 						</div>
 					</div>
 					<div class="db-2-main-1">
-						<div class="db-2-main-2"> <img src="/images/icon/dbc3.png" alt=""> <span>Đã duyệt</span>
+						<div class="db-2-main-2"> <i class="fa fa-check-square-o fa-5x" aria-hidden="true"></i> <span>Đã duyệt</span>
 							<h2 th:text="${confirmedBooking}">16</h2> </div>
 					</div>
 				</div>

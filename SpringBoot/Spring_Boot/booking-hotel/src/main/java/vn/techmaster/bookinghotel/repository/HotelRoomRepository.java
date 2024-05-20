@@ -16,6 +16,7 @@ import java.util.List;
 public interface HotelRoomRepository extends JpaRepository<HotelRoom , Integer> {
     List<HotelRoom> findHotelRoomByHotel_Id(Integer hotel_id);
 
+    @Query(value = "SELECT hr.* FROM `db-booking-hotel`.hotel_room hr inner join rooms r on hr.room_id = r.id inner join hotels h on hr.hotel_id = h.id where r.status = 1 and hotel_id = ?;",nativeQuery = true)
     Page<HotelRoom> findHotelRoomByHotel_Id(Integer hotel_id, Pageable pageable);
     HotelRoom findHotelRoomByHotel_IdAndRoom_Id(Integer hotelId,Integer roomId);
 }

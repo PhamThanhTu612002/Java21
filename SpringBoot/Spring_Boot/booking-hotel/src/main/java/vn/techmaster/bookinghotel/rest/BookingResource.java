@@ -12,6 +12,7 @@ import vn.techmaster.bookinghotel.model.request.BookingRequest;
 import vn.techmaster.bookinghotel.repository.BookingRepository;
 import vn.techmaster.bookinghotel.repository.HotelRoomRepository;
 import vn.techmaster.bookinghotel.repository.UserRepository;
+import vn.techmaster.bookinghotel.service.BookingService;
 
 import java.util.Collections;
 import java.util.Date;
@@ -26,6 +27,8 @@ public class BookingResource {
     HotelRoomRepository hotelRoomRepository;
     @Autowired
     BookingRepository bookingRepository;
+    @Autowired
+    BookingService bookingService;
 
     /**
      * API tạo booking
@@ -64,9 +67,7 @@ public class BookingResource {
     }
     @DeleteMapping("/{bookingId}")
     public ResponseEntity<?> deleteBooking(@PathVariable Integer bookingId){
-        Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new ResourceNotFoundException("Không tifm thấy booking này"));
-
-        bookingRepository.delete(booking);
+        bookingService.deleteBooking(bookingId);
         return ResponseEntity.noContent().build();
     }
     @PutMapping("/{bookingId}")

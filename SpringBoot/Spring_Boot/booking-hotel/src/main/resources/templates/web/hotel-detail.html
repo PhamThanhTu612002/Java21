@@ -48,13 +48,13 @@
 							<div class="re-room">
 								<ul th:each="hotelRoom : ${hotelRooms}">
 									<li>
-										<a th:href="@{/room/{id}/{slug} (id = ${hotelRoom.room.id},slug = ${hotelRoom.room.slug})}">
+										<a th:href="@{/hotel/{hotelId}/room/{roomId}/{slug} (hotelId = ${hotelRoom.hotel.id},roomId = ${hotelRoom.room.id},slug = ${hotelRoom.room.slug})}">
 											<div class="re-room-list">
 												<div class="col-md-3 re-room-list-1"><img th:src="${hotelRoom.room.poster}" alt=""> </div>
 												<div class="col-md-6 re-room-list-2">
 													<h4 th:text="${hotelRoom.room.name}">Ultra Deluxe</h4>
 													<p th:text="${#strings.concat('Diện tích : ', hotelRoom.room.area)}"></div>
-												<div class="col-md-3 re-room-list-3"> <span class="hot-list-p3-1">1 đêm</span> <span class="hot-list-p3-2" th:text="${#numbers.formatDecimal(hotelRoom.price*hotelRoom.discount, 0, 'COMMA', 0, 'POINT')}"></span> <a th:href="@{/hotel/{hotelId}/room/{roomId}/{slug} (hotelId = ${hotelRoom.hotel.id},roomId = ${hotelRoom.room.id},slug = ${hotelRoom.room.slug})}" class="hot-page2-alp-quot-btn spec-btn-text">Book Now</a> </div>
+												<div class="col-md-3 re-room-list-3"> <span class="hot-list-p3-1">1 đêm</span> <span class="hot-list-p3-2" th:text="${#numbers.formatDecimal(hotelRoom.price*(1 - hotelRoom.discount), 0, 'COMMA', 0, 'POINT').concat('đ')}"></span> <a th:href="@{/hotel/{hotelId}/room/{roomId}/{slug} (hotelId = ${hotelRoom.hotel.id},roomId = ${hotelRoom.room.id},slug = ${hotelRoom.room.slug})}" class="hot-page2-alp-quot-btn spec-btn-text">Book Now</a> </div>
 											</div>
 										</a>
 									</li>

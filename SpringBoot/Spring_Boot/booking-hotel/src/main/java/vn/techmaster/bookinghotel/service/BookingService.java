@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import vn.techmaster.bookinghotel.entity.Booking;
 import vn.techmaster.bookinghotel.entity.Hotel;
 import vn.techmaster.bookinghotel.entity.HotelRoom;
+import vn.techmaster.bookinghotel.exception.ResourceNotFoundException;
 import vn.techmaster.bookinghotel.repository.BookingRepository;
 
 import java.time.LocalDate;
@@ -41,7 +42,12 @@ public class BookingService {
     public List<Booking> getBookingOrderByBookingDateDesc(){
         return bookingRepository.findAll().stream().sorted(Comparator.comparing(Booking::getBookingDate).reversed()).toList();
     }
-     public Page<Booking> findBookingsByManagerId(Integer useId,Integer page, Integer size){
+    public Page<Booking> findBookingsByManagerId(Integer useId,Integer page, Integer size){
         return bookingRepository.findBookingsByManagerId(useId, PageRequest.of(page-1,size));
-     }
+    }
+    public void deleteBooking(Integer bookingID){
+        Booking booking = bookingRepository.findById(bookingID).orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy booking"));
+
+        bookingRepository.delete(booking);
+    }
 }

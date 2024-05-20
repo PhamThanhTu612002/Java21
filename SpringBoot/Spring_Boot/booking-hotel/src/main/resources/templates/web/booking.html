@@ -67,7 +67,7 @@
 										<p>Địa chỉ: <span th:text="${hotel.address}">Hà nội</span></p>
 										<p>Ngày đến: <span id="checkInDate"></span></p>
 										<p>Ngày đi: <span id="checkOutDate"></span></p>
-										<h3 th:text="${#strings.concat('Phòng ', room.name)}">Phòng đôi</h3>
+										<h3 th:text="${room.name}">Phòng đôi</h3>
 										<p>Số lượng người lớn: <span id="noAdult"></span></p>
 										<p>Số lượng trẻ em: <span id="noChildren"></span> </p>
 										<h4>Tổng cộng thanh toán</h4>
@@ -186,8 +186,8 @@
 				var dateParts = stringDate.split('/');
 
 				// Lấy các phần riêng biệt
-				var month = dateParts[0];
-				var day = dateParts[1];
+				var day = dateParts[0];
+				var month = dateParts[1];
 				var year = dateParts[2];
 
 				// Định dạng lại theo mẫu 'YYYY-MM-DD'

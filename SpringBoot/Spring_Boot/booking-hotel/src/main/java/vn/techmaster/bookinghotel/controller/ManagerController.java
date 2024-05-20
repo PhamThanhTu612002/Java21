@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import vn.techmaster.bookinghotel.entity.Hotel;
 import vn.techmaster.bookinghotel.entity.HotelRoom;
+import vn.techmaster.bookinghotel.entity.Role;
 import vn.techmaster.bookinghotel.entity.User;
 import vn.techmaster.bookinghotel.exception.ResourceNotFoundException;
 import vn.techmaster.bookinghotel.service.*;
@@ -29,6 +30,8 @@ public class ManagerController {
     UserService userService;
     @Autowired
     BedService bedService;
+    @Autowired
+    RoleService roleService;
     @GetMapping("/manager")
     public String getManagerPage(Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -78,5 +81,17 @@ public class ManagerController {
         model.addAttribute("hotel",hotel);
         model.addAttribute("beds",bedService.getAll());
         return "manager/hotelManagerDetail";
+    }
+    @GetMapping("/manager/user")
+    public String getUserManager(Model model,
+                                 @RequestParam (required = false, defaultValue = "1") Integer page,
+                                 @RequestParam (required = false, defaultValue = "10") Integer size){
+        Page<User> users = userService.getAllUsers(page,size);
+        model.addAttribute("currentPage",page);
+        model.addAttribute("users",users);
+        model.addAttribute("roleUser",roleService.getByRole("USER"));
+        model.addAttribute("roleAdmin",roleService.getByRole("ADMIN"));
+        model.addAttribute("roleManager",roleService.getByRole("MANAGER"));
+        return "manager/userManager";
     }
 }

@@ -51,14 +51,14 @@
                             <li><a class='dropdown-button' href='#' data-activates='dropdown2'>Ngôn ngữ <i class="fa fa-angle-down"></i></a>
                                 <ul id="dropdown2" class="dropdown-content drop-con-man" style="width: 97.6875px; position: absolute; top: 12.8px; left: 720.675px; opacity: 1; display: none;">
                                     <li>
-                                        <a href="dashboard.html"><img src="/images/icon/15.png" alt="">Tiếng Việt</a>
+                                        <a href="#">Tiếng Việt</a>
                                     </li>
                                     <li>
-                                        <a href="db-profile.html"><img src="/images/icon/2.png" alt="">Tiếng Anh</a>
+                                        <a href="#">Tiếng Anh</a>
                                     </li>
                                 </ul>
                             </li>
-                            <li><a href="#">Liên hệ: 1800 102 7275</a>
+                            <li><a href="#">Liên hệ: 0363726102</a>
                             </li>
                         </ul>
                     </div>
@@ -72,27 +72,15 @@
                         <ul>
                             <li><a th:href="@{/}">Trang chủ</a>
                             </li>
-                            <li><a href="#" class='dropdown-button' data-activates='drop-home'>Khách sạn<i class="fa fa-angle-down"></i></a>
-                                <ul id="drop-home" class="dropdown-content drop-con-man">
-                                    <li><a href="index.html">Khách sạn 5 sao</a>
-                                    </li>
-                                    <li><a href="index-1.html">Khách sạn 4 sao</a>
-                                    </li>
-                                    <li><a href="index-2.html">Khách sạn 3 sao</a>
-                                    </li>
-                                    <li><a href="index-3.html">Khách sạn 2 sao</a>
-                                    </li>
-                                </ul>
-                            </li>
                             <li><a href="#" class='dropdown-button' data-activates='drop-room'>Điểm đến<i class="fa fa-angle-down"></i></a>
                                 <ul id="drop-room" class="dropdown-content drop-con-man">
-                                    <li><a href="index.html">Hà Nội</a>
+                                    <li><a th:href="@{/hotels(place='Hà Nội', noAdult=0, noChildren=0)}">Hà Nội</a>
                                     </li>
-                                    <li><a href="index-1.html">Hạ Long</a>
+                                    <li><a th:href="@{/hotels(place='Sa Pa', noAdult=0, noChildren=0)}">Sa Pa</a>
                                     </li>
-                                    <li><a href="index-2.html">Nha Trang</a>
+                                    <li><a th:href="@{/hotels(place='Nha Trang', noAdult=0, noChildren=0)}">Nha Trang</a>
                                     </li>
-                                    <li><a href="index-3.html">Phú Quốc</a>
+                                    <li><a th:href="@{/hotels(place='Phú Quốc', noAdult=0, noChildren=0)}">Phú Quốc</a>
                                     </li>
                                 </ul>
                             </li>

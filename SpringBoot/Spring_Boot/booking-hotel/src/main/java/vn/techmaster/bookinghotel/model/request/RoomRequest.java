@@ -28,4 +28,5 @@ public class RoomRequest {
     Double price;
     Double discount;
     Integer quantity;
+    String description;
 }

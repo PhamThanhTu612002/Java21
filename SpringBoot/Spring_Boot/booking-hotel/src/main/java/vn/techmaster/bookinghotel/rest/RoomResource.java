@@ -2,6 +2,7 @@ package vn.techmaster.bookinghotel.rest;
 
 import com.github.slugify.Slugify;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -86,11 +87,17 @@ public class RoomResource {
         hotelRoom.setQuantity(roomRequest.getQuantity());
         hotelRoom.setDiscount(roomRequest.getDiscount());
         hotelRoom.setPrice(roomRequest.getPrice().intValue());
+        hotelRoom.getRoom().setDescription(roomRequest.getDescription());
 
         room.setPoster(roomRequest.getPoster());
 
         roomRepository.save(room);
         hotelRoomRepository.save(hotelRoom);
         return ResponseEntity.ok(hotelRoom);
+    }
+    @PutMapping(value = "/{id}", params = "imageRoom")
+    public ResponseEntity<?> uploadImage(@PathVariable Integer id, @RequestParam String path){
+        Room room = roomService.uploadImage(id,path);
+        return new ResponseEntity<>(room, HttpStatus.OK);
     }
 }

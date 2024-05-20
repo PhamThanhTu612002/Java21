@@ -68,7 +68,7 @@ public class WebController {
         Hotel hotel = hotelService.getHotelById(id,slug);
         List<Review> reviews = reviewService.getReviewsByHotelId(id);
 
-        Page<HotelRoom> hotelRooms = new PageImpl<>(hotelRoomService.getHotelRooms(id,page,size).stream().filter(hotelRoom -> hotelRoom.getRoom().getStatus() == true).collect(Collectors.toList()));
+        Page<HotelRoom> hotelRooms = hotelRoomService.getHotelRooms(id,page,size);
         model.addAttribute("currentPage",page);
         model.addAttribute("hotelDetail",hotel);
         model.addAttribute("reviews",reviews);

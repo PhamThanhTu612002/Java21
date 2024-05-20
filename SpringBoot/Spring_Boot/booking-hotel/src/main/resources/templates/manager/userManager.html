@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" th:replace="~{web/layout/layout :: layout(~{:: title}, ~{:: #css}, ~{:: #main-content}, ~{:: #js})}"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+	<title>MyHotel - Hotel Booking and Room Booking Online Html Responsive Template</title>
+	<th:block id="css"></th:block>
+</head>
+
+<body data-ng-app="">
+ 	<th:block id="main-content">
+		<!--DASHBOARD SECTION-->
+		<div class="dashboard">
+			<div class="db-left">
+				<div class="db-left-1">
+					<h4>Hà Nội</h4>
+					<p>Việt Nam</p>
+				</div>
+				<div class="db-left-2">
+					<ul>
+						<li>
+							<a th:href="@{/manager}">Dashboard</a>
+						</li>
+						<li>
+							<a th:href="@{/manager/booking}">Quản lý booking</a>
+						</li>
+						<li>
+							<a th:href="@{/manager/hotel}">Quản lý khách sạn</a>
+						</li>
+						<li sec:authorize="hasRole('ADMIN')">
+							<a th:href="@{/manager/user}">Quản lý người dùng</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="db-cent">
+				<div class="db-cent-1">
+					<p th:text="${#strings.concat('Xin chào ',#authentication.principal.getFullname())}">Hi Jana Novakova,</p>
+					<h4>Chào mừng đến trang quản lý</h4>
+				</div>
+				<div class="db-cent-3">
+					<div class="preloading">
+						<div class="head-typo collap-expand">
+							<div class="preloader-wrapper big active">
+								<div class="spinner-layer spinner-blue">
+									<div class="circle-clipper left">
+										<div class="circle"></div>
+									</div>
+									<div class="gap-patch">
+										<div class="circle"></div>
+									</div>
+									<div class="circle-clipper right">
+										<div class="circle"></div>
+									</div>
+								</div>
+								<div class="spinner-layer spinner-red">
+									<div class="circle-clipper left">
+										<div class="circle"></div>
+									</div>
+									<div class="gap-patch">
+										<div class="circle"></div>
+									</div>
+									<div class="circle-clipper right">
+										<div class="circle"></div>
+									</div>
+								</div>
+								<div class="spinner-layer spinner-yellow">
+									<div class="circle-clipper left">
+										<div class="circle"></div>
+									</div>
+									<div class="gap-patch">
+										<div class="circle"></div>
+									</div>
+									<div class="circle-clipper right">
+										<div class="circle"></div>
+									</div>
+								</div>
+								<div class="spinner-layer spinner-green">
+									<div class="circle-clipper left">
+										<div class="circle"></div>
+									</div>
+									<div class="gap-patch">
+										<div class="circle"></div>
+									</div>
+									<div class="circle-clipper right">
+										<div class="circle"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="db-cent-table db-com-table">
+						<div class="db-title">
+							<h3><i class="fa fa-credit-card-alt" aria-hidden="true"></i> Đơn đặt phòng</h3>
+						</div>
+						<table class="bordered responsive-table">
+							<thead>
+							<tr>
+								<th>#</th>
+								<th>Người dùng</th>
+								<th>Email</th>
+								<th>Giới tính</th>
+								<th>Trạng thái</th>
+								<th>Thực hiện</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr th:each="user : ${users}">
+								<td th:text="${user.id}">01</td>
+								<td th:text="${user.fullname}">Alvin</td>
+								<td th:text="${user.email}">+01 4215 3521</td>
+								<td th:text="${user.gender == 'MALE' ? 'Nam': 'Nữ'}">12may</td>
+								<td><a th:class="${user.status ? 'db-success' : 'db-not-success'}" th:text="${user.status ? 'Đang hoạt động' : 'Vô hiệu hóa'}"></a></td>
+								<td><button data-toggle="modal" th:attr="data-target='#editUser'+${user.id}"  class="btn-warning btnDetailBooking"><i class="fa fa-pencil-square-o"></i> Quản lý</button> </td>
+							</tr>
+							</tbody>
+						</table>
+						<!-- Modal -->
+						<div th:each="user : ${users}" class="modal fade" th:id="${#strings.concat('editUser',user.id)}" tabindex="-1" role="dialog" aria-labelledby="editUser" aria-hidden="true">
+							<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+								<div class="modal-content">
+									<div class="modal-body">
+										<div class="book-form inn-com-form db-form">
+											<form class="col s12 ng-pristine ng-valid">
+												<div class="row">
+													<div class="input-field col s6">
+														<p>Tên người dùng</p>
+														<input th:value="${user.fullname}" th:id="${#strings.concat('fullname'+user.id)}" type="text" class="validate valid">
+													</div>
+													<div class="input-field col s6">
+														<p>Email</p>
+														<input th:value="${user.email}" th:id="${#strings.concat('email'+user.id)}" type="text" class="validate valid">
+													</div>
+												</div>
+												<div class="row">
+													<div class="input-field col s6">
+														<p>Địa chỉ</p>
+														<input th:value="${user.address}" th:id="${#strings.concat('address'+user.id)}" type="text" class="validate valid">
+													</div>
+													<div class="input-field col s6">
+														<p>Trạng thái</p>
+														<select th:id="${#strings.concat('statusUser'+user.id)}" class="browser-default">
+															<option value="false" th:selected="${user.status}">Vô hiệu hóa</option>
+															<option value="true" th:selected="${user.status}">Đang hoạt động</option>
+														</select>
+													</div>
+												</div>
+												<div class="row">
+													<div class="input-field col s6">
+														<p>Trạng thái</p>
+														<select th:id="${#strings.concat('gender'+user.id)}" class="browser-default">
+															<option value="MALE" th:selected="${user.gender == 'MALE'}">Nam</option>
+															<option value="FEMALE" th:selected="${user.gender == 'FEMALE'}">Nữ</option>
+														</select>
+													</div>
+													<div class="input-field col s6">
+														<p>Vai trò</p>
+														<select multiple th:id="${#strings.concat('role'+user.id)}">
+															<option disabled>Vui lòng chọn</option>
+															<option value="ADMIN" th:selected="${user.roles.contains(roleAdmin)}">Người quản trị</option>
+															<option value="USER" th:selected="${user.roles.contains(roleUser)}">Người dùng</option>
+															<option value="MANAGER" th:selected="${user.roles.contains(roleManager)}">Người quản lý</option>
+														</select>
+													</div>
+												</div>
+												<div class="row">
+													<div class="file-field input-field col s6">
+														<div class="btn" id="pro-file-upload"> <span>Tải lên</span>
+															<input th:onchange="|uploadAvatar(this,${user.id})|" type="file">
+														</div>
+														<div class="file-path-wrapper">
+															<input th:id="${#strings.concat('pathAvatar'+user.id)}" th:value="${user.avatar}" class="file-path validate" type="text" placeholder="Tải ảnh lên">
+														</div>
+													</div>
+													<div class="file-field input-field col s6">
+														<img width="100px" th:id="${#strings.concat('avatar'+user.id)}" th:src="${user.avatar}">
+													</div>
+												</div>
+												<div class="row">
+													<div class="input-field col s12 btnSave">
+														<button type="button" th:id="${#strings.concat('btnSave'+user.id)}" class="btn btn-success" th:onclick="|editUser(${user.id})|">Lưu</button>
+													</div>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="db-pagi" th:if="${users.getTotalPages() > 1}">
+					<ul class="pagination">
+						<li th:classappend="${currentPage == 1 ? 'disabled' : ''}">
+							<a th:href="@{/manager/user (page = ${currentPage - 1})}"><i class="material-icons">chevron_left</i></a>
+						</li>
+						<li class="waves-effect" th:each="pageNumber : ${#numbers.sequence(1,users.getTotalPages())}" th:classappend="${pageNumber == currentPage ? 'active' : ''}">
+							<a th:text="${pageNumber}" th:href="@{/manager/user (page=${pageNumber})}">1</a>
+						</li>
+						<li th:classappend="${currentPage == users.getTotalPages() ? 'disabled' : ''}">
+							<a th:href="@{/manager/user (page = ${currentPage + 1})}"><i class="material-icons">chevron_right</i></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+<!--			<div class="db-righ">-->
+<!--				<h4>Notifications(18)</h4>-->
+<!--				<ul>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr1.jpg" alt="">-->
+<!--							<h5>Joseph, write a review</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>2 hours ago</span> </a>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr2.jpg" alt="">-->
+<!--							<h5>14 New Messages</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>4 hours ago</span> </a>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr3.jpg" alt="">-->
+<!--							<h5>Ads expairy soon</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>10 hours ago</span> </a>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr4.jpg" alt="">-->
+<!--							<h5>Post free ads - today only</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>12 hours ago</span> </a>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr5.jpg" alt="">-->
+<!--							<h5>listing limit increase</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>14 hours ago</span> </a>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr6.jpg" alt="">-->
+<!--							<h5>mobile app launch</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>18 hours ago</span> </a>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr7.jpg" alt="">-->
+<!--							<h5>Setting Updated</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>20 hours ago</span> </a>-->
+<!--					</li>-->
+<!--					<li>-->
+<!--						<a href="#!"> <img src="/images/icon/dbr8.jpg" alt="">-->
+<!--							<h5>Increase listing viewers</h5>-->
+<!--							<p>All the Lorem Ipsum generators on the</p> <span>2 days ago</span> </a>-->
+<!--					</li>-->
+<!--				</ul>-->
+<!--			</div>-->
+		</div>
+		<!--END DASHBOARD SECTION-->
+	</th:block>
+	<th:block id="js">
+		<script th:inline="javascript">
+			function uploadAvatar(file, userId){
+				const pathAvatar = document.getElementById('pathAvatar'+userId);
+				const avatar = document.getElementById('avatar'+userId);
+
+				// Tạo đối tượng form data để đưa dữ liệu vào gửi đi
+				const formData = new FormData()
+				formData.append('file', file.files[0])
+				formData.append('folder','user')
+				showPreloader();
+				// Goọi api sử dung axios
+				axios.post(`http://localhost:8080/api/files/upload/image`, formData)
+						.then(res => {
+							// Hiển thị hình ảnh vừa được upload lên
+							pathAvatar.value = res.data.url;
+							avatar.src = res.data.url;
+							console.log(res);
+							hidePreloader();
+							toastr.success('Upload hình ảnh thành công.')
+						})
+						.catch(err => {
+							console.log(err)
+							hidePreloader();
+							toastr.error(err.response.data.message)
+						})
+			}
+			function editUser(userId){
+				const fullname = document.getElementById('fullname'+userId);
+				const email = document.getElementById('email'+userId);
+				const address = document.getElementById('address'+userId);
+				const status = document.getElementById('statusUser'+userId);
+				const gender = document.getElementById('gender'+userId);
+				const role = document.getElementById('role'+userId);
+				const avatar = document.getElementById('pathAvatar'+userId);
+
+
+				var listRoles = [];
+
+				for (var i = 0; i < role.options.length; i++) {
+					var option = role.options[i];
+					if (option.selected) {
+						listRoles.push(option.value);
+					}
+				}
+				console.log(listRoles);
+
+				const data = {
+					email: email.value,
+					fullname: fullname.value,
+					gender: gender.value,
+					address: address.value,
+					status: status.value,
+					roles: listRoles,
+					avatar: avatar.value
+				}
+				showPreloader();
+				axios.put('http://localhost:8080/api/users/'+userId,data)
+						.then(function (response){
+							if(response.status === 200){
+								hidePreloader()
+								toastr.success('Cập nhật người dùng thành công');
+								setTimeout(() =>{
+									window.location.reload();
+								},1500)
+							}
+						})
+						.catch(function (error) {
+							console.log(error);
+							hidePreloader()
+							toastr.error(error.response.data);
+						})
+
+			}
+			function showPreloader() {
+				document.querySelector('.preloading').style.display = "flex";
+			}
+
+			// Hide preloader
+			function hidePreloader() {
+				document.querySelector('.preloading').style.display = "none";
+			}
+		</script>
+	</th:block>
+</body>
+
+</html>

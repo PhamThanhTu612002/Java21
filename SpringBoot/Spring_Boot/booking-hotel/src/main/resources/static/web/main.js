@@ -5,7 +5,18 @@ const inputCheckInDate = document.getElementById("from");
 const inputCheckOutDate = document.getElementById("to");
 const formSearch = document.getElementById("formSearch");
 
-
+document.getElementById('no-adult').addEventListener('keypress', function (e) {
+    e.preventDefault();
+});
+document.getElementById('no-children').addEventListener('keypress', function (e) {
+    e.preventDefault();
+});
+document.getElementById('from').addEventListener('keypress', function (e) {
+    e.preventDefault();
+});
+document.getElementById('to').addEventListener('keypress', function (e) {
+    e.preventDefault();
+});
 function validateForm(){
     var valid = true;
     resetErrorMessages();
@@ -17,8 +28,14 @@ function validateForm(){
     if (inputNoAdult.value === ''){
         valid = false;
         displayErrorMessage('error-noAdult','Hãy chọn số lượng người lớn');
+    }else if(inputNoAdult.value === '0' && inputNoChildren.value.trim() === '0'){
+        valid = false;
+        displayErrorMessage('error-noAdult','Hãy chọn số lượng người lớn');
     }
     if (inputNoChildren.value === ''){
+        valid = false;
+        displayErrorMessage('error-noChildren','Hãy chọn số lượng trẻ em');
+    }else if(inputNoChildren.value === '0' && inputNoAdult.value.trim() === '0'){
         valid = false;
         displayErrorMessage('error-noChildren','Hãy chọn số lượng trẻ em');
     }

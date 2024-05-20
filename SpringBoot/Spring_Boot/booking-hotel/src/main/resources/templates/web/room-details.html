@@ -51,11 +51,9 @@
 							<div class="hp-section">
 								<div class="hp-sub-tit">
 									<h4><span th:text="${roomDetail.getName()}">Master Suite</span></h4>
-									<p>Aliquam id tempor sem. Cras molestie risus et lobortis congue. Donec id est consectetur, cursus tellus at, mattis lacus.</p>
 								</div>
 								<div class="hp-amini detai-2p">
-									<p>Maecenas erat lorem, vulputate sed ex at, vehicula dignissim risus. Nullam non nisi congue elit cursus tempus. Nunc vel ante nec libero semper maximus. Donec cursus sed massa eget commodo. Phasellus semper neque id iaculis malesuada. Nulla efficitur dui vitae orci blandit tempor. Mauris sed venenatis nibh, sed sodales risus.</p>
-									<p>Nam sit amet tortor in elit fermentum consectetur et sit amet eros. Sed varius velit at eros tempor sodales. Fusce at enim at lectus sollicitudin pharetra at in risus. Donec ut semper turpis. Maecenas lobortis ante ut eros scelerisque, at semper augue ullamcorper.</p>
+									<p th:text="${roomDetail.description}"></p>
 								</div>
 							</div>
 							<div class="hp-section">
@@ -81,7 +79,7 @@
 										<div id="menu1" class="tab-pane fade tab-space active in">
 											<div class="hp-main-overview">
 												<ul>
-													<li>Tối đa: <span th:text="${roomDetail.getMax_adult()}"></span>
+													<li>Tối đa: <span th:text="${roomDetail.getMax_adult() + roomDetail.getMax_child()}"></span>
 													</li>
 													<li>Diện tích : <span th:text="${roomDetail.getArea()}">800 sq. feet</span>
 													</li>
@@ -112,8 +110,7 @@
 							</div>
 							<div class="hp-section">
 								<div class="hp-sub-tit">
-									<h4><span>Thư viện ảnh phòng </span><span th:text="${roomDetail.name}"></span></h4>
-									<p>Aliquam id tempor sem. Cras molestie risus et lobortis congue. Donec id est consectetur, cursus tellus at, mattis lacus.</p>
+									<h4><span>Thư viện ảnh của </span><span th:text="${roomDetail.name}"></span></h4>
 								</div>
 								<div class="">
 									<div class="h-gal">
@@ -163,13 +160,29 @@
 
 		const inputNoAdult = document.getElementById('inputNoAdult');
 		const inputNoChildren = document.getElementById('inputNoChildren');
-		const from = document.getElementById('from');
-		const to = document.getElementById('to');
+		let from = document.getElementById('from');
+		let to = document.getElementById('to');
 
-		inputNoAdult.value = noAdult;
-		inputNoChildren.value = noChildren;
-		from.value = checkInDate;
-		to.value = checkOutDate;
+		if(noAdult !== null || noAdult !== '' || noAdult !== undefined){
+			inputNoAdult.value = noAdult;
+		}else {
+			inputNoAdult.value = '';
+		}
+		if(noChildren !== null || noChildren !== '' || noChildren !== undefined){
+			inputNoChildren.value = noChildren;
+		}else {
+			inputNoChildren.value = '';
+		}
+		if(checkInDate !== null || checkInDate !== '' || checkInDate !== undefined){
+			from.value = checkInDate;
+		}else {
+			from.value = '';
+		}
+		if(checkOutDate !== null || checkOutDate !== '' || checkOutDate !== undefined){
+			to.value = checkOutDate;
+		}else {
+			to.value = checkOutDate;
+		}
 
 		function validateForm(){
 			var valid = true;
@@ -184,6 +197,7 @@
 				valid = false;
 				displayErrorMessage('inputNoChildren');
 			}
+
 			if (from.value === ''){
 				valid = false;
 				displayErrorMessage('from');
@@ -192,6 +206,10 @@
 				valid = false;
 				displayErrorMessage('to');
 			}
+			localStorage.setItem("noAdult",inputNoAdult.value);
+			localStorage.setItem("noChildren",inputNoChildren.value);
+			localStorage.setItem("checkInDate",from.value);
+			localStorage.setItem("checkOutDate",to.value);
 			return valid;
 		}
 		function resetErrorMessages(){
@@ -206,6 +224,10 @@
 		}
 		function bookingRoom(hotelId, roomId){
 			if(!validateForm()){
+				return;
+			}
+			if (localStorage.getItem('email') == null){
+				toastr.error("Vui lòng đăng nhập");
 				return;
 			}
 			window.location.href = 'http://localhost:8080/booking/'+hotelId+'/'+roomId;

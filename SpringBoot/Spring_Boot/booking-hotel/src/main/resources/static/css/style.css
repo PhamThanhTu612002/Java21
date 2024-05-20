@@ -1762,7 +1762,7 @@ td {} .inn-com p {} .inn-com-form {} .inn-com-form form {
 }
 .db-left-1 {
     padding: 116px 50px 30px 50px;
-    background: url('../images/user.jpg') no-repeat center center;
+    background: url('../images/quoctugiam.jpg') no-repeat center center;
     background-size: cover;
     position: relative;
     /* overflow: hidden; */
@@ -1899,7 +1899,7 @@ td {} .inn-com p {} .inn-com-form {} .inn-com-form form {
 }
 .db-cent-1 {
     padding: 116px 50px 30px 50px;
-    background: url(../images/slide2.jpg) no-repeat center center;
+    background: url(../images/khachsan2.jpg) no-repeat center center;
     background-size: cover;
     position: relative;
 }
@@ -1948,6 +1948,18 @@ td {} .inn-com p {} .inn-com-form {} .inn-com-form form {
     padding: 12px;
     border-radius: 5px;
     margin-bottom: 20px;
+}
+.db-2-main-2 i {
+    display: block;
+    width: 80px;
+
+    margin: 0 auto;
+    /* padding-bottom: 20px; */
+
+    border: 1px solid #eaedef;
+    padding: 12px;
+    border-radius: 5px;
+    margin-bottom: 35px;
 }
 .db-2-main-2 span {
     font-size: 24px;

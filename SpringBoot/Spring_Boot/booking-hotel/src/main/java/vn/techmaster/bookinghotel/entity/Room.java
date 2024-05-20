@@ -31,6 +31,8 @@ public class Room {
     Boolean have_breafast;
     Date createdAt;
     Date updatedAt;
+    @Column(columnDefinition = "TEXT")
+    String description;
 
     @ManyToMany
     @JoinTable(name = "room_utility",

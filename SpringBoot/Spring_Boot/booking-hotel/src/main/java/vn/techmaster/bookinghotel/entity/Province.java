@@ -19,4 +19,5 @@ public class Province {
     Integer id;
     String name;
     String slug;
+    String thumbnail;
 }

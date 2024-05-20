@@ -97,13 +97,13 @@
 
 								<div class="row">
 									<div class="input-field col s6">
-										<input type="text" id="from">
+										<input class="datepicker" type="text" id="from">
 										<label for="from">Ngày đến</label>
 										<p class="msg-error" id="error-checkin"></p>
 									</div>
 
 									<div class="input-field col s6">
-										<input type="text" id="to">
+										<input class="datepicker" type="text" id="to">
 										<label for="to">Ngày đi</label>
 										<p class="msg-error" id="error-checkout"></p>
 									</div>
@@ -142,7 +142,7 @@
 							<div class="to-ho-hotel-con">
 								<div class="to-ho-hotel-con-1">
 									<div class="hom-hot-av-tic" th:text="${#strings.concat(province.getValue(),' khách sạn')}"></div>
-									<img src="/images/hanoi.jpg" alt="">
+									<img width="200px" height="200px" th:src="${province.getKey().thumbnail}" alt="">
 								</div>
 								<div class="to-ho-hotel-con-23">
 									<div class="to-ho-hotel-con-2"> <a th:href="@{/hotels(place=${province.getKey().name}, noAdult=0, noChildren=0)}"><h2 style="color: white" th:text="${province.getKey().name}">Mini-Suite</h2></a> </div>

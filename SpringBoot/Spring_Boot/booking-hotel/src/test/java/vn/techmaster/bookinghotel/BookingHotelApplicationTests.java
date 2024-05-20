@@ -248,5 +248,17 @@ class BookingHotelApplicationTests {
     public static String generateLinkImage(String name) {
         return "https://placehold.co/200x200?text=" + getCharacter(name);
     }
+    @Test
+    public void addRole(){
+        User user = userRepository.findById(1).get();
+        Role role = roleRepository.findByRole("ADMIN").get();
+
+        List<Role> roles = user.getRoles();
+        roles.add(role);
+
+        user.setRoles(roles);
+
+        userRepository.save(user);
+    }
 
 }
