@@ -19,7 +19,7 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "hotel_room_id")
     HotelRoom hotel_room;
 

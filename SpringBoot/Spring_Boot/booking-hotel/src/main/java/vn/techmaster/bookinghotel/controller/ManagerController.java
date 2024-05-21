@@ -9,12 +9,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
-import vn.techmaster.bookinghotel.entity.Hotel;
-import vn.techmaster.bookinghotel.entity.HotelRoom;
-import vn.techmaster.bookinghotel.entity.Role;
-import vn.techmaster.bookinghotel.entity.User;
+import vn.techmaster.bookinghotel.entity.*;
 import vn.techmaster.bookinghotel.exception.ResourceNotFoundException;
 import vn.techmaster.bookinghotel.service.*;
+
+import java.util.Comparator;
+import java.util.stream.Collectors;
 
 @Controller
 public class ManagerController {
@@ -40,8 +40,9 @@ public class ManagerController {
         User user = userService.getUserByEmail(currentUserEmail).orElseThrow(() -> new ResourceNotFoundException("Không thấy user này"));
 
         model.addAttribute("bookingToday",bookingService.bookingToday(user.getId()));
+        model.addAttribute("bookingMonth",bookingService.bookingMonth(user.getId()));
         model.addAttribute("pendingBooking",bookingService.pendingBooking(0,user.getId()));
-        model.addAttribute("confirmedBooking",bookingService.pendingBooking(1,user.getId()));
+        model.addAttribute("confirmedBooking",bookingService.pendingBooking(1,user.getId()) + bookingService.pendingBooking(2,user.getId()));
         return "manager/dashboard";
     }
     @GetMapping("/manager/booking")

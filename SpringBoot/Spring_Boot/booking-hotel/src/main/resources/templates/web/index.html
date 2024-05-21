@@ -4,7 +4,14 @@
 
 <head>
 	<title>Booking Vi Vu</title>
-	<th:block id="css"></th:block>
+	<th:block id="css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/styles/choices.min.css"/>
+		<style>
+			.choices{
+				margin-bottom: 0;
+			}
+		</style>
+	</th:block>
 </head>
 
 <body data-ng-app="">
@@ -76,8 +83,10 @@
 							<form id="formSearch" class="col s12" th:action="@{/hotels}" onsubmit="return validateForm()">
 								<div class="row">
 									<div class="input-field col s12">
-										<input type="text" name="place" class="validate" id="place">
-										<label>Bạn muốn đi đâu?</label>
+										<p style="margin-left: 5px">Bạn muốn đi đâu?</p>
+										<select id="place" name="place" class="browser-default choices-single">
+											<option th:each="province : ${provinceList}" th:value="${province.name}" th:text="${province.name}">Arizona</option>
+										</select>
 										<p class="msg-error" id="error-place" style="color: red"></p>
 									</div>
 								</div>
@@ -156,6 +165,7 @@
 		<!--END HOTEL ROOMS-->
 	</th:block>
 	<th:block id="js">
+		<script src="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/scripts/choices.min.js"></script>
 		<script src="/web/main.js"></script>
 	</th:block>
 </body>

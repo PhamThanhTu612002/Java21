@@ -4,7 +4,9 @@ const inputNoChildren = document.getElementById("no-children");
 const inputCheckInDate = document.getElementById("from");
 const inputCheckOutDate = document.getElementById("to");
 const formSearch = document.getElementById("formSearch");
-
+inputPlace.addEventListener('change',function (){
+    console.log(inputPlace.value);
+})
 document.getElementById('no-adult').addEventListener('keypress', function (e) {
     e.preventDefault();
 });
@@ -53,7 +55,6 @@ function validateForm(){
     localStorage.setItem("checkOutDate",inputCheckOutDate.value);
 
     return valid;
-
 }
 function resetErrorMessages(){
     var errorMessages = document.querySelectorAll('.msg-error');
@@ -65,3 +66,4 @@ function displayErrorMessage(elementId , message) {
     var errorMessageElement = document.querySelector("#"+elementId);
     errorMessageElement.textContent = message;
 }
+new Choices(document.querySelector(".choices-single"));

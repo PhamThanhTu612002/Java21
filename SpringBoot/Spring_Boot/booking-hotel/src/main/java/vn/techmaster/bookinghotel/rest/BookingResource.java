@@ -14,6 +14,7 @@ import vn.techmaster.bookinghotel.repository.HotelRoomRepository;
 import vn.techmaster.bookinghotel.repository.UserRepository;
 import vn.techmaster.bookinghotel.service.BookingService;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -45,6 +46,7 @@ public class BookingResource {
                 .hotel_room(hotelRoom)
                 .user(user)
                 .bookingDate(request.getBookingDate())
+                .nameBooking(request.getNameBooking())
                 .amount_adult(request.getAmount_adult())
                 .amount_child(request.getAmount_child())
                 .phone(request.getPhone())
@@ -76,6 +78,13 @@ public class BookingResource {
         booking.setStatus(request.getStatus());
         bookingRepository.save(booking);
         return ResponseEntity.ok(booking);
+    }
+    @GetMapping("/revenue")
+    public ResponseEntity<?> getRevenue(@RequestParam String email){
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy user này"));
+        LocalDate date = LocalDate.now();
+        List<Object[]> list = bookingRepository.getMonthlyTotalPriceForYear(date.getYear(),user.getId());
+        return ResponseEntity.ok(list);
     }
 
 }

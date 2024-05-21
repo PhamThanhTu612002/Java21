@@ -181,7 +181,7 @@
 		if(checkOutDate !== null || checkOutDate !== '' || checkOutDate !== undefined){
 			to.value = checkOutDate;
 		}else {
-			to.value = checkOutDate;
+			to.value = '';
 		}
 
 		function validateForm(){
@@ -206,10 +206,6 @@
 				valid = false;
 				displayErrorMessage('to');
 			}
-			localStorage.setItem("noAdult",inputNoAdult.value);
-			localStorage.setItem("noChildren",inputNoChildren.value);
-			localStorage.setItem("checkInDate",from.value);
-			localStorage.setItem("checkOutDate",to.value);
 			return valid;
 		}
 		function resetErrorMessages(){
@@ -230,6 +226,7 @@
 				toastr.error("Vui lòng đăng nhập");
 				return;
 			}
+
 			window.location.href = 'http://localhost:8080/booking/'+hotelId+'/'+roomId;
 		}
 	</script>

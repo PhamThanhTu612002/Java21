@@ -71,8 +71,8 @@
 										<p>Số lượng người lớn: <span id="noAdult"></span></p>
 										<p>Số lượng trẻ em: <span id="noChildren"></span> </p>
 										<h4>Tổng cộng thanh toán</h4>
-										<p>Khách sạn: <span class="room-price-2" th:text="${#numbers.formatDecimal(hotelRoom.price*hotelRoom.discount, 0, 'COMMA', 0, 'POINT')}"></span></p>
-										<p>Tổng tiền: <span id="totalPrice" class="room-price-2" th:text="${#numbers.formatDecimal(hotelRoom.price*hotelRoom.discount, 0, 'COMMA', 0, 'POINT')}"></span></p>
+										<p>Khách sạn: <span class="room-price-2" th:text="${#numbers.formatDecimal(hotelRoom.price - hotelRoom.price*hotelRoom.discount, 0, 'COMMA', 0, 'POINT')}"></span></p>
+										<p>Tổng tiền: <span id="totalPrice" class="room-price-2" th:text="${#numbers.formatDecimal(hotelRoom.price - hotelRoom.price*hotelRoom.discount, 0, 'COMMA', 0, 'POINT')}"></span></p>
 									</div>
 								</div>
 							</div>
@@ -121,13 +121,14 @@
 				if (!validateForm()){
 					return;
 				}
-				const totalPrice = [[${hotelRoom.price*hotelRoom.discount}]];
+				const totalPrice = [[${hotelRoom.price-hotelRoom.price*hotelRoom.discount}]];
 				const hotelRoomId = [[${hotelRoom.id}]];
 				console.log(hotelRoomId);
 				const dataBooking = {
 					hotelRoomId: hotelRoomId,
 					userId:localStorage.getItem('userId'),
 					phone: inputPhone.value,
+					nameBooking: inputFullName.value,
 					bookingDate: new Date(),
 					check_in_date: formatDate(localStorage.getItem('checkInDate')),
 					check_out_date: formatDate(localStorage.getItem('checkOutDate')),

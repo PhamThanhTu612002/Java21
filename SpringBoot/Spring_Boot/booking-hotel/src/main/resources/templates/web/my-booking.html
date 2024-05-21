@@ -71,8 +71,8 @@
 															<p>Số lượng người lớn: <span th:text="${booking.getKey().amount_adult}" id="noAdult"></span></p>
 															<p>Số lượng trẻ em: <span th:text="${booking.getKey().amount_child}" id="noChildren"></span> </p>
 															<h4>Tổng cộng thanh toán</h4>
-															<p>Khách sạn: <span class="room-price-2" th:text="${#numbers.formatDecimal(booking.getValue().price*booking.getValue().discount, 0, 'COMMA', 0, 'POINT')}"></span></p>
-															<p>Tổng tiền: <span id="totalPrice" class="room-price-2" th:text="${#numbers.formatDecimal(booking.getValue().price*booking.getValue().discount, 0, 'COMMA', 0, 'POINT')}"></span></p>
+															<p>Khách sạn: <span class="room-price-2" th:text="${#numbers.formatDecimal(booking.getValue().price - booking.getValue().price*booking.getValue().discount, 0, 'COMMA', 0, 'POINT')}"></span></p>
+															<p>Tổng tiền: <span id="totalPrice" class="room-price-2" th:text="${#numbers.formatDecimal(booking.getValue().price - booking.getValue().price*booking.getValue().discount, 0, 'COMMA', 0, 'POINT')}"></span></p>
 														</div>
 													</div>
 													<div class="modal-footer">

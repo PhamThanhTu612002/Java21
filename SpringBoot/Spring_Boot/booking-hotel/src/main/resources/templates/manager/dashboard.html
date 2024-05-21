@@ -34,6 +34,56 @@
 				</div>
 			</div>
 			<div class="db-cent">
+				<div class="preloading">
+					<div class="head-typo collap-expand">
+						<div class="preloader-wrapper big active">
+							<div class="spinner-layer spinner-blue">
+								<div class="circle-clipper left">
+									<div class="circle"></div>
+								</div>
+								<div class="gap-patch">
+									<div class="circle"></div>
+								</div>
+								<div class="circle-clipper right">
+									<div class="circle"></div>
+								</div>
+							</div>
+							<div class="spinner-layer spinner-red">
+								<div class="circle-clipper left">
+									<div class="circle"></div>
+								</div>
+								<div class="gap-patch">
+									<div class="circle"></div>
+								</div>
+								<div class="circle-clipper right">
+									<div class="circle"></div>
+								</div>
+							</div>
+							<div class="spinner-layer spinner-yellow">
+								<div class="circle-clipper left">
+									<div class="circle"></div>
+								</div>
+								<div class="gap-patch">
+									<div class="circle"></div>
+								</div>
+								<div class="circle-clipper right">
+									<div class="circle"></div>
+								</div>
+							</div>
+							<div class="spinner-layer spinner-green">
+								<div class="circle-clipper left">
+									<div class="circle"></div>
+								</div>
+								<div class="gap-patch">
+									<div class="circle"></div>
+								</div>
+								<div class="circle-clipper right">
+									<div class="circle"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 				<div class="db-cent-1">
 					<p th:text="${#strings.concat('Xin chào ',#authentication.principal.getFullname())}">Hi Jana Novakova,</p>
 					<h4>Chào mừng đến trang quản lý</h4>
@@ -42,6 +92,11 @@
 					<div class="db-2-main-1">
 						<div class="db-2-main-2"> <i class="fa fa-plus fa-5x" aria-hidden="true"></i> <span>Booking hôm nay</span>
 							<h2 th:text="${bookingToday}">12</h2>
+						</div>
+					</div>
+					<div class="db-2-main-1">
+						<div class="db-2-main-2"> <i class="fa fa-plus fa-5x" aria-hidden="true"></i> <span>Booking tháng này</span>
+							<h2 th:text="${bookingMonth}">12</h2>
 						</div>
 					</div>
 					<div class="db-2-main-1">
@@ -54,7 +109,11 @@
 							<h2 th:text="${confirmedBooking}">16</h2> </div>
 					</div>
 				</div>
+				<div>
+					<canvas id="myChart"></canvas>
+				</div>
 			</div>
+
 <!--			<div class="db-righ">-->
 <!--				<h4>Notifications(18)</h4>-->
 <!--				<ul>-->
@@ -104,7 +163,55 @@
 		<!--END DASHBOARD SECTION-->
 	</th:block>
 	<th:block id="js">
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		<script>
+			const email = localStorage.getItem('email');
+			showPreloader();
+			axios.get('http://localhost:8080/api/bookings/revenue?email='+email)
+					.then(res => {
+						hidePreloader();
+						const ctx = document.getElementById('myChart');
+						new Chart(ctx, {
+							type: 'bar',
+							data: {
+								labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6','Tháng 7','Tháng 8','Tháng 9','Tháng 10','Tháng 11','Tháng 12'],
+								datasets: [{
+									label: 'VNĐ',
+									data: res.data[0],
+									borderWidth: 1
+								}]
+							},
+							options: {
+								scales: {
+									y: {
+										beginAtZero: true
+									}
+								},
+								plugins:{
+									title: {
+										display: true,
+										text: 'Doanh thu theo tháng của năm 2024',
+										font: {
+											size : 24,
+										},
+										color: '#000'
+									}
+								}
+							}
+						});
+					})
+					.catch(err =>{
+						console.log(err);
+					})
+			function showPreloader() {
+				document.querySelector('.preloading').style.display = "flex";
+			}
 
+			// Hide preloader
+			function hidePreloader() {
+				document.querySelector('.preloading').style.display = "none";
+			}
+		</script>
 	</th:block>
 </body>
 

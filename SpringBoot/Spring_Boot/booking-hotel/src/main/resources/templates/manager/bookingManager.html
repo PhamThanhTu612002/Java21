@@ -45,24 +45,24 @@
 						<table class="bordered responsive-table">
 							<thead>
 							<tr>
-								<th>#</th>
 								<th>Người đặt phòng</th>
 								<th>Số điện thoại</th>
 								<th>Điểm đến</th>
 								<th>Khách sạn</th>
 								<th>Số người</th>
+								<th>Ngày đặt</th>
 								<th>Trạng thái</th>
 								<th>Thực hiện</th>
 							</tr>
 							</thead>
 							<tbody>
 							<tr th:each="booking : ${bookings}">
-								<td th:text="${booking.id}">01</td>
 								<td th:text="${booking.nameBooking}">Alvin</td>
 								<td th:text="${booking.phone}">+01 4215 3521</td>
 								<td th:text="${booking.hotel_room.hotel.province.name}">12may</td>
 								<td th:text="${booking.hotel_room.hotel.name}">20may</td>
 								<td th:text="${booking.amount_adult+booking.amount_child}">12</td>
+								<td th:text="${#dates.format(booking.bookingDate,'dd/MM/yyyy')}"></td>
 								<td><a th:class="${booking.status == 1 ? 'db-success' : 'db-not-success'}"><th:block th:if="${booking.status == 0}">Chờ xử lý</th:block><th:block th:if="${booking.status == 1}">Đã xác nhận</th:block><th:block th:if="${booking.status == 2}">Đã thanh toán</th:block></a></td>
 								<td th:if="${booking.status != 2}"><button data-toggle="modal" th:attr="data-target='#editBooking'+${booking.id}"  class="btn-warning btnDetailBooking"><i class="fa fa-pencil-square-o"></i> Quản lý</button> </td>
 							</tr>
@@ -142,7 +142,7 @@
 												</div>
 												<div class="row">
 													<div class="input-field col s12 ">
-														<h4>Tổng tiền: <span id="totalPrice" class="room-price-2" th:text="${#numbers.formatDecimal(booking.hotel_room.price*booking.hotel_room.discount, 0, 'COMMA', 0, 'POINT')}"></span></h4>
+														<h4>Tổng tiền: <span id="totalPrice" class="room-price-2" th:text="${#numbers.formatDecimal(booking.hotel_room.price - booking.hotel_room.price*booking.hotel_room.discount, 0, 'COMMA', 0, 'POINT')}"></span></h4>
 													</div>
 												</div>
 												<div class="row">

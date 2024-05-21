@@ -48,7 +48,9 @@ public class WebController {
     @GetMapping("/")
     public String getHomePage(Model model){
         Map<Province,Integer> provinces = provinceService.getProvincesWithMostHotels();
+        List<Province> provinceList = provinceService.getAllProvinces();
         model.addAttribute("provinces",provinces);
+        model.addAttribute("provinceList",provinceList);
         return "web/index";
     }
     @GetMapping("hotel/{hotelId}/room/{roomId}/{slug}")
@@ -68,11 +70,19 @@ public class WebController {
         Hotel hotel = hotelService.getHotelById(id,slug);
         List<Review> reviews = reviewService.getReviewsByHotelId(id);
 
+        // Kiểm tra xác thực người dùng
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserEmail = authentication.getName(); // Lấy email của người dùng hiện tại
+
+        User user = userService.getUserByEmail(currentUserEmail).orElseThrow(() -> new ResourceNotFoundException("Không thấy user này"));
+        List<Booking> bookings = bookingService.getBookingToReview(user.getId(),hotel.getId());
+
         Page<HotelRoom> hotelRooms = hotelRoomService.getHotelRooms(id,page,size);
         model.addAttribute("currentPage",page);
         model.addAttribute("hotelDetail",hotel);
         model.addAttribute("reviews",reviews);
         model.addAttribute("hotelRooms",hotelRooms);
+        model.addAttribute("bookings",bookings.size());
         return "web/hotel-detail";
     }
     @GetMapping("/blogs")

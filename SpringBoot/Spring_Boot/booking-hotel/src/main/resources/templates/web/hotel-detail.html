@@ -78,6 +78,37 @@
 							<div class="detail-title">
 								<h2>Đánh giá</h2>
 							</div>
+							<div th:if="${session.MY_SESSION != null && bookings > 0}" class="marginBottom">
+								<button data-toggle="modal" data-target="#modalReviews" class="btn btn-danger">Viết bình luận</button>
+							</div>
+							<div class="modal fade" id="modalReviews" tabindex="-1" role="dialog" aria-labelledby="modalAddHotelRoom" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered" role="document">
+									<div class="modal-content">
+										<div class="modal-body">
+											<div>
+												<div class="rating-container text-center mb-3">
+													<span class="rating-item fs-5" data-value="1"><i class="fa fa-star fa-lg"></i></span>
+													<span class="rating-item fs-5" data-value="2"><i class="fa fa-star fa-lg"></i></span>
+													<span class="rating-item fs-5" data-value="3"><i class="fa fa-star fa-lg"></i></span>
+													<span class="rating-item fs-5" data-value="4"><i class="fa fa-star fa-lg"></i></span>
+													<span class="rating-item fs-5" data-value="5"><i class="fa fa-star fa-lg"></i></span>
+													<span class="rating-item fs-5" data-value="6"><i class="fa fa-star fa-lg"></i></span>
+													<span class="rating-item fs-5" data-value="7"><i class="fa fa-star fa-lg"></i></span>
+													<span class="rating-item fs-5" data-value="8"><i class="fa fa-star fa-lg"></i></span>
+													<span class="rating-item fs-5" data-value="9"><i class="fa fa-star fa-lg"></i></span>
+													<span class="rating-item fs-5" data-value="10"><i class="fa fa-star fa-lg"></i></span>
+												</div>
+											</div>
+											<div class="form-floating">
+												<textarea class="form-control" id="rating-content" placeholder="Viết bình luận" style="height: 100px"></textarea>
+											</div>
+										</div>
+										<div class="modal-footer d-flex justify-content-center">
+											<button id="btn-handle-review" type="button" class="btn btn-primary">Hoàn tất</button>
+										</div>
+									</div>
+								</div>
+							</div>
 							<div th:each="review : ${reviews}">
 								<div class="room-rat-inn room-rat-bor">
 									<div class="row">
@@ -128,7 +159,86 @@
 		</div>
 		<!--TOP SECTION-->
 	</th:block>
-	<th:block id="js"></th:block>
+	<th:block id="js">
+		<script>
+			const hotelId = [[${hotelDetail.id}]];
+			let countStar = 0;
+			const ratingItems = document.querySelectorAll('.rating-item');
+			// Function to highlight stars up to the selected one
+			function highlightStars(starCount) {
+				resetStars();
+				for (var i = 0; i < ratingItems.length; i++) {
+					if (parseInt(ratingItems[i].dataset.value,10) <= starCount) {
+						ratingItems[i].classList.add('text-warning2');
+					}
+				}
+			}
+
+			// Function to reset all stars
+			function resetStars() {
+				for (var i = 0; i < ratingItems.length; i++) {
+					ratingItems[i].classList.remove('text-warning2');
+				}
+			}
+			document.addEventListener("DOMContentLoaded", function () {
+
+
+				for (let i = 0; i < ratingItems.length; i++) {
+					// MouseHover event
+					ratingItems[i].addEventListener('mouseover', function () {
+						let currentStar = parseInt(this.dataset.value,10);
+						highlightStars(currentStar);
+					});
+
+					// MouseClick event
+					ratingItems[i].addEventListener('click', function () {
+						var selectedStar = parseInt(this.dataset.value,10);
+						// alert('You selected ' + selectedStar + ' stars!');
+						highlightStars(selectedStar);
+						countStar = selectedStar;
+						// You can send the selected rating to the server or perform other actions here.
+					});
+				}
+			});
+			const btnHandleReview = document.getElementById('btn-handle-review')
+			const ratingContentEl = document.getElementById('rating-content')
+			btnHandleReview.addEventListener('click',function () {
+				createReview()
+			});
+			const createReview = () => {
+				// Kiểm tra xem người dùng đã đánh giá chưa?
+				if(!countStar) {
+					toastr.error('Bạn chưa đánh giá.')
+					return;
+				}
+
+				// Kiểm tra ndung review có hợp lệ không?
+				if(!ratingContentEl.value.trim()) {
+					toastr.error('Bạn chưa nhập nội dung đánh giá.')
+					return;
+				}
+
+				const data = {
+					rating: countStar,
+					content: ratingContentEl.value,
+					hotelId: hotelId
+				}
+				console.log(data);
+				// Gọi API để tạo mới review sử dụng axios
+				axios.post('http://localhost:8080/api/reviews', data)
+						.then(function (response) {
+							toastr.success('Tạo mới review thành công.')
+							// Đóng modal
+							$('#modalReviews').hide();
+							window.location.reload();
+						})
+						.catch(function (error) {
+							console.log(error);
+							toastr.error(error.message)
+						});
+			}
+		</script>
+	</th:block>
 </body>
 
 </html>
