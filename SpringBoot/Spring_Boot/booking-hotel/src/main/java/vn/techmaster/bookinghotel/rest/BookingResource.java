@@ -14,6 +14,8 @@ import vn.techmaster.bookinghotel.repository.HotelRoomRepository;
 import vn.techmaster.bookinghotel.repository.UserRepository;
 import vn.techmaster.bookinghotel.service.BookingService;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Date;
@@ -87,4 +89,26 @@ public class BookingResource {
         return ResponseEntity.ok(list);
     }
 
+    @GetMapping("/check")
+    public ResponseEntity<?> checkToBooking(@RequestParam Integer hotelId, @RequestParam Integer roomId, @RequestParam String checkInDate){
+        // Định dạng của ngày đầu vào
+        SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+        // Định dạng của ngày đầu ra
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Boolean check = false;
+        try {
+            // Chuyển đổi từ chuỗi sang đối tượng Date
+            Date date = inputFormat.parse(checkInDate);
+
+            // Chuyển đổi từ đối tượng Date sang chuỗi với định dạng mới
+            String outputDate = outputFormat.format(date);
+
+            check = bookingService.checkToBooking(hotelId,roomId,outputDate);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(check,HttpStatus.OK);
+    }
 }

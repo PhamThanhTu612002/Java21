@@ -6,9 +6,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import vn.techmaster.bookinghotel.entity.Booking;
+import vn.techmaster.bookinghotel.entity.Hotel;
 import vn.techmaster.bookinghotel.entity.HotelRoom;
 import vn.techmaster.bookinghotel.exception.ResourceNotFoundException;
 import vn.techmaster.bookinghotel.repository.BookingRepository;
+import vn.techmaster.bookinghotel.repository.HotelRoomRepository;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -18,6 +20,8 @@ import java.util.*;
 public class BookingService {
     @Autowired
     BookingRepository bookingRepository;
+    @Autowired
+    HotelRoomRepository hotelRoomRepository;
 
     public List<Booking> getBookingByUserId(Integer userId){
         return bookingRepository.findByUser_Id(userId);
@@ -60,6 +64,17 @@ public class BookingService {
     }
     public List<Booking> getBookingToReview(Integer userId, Integer hotelId){
         return bookingRepository.getBookingToReview(userId,hotelId);
+    }
+
+    public Boolean checkToBooking(Integer hotelId, Integer roomId, String checkInDate){
+        List<Booking> bookings = bookingRepository.checkToBooking(hotelId,roomId,checkInDate);
+
+        HotelRoom hotelRoom = hotelRoomRepository.findHotelRoomByHotel_IdAndRoom_Id(hotelId,roomId);
+        if (bookings.size() == hotelRoom.getQuantity()){
+            return false;
+        }else {
+            return true;
+        }
     }
 
 }

@@ -15,10 +15,7 @@ import vn.techmaster.bookinghotel.entity.*;
 import vn.techmaster.bookinghotel.exception.ResourceNotFoundException;
 import vn.techmaster.bookinghotel.service.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -73,9 +70,14 @@ public class WebController {
         // Kiểm tra xác thực người dùng
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserEmail = authentication.getName(); // Lấy email của người dùng hiện tại
+        List<Booking> bookings = new ArrayList<>();
+        Optional<User> user = userService.getUserByEmail(currentUserEmail);
+        if (user.isPresent()){
+            bookings = bookingService.getBookingToReview(user.get().getId(),hotel.getId());
+        }else {
+            bookings = bookingService.getBookingToReview(null,hotel.getId());
+        }
 
-        User user = userService.getUserByEmail(currentUserEmail).orElseThrow(() -> new ResourceNotFoundException("Không thấy user này"));
-        List<Booking> bookings = bookingService.getBookingToReview(user.getId(),hotel.getId());
 
         Page<HotelRoom> hotelRooms = hotelRoomService.getHotelRooms(id,page,size);
         model.addAttribute("currentPage",page);

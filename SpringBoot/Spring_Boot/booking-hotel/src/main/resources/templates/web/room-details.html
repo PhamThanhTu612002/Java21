@@ -8,6 +8,56 @@
 
 <body data-ng-app="">
 	<th:block id="main-content">
+		<div class="preloading">
+			<div class="head-typo collap-expand">
+				<div class="preloader-wrapper big active">
+					<div class="spinner-layer spinner-blue">
+						<div class="circle-clipper left">
+							<div class="circle"></div>
+						</div>
+						<div class="gap-patch">
+							<div class="circle"></div>
+						</div>
+						<div class="circle-clipper right">
+							<div class="circle"></div>
+						</div>
+					</div>
+					<div class="spinner-layer spinner-red">
+						<div class="circle-clipper left">
+							<div class="circle"></div>
+						</div>
+						<div class="gap-patch">
+							<div class="circle"></div>
+						</div>
+						<div class="circle-clipper right">
+							<div class="circle"></div>
+						</div>
+					</div>
+					<div class="spinner-layer spinner-yellow">
+						<div class="circle-clipper left">
+							<div class="circle"></div>
+						</div>
+						<div class="gap-patch">
+							<div class="circle"></div>
+						</div>
+						<div class="circle-clipper right">
+							<div class="circle"></div>
+						</div>
+					</div>
+					<div class="spinner-layer spinner-green">
+						<div class="circle-clipper left">
+							<div class="circle"></div>
+						</div>
+						<div class="gap-patch">
+							<div class="circle"></div>
+						</div>
+						<div class="circle-clipper right">
+							<div class="circle"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<!--TOP SECTION-->
 		<div class="hp-banner"> <img height="400px" th:src="${roomDetail.poster}" alt=""> </div>
 		<!--END HOTEL ROOMS-->
@@ -162,7 +212,6 @@
 		const inputNoChildren = document.getElementById('inputNoChildren');
 		let from = document.getElementById('from');
 		let to = document.getElementById('to');
-
 		if(noAdult !== null || noAdult !== '' || noAdult !== undefined){
 			inputNoAdult.value = noAdult;
 		}else {
@@ -187,7 +236,6 @@
 		function validateForm(){
 			var valid = true;
 			resetErrorMessages();
-
 			if(inputNoAdult.value.trim() === ''){
 				valid = false;
 				displayErrorMessage('inputNoAdult');
@@ -198,14 +246,19 @@
 				displayErrorMessage('inputNoChildren');
 			}
 
-			if (from.value === ''){
+			if (from[0].value === ''){
 				valid = false;
 				displayErrorMessage('from');
 			}
-			if (to.value === ''){
+			if (to[0].value === ''){
 				valid = false;
 				displayErrorMessage('to');
 			}
+
+			localStorage.setItem('noAdult',inputNoAdult.value);
+			localStorage.setItem('noChildren',inputNoChildren.value);
+			localStorage.setItem('checkInDate',from[0].value);
+			localStorage.setItem('checkOutDate',to[0].value);
 			return valid;
 		}
 		function resetErrorMessages(){
@@ -226,8 +279,32 @@
 				toastr.error("Vui lòng đăng nhập");
 				return;
 			}
+			showPreloader();
+			axios.get('http://localhost:8080/api/bookings/check?hotelId='+hotelId+'&roomId='+roomId+'&checkInDate='+from[0].value)
+					.then(res => {
+						if (res.status === 200){
+							if (res.data === true){
+								setTimeout(() => {
+									hidePreloader();
+									window.location.href = 'http://localhost:8080/booking/'+hotelId+'/'+roomId;
+								},1500);
+							}else {
+								hidePreloader();
+								toastr.error("Phòng hiện đã hết");
+							}
+						}
+					})
+					.catch(err => {
+						toastr.error(err.response.data);
+					})
+		}
+		function showPreloader() {
+			document.querySelector('.preloading').style.display = "flex";
+		}
 
-			window.location.href = 'http://localhost:8080/booking/'+hotelId+'/'+roomId;
+		// Hide preloader
+		function hidePreloader() {
+			document.querySelector('.preloading').style.display = "none";
 		}
 	</script>
 </th:block>
