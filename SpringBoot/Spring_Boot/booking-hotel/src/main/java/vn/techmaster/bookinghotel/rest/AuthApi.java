@@ -43,4 +43,16 @@ public class AuthApi {
         authService.logout();
         return ResponseEntity.ok().build();
     }
+    @PostMapping("/forgot")
+    public ResponseEntity<?> forgotPassword(@RequestParam String email){
+        return authService.forgotPassword(email);
+    }
+    @PostMapping("/check")
+    public ResponseEntity<?> checkEmailExist(@RequestParam String email){
+        return authService.checkEmailExist(email);
+    }
+    @PostMapping("/changePassword")
+    public ResponseEntity<?> changePassword(@RequestParam Integer uId, @RequestParam String nP,@RequestParam String npC){
+        return authService.changePasswordConfirmed(uId,nP,npC);
+    }
 }

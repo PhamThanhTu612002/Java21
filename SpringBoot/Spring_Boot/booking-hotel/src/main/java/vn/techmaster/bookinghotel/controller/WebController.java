@@ -133,6 +133,12 @@ public class WebController {
         model.addAttribute("data", data);
         return "web/account-confirm";
     }
+    @GetMapping("/resetPassword")
+    public String getResetPasswordPage(@RequestParam String token, Model model){
+        Map<String, Object> data = authService.changePassword(token);
+        model.addAttribute("userId", data.get("userID"));
+        return "web/forgot-password";
+    }
     @GetMapping("/my-booking")
     public String getMyBookingPage(Model model) {
         // Kiểm tra xác thực người dùng

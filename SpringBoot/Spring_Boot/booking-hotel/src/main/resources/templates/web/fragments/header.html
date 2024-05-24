@@ -214,7 +214,45 @@
             </div>
         </div>
     </div>
+    <!-- FORGOT PASSWORD SECTION -->
+    <div id="modal3" class="modal fade in" role="dialog">
+        <div class="log-in-pop">
+            <div class="log-in-pop-left">
+                <h1>Xin Chào... <span class="ng-binding"></span></h1>
+                <p>Nếu chưa có tài khoản, <a href=""> tạo tài khoản mới</a>.</p>
+                <h4>Đăng nhập bằng cách mạng xã hội</h4>
+                <ul>
+                    <li><a href="#"><i class="fa fa-facebook"></i> Facebook</a>
+                    </li>
+                    <li><a href="#"><i class="fa fa-google"></i> Google+</a>
+                    </li>
+                    <li><a href="#"><i class="fa fa-twitter"></i> Twitter</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="log-in-pop-right">
+                <a href="#" class="pop-close" data-dismiss="modal"><img src="/images/cancel.png" alt="">
+                </a>
+                <h4>Quên mật khẩu</h4>
+                <p>Nếu chưa có tài khoản, <a href=""> tạo tài khoản mới</a>. Chỉ mất vài phút</p>
+                <form class="s12 ng-pristine ng-valid" id="formForgotPassword">
+                    <div>
+                        <div class="input-field s12">
+                            <input id="emailForgot" type="text" data-ng-model="name" class="validate ng-pristine ng-untouched ng-valid ng-empty">
+                            <label>Email</label>
+                        </div>
+                        <p style="margin-top: 5px" class="msg-error" id="emailForgotError"></p>
+                    </div>
+                    <div>
+                        <div class="input-field s4">
+                            <i class="waves-effect waves-light log-in-btn waves-input-wrapper" style=""><input id="btnForgot" type="button" value="Lấy lại mật khẩu" class="waves-button-input"></i> </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <script th:inline="javascript">
+
         document.getElementById('btnLogin').addEventListener('click',function (event){
             const emailLogin = document.getElementById('emailLogin');
             const passwordLogin = document.getElementById('passwordLogin');
@@ -284,6 +322,48 @@
                 })
 
         });
+        const emailForgot = document.getElementById('emailForgot');
+        emailForgot.addEventListener('input',function (){
+            resetErrorMessages();
+        })
+        document.getElementById('btnForgot').addEventListener('click',function (){
+
+            resetErrorMessages();
+            console.log(123)
+            if(emailForgot.value.trim() === ''){
+                displayErrorMessage('emailForgotError','Email không được để trống');
+            }else {
+                axios.post('http://localhost:8080/api/auth/check?email='+emailForgot.value)
+                    .then(res => {
+                        if (res.data === false){
+                            displayErrorMessage('emailForgotError','Email không tồn tại');
+                        }
+                        if (res.data === true){
+                            axios.post('http://localhost:8080/api/auth/forgot?email='+emailForgot.value)
+                                .then(res => {
+                                    if (res.status !== 200){
+                                        toastr.error(res.response.data);
+                                    }else {
+                                        toastr.success('Hãy vào gmail để đổi mật khẩu tài khoản');
+                                        setTimeout(() =>{
+                                            location.reload();
+                                        },1500)
+                                    }
+                                })
+                        }
+                    })
+            }
+            function resetErrorMessages(){
+                var errorMessages = document.querySelectorAll('.msg-error');
+                errorMessages.forEach(function (msg) {
+                    msg.textContent = '';
+                });
+            }
+            function displayErrorMessage(elementId , message) {
+                var errorMessageElement = document.querySelector("#"+elementId);
+                errorMessageElement.textContent = message;
+            }
+        })
     </script>
 </header>
 </body>

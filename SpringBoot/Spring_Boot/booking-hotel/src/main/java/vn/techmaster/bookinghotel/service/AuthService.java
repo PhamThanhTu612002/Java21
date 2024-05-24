@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import vn.techmaster.bookinghotel.entity.Role;
 import vn.techmaster.bookinghotel.entity.TokenConfirm;
 import vn.techmaster.bookinghotel.entity.User;
+import vn.techmaster.bookinghotel.exception.ResourceNotFoundException;
 import vn.techmaster.bookinghotel.model.TokenType;
 import vn.techmaster.bookinghotel.model.request.LoginRequest;
 import vn.techmaster.bookinghotel.model.request.RegisterRequest;
@@ -123,6 +124,66 @@ public class AuthService {
         }
 
     }
+    public ResponseEntity<?> changePasswordConfirmed(Integer userId,String newPassword, String newPasswordConfirmed) {
+        //regex email và mật khẩu
+        String passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
+
+        // Kiểm tra xem password và confirmPassword có giống nhau không
+        if (!newPassword.equals(newPasswordConfirmed)) {
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Mật khẩu không trùng khớp");
+        }
+        // Mật khẩu có ít nhất 8 ký tự, bao gồm ít nhất một chữ cái viết thường, một chữ cái viết hoa, một số và một ký tự đặc biệt
+        if (!newPassword.matches(passwordRegex)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Mật khẩu không hợp lệ");
+        }
+
+        try {
+            // Lưu thông tin user vào database
+            User user = changePassword(userId,newPassword);
+
+            return ResponseEntity.ok(user);
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Đổi mật khẩu thất bại");
+        }
+    }
+    public ResponseEntity<?> forgotPassword(String email){
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}$";
+        if (email.trim().isEmpty()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email không được để trống");
+        }
+        //kiểm tra email có đúng định dạng ko
+        if (!email.matches(emailRegex)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email không hợp lệ");
+        }
+        // Kiểm tra xem email đã tồn tại chưa
+        if (userRepository.findByEmail(email).isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email không tồn tại");
+        }
+
+        try {
+            // Lưu thông tin user vào database
+            User user = userRepository.findByEmail(email).get();
+
+            // Tạo confirmToken tương ứng với user
+            TokenConfirm tokenConfirm = saveTokenConfirm2(user);
+
+            // Send mail
+            String link = "http://localhost:8080/resetPassword?token=" + tokenConfirm.getToken();
+            mailService.sendMailChangPassword(user.getEmail(), link);
+
+            return ResponseEntity.ok().build();
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Đổi mật khẩu thất bại");
+        }
+    }
+    public ResponseEntity<?> checkEmailExist(String email){
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isPresent()){
+            return new ResponseEntity<>(true,HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(false,HttpStatus.OK);
+        }
+    }
     public void logout(){
         httpSession.setAttribute("MY_SESSION", null);
     }
@@ -132,6 +193,17 @@ public class AuthService {
         tokenConfirm.setToken(UUID.randomUUID().toString());
         tokenConfirm.setUser(user);
         tokenConfirm.setTokenType(TokenType.REGISTRATION);
+
+        // set expiredAt after 24 hours
+        tokenConfirm.setExpiredAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000));
+        tokenConfirmRepository.save(tokenConfirm);
+        return tokenConfirm;
+    }
+    private TokenConfirm saveTokenConfirm2(User user) {
+        TokenConfirm tokenConfirm = new TokenConfirm();
+        tokenConfirm.setToken(UUID.randomUUID().toString());
+        tokenConfirm.setUser(user);
+        tokenConfirm.setTokenType(TokenType.FORGOT_PASSWORD);
 
         // set expiredAt after 24 hours
         tokenConfirm.setExpiredAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000));
@@ -151,6 +223,13 @@ public class AuthService {
         Role userRole = roleRepository.findByRole("USER")
                 .orElseThrow(() -> new RuntimeException("Role not found"));
         user.setRoles(List.of(userRole));
+        userRepository.save(user);
+        return user;
+    }
+    private User changePassword(Integer userId, String newPassword){
+        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy user này"));
+
+        user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
         return user;
     }
@@ -195,6 +274,40 @@ public class AuthService {
 
         data.put("success", true);
         data.put("message", "Xác nhận tài khoản thành công");
+        return data;
+    }
+    public Map<String, Object> changePassword(String token) {
+        Map<String, Object> data = new HashMap<>();
+
+        // Tìm kiếm token trong database
+        Optional<TokenConfirm> tokenConfirmOptional = tokenConfirmRepository
+                .findByTokenAndTokenType(token, TokenType.FORGOT_PASSWORD);
+
+        // Nếu không tìm thấy token
+        if (tokenConfirmOptional.isEmpty()) {
+            data.put("success", false);
+            data.put("message", "Token không hợp lệ");
+            return data;
+        }
+
+        TokenConfirm tokenConfirm = tokenConfirmOptional.get();
+        // Nếu token dã được xác nhận
+        if (tokenConfirm.getConfirmedAt() != null) {
+            data.put("success", false);
+            data.put("message", "Token đã được xác nhận");
+            return data;
+        }
+
+        // Nếu token đã hết hạn
+        if (tokenConfirm.getExpiredAt().before(new Date())) {
+            data.put("success", false);
+            data.put("message", "Token đã hết hạn");
+            return data;
+        }
+
+        data.put("success", true);
+        data.put("userID",tokenConfirm.getUser().getId());
+        data.put("message", "Xác nhận thành công");
         return data;
     }
 }

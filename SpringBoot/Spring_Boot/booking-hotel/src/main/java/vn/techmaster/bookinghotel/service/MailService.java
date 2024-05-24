@@ -21,4 +21,14 @@ public class MailService {
         // Send Message!
         emailSender.send(message);
     }
+    public void sendMailChangPassword(String email, String content) {
+        SimpleMailMessage message = new SimpleMailMessage();
+
+        message.setTo(email);
+        message.setSubject("Đổi mật khẩu");
+        message.setText(content);
+
+        // Send Message!
+        emailSender.send(message);
+    }
 }
