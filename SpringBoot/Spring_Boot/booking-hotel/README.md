@@ -48,7 +48,25 @@
 ### 11. Lịch sử thanh toán của tôi
 - **Endpoint:** `/my-payment`
 - **Mô tả:** Hiển thị danh sách các giao dịch thanh toán của người dùng hiện tại.
-
+## Diagram
+![img_9.png](image/img_9.png)
+## Màn hình
+### Trang chủ
+![img.png](image/img.png)
+### Đăng ký
+![img_2.png](image/img_2.png)
+### Đăng nhập
+![img_3.png](image/img_3.png)
+### Danh sách khách sạn
+![img_4.png](image/img_4.png)
+### Chi tiết khách sạn
+![img_5.png](image/img_5.png)
+### Chi tiết phòng 
+![img_6.png](image/img_6.png)
+### Đặt phòng
+![img_7.png](image/img_7.png)
+### Kỳ nghỉ của tôi
+![img_8.png](image/img_8.png)
 ## Cách chạy dự án
 
 ### Yêu cầu hệ thống
@@ -59,7 +77,7 @@
 ### Cài đặt
 1. Clone repository:
    ```sh
-   git clone <repository-url>
+   git clone <https://github.com/PhamThanhTu612002/Java21/tree/master/SpringBoot/Spring_Boot/booking-hotel>
    ```
 2. Chạy ứng dụng:
    ```sh
