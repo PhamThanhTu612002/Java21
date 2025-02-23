@@ -1,4 +1,4 @@
-# WebController.java - Booking Hotel Application
+# Booking Hotel Application
 
 ## Giới thiệu
 `Booking-hotel` là một hệ thống đặt phòng khách sạn, chịu trách nhiệm xử lý các yêu cầu từ phía người dùng và hiển thị dữ liệu liên quan đến khách sạn, phòng, đặt chỗ, blog, thanh toán và tài khoản người dùng.
